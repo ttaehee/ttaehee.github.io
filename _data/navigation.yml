@@ -11,28 +11,72 @@ main:
   - title: "Sitemap"
     url: /sitemap/
     
-docs:
-  - title: Database
+sidebar:
+  - title: 프레임워크
+    url: /frameworks/
     children:
-      - title: "Oracle"
-        url: oracle/
-        category: "oracle"
-      - title: "MS-SQL"
-        url: mssql/
-        category: "mssql"
-      - title: "MariaDB"
-        url: mariadb/
-        category: "mariadb"
-  - title: Server
+      - title: 안드로이드
+        url: /frameworks/android/
+      - title: 플러터
+        url: /frameworks/flutter/
+      - title: 스프링 부트
+        url: /frameworks/spring-boot/
+  - title: 지킬
+    url: /jekyll/
     children:
-      - title: "Ubuntu"
-        url: ubuntu/
-        category: "ubuntu"
-      - title: "Windows Server"
-        url: windows-server/
-        category: "windows-server"
-  - title: Etc
+      - title: "Front Matter"
+        url: /jekyll/front-matter/
+      - title: "localhost"
+        url: /jekyll/localhost/
+      - title: "Liquid"
+        url: /jekyll/liquid/
+  - title: 언어
+    url: /languages/
     children:
-      - title: "Jekyll"
-        url: jekyll/
-        category: "jekyll"
+      - title: C#
+        url: /languages/cs/
+      - title: Dart
+        url: /languages/dart/
+      - title: Java
+        url: /languages/java/
+      - title: kotlin
+        url: /languages/kotlin/
+  - title: 도구
+    url: /tools/
+    children:
+      - title: Git
+        url: /tools/git/
+      - title: IDE
+        url: /tools/ide/
+      - title: PowerToys
+        url: /tools/powertoys/
+      - title: Winget
+        url: /tools/winget/
+      - title: WSL
+        url: /tools/wsl/
+  
+
+frameworks:
+  - title: 안드로이드
+    url: /frameworks/android/
+    children:
+      - title: setup
+        url: /frameworks/android/setup/
+      - title: 프로젝트 구조
+        url: /frameworks/android/project-structure/
+      - title: 뷰 바인딩 설정
+        url: /frameworks/android/view-binding/
+      - title: 컴포넌트
+        url: /frameworks/android/component/
+      - title: 액티비티
+        url: /frameworks/android/activity/
+  - title: 플러터
+    url: /frameworks/flutter/
+    children:
+      - title: start
+        url: /frameworks/flutter/start/
+  - title: 스프링부트
+    url: /frameworks/spring-boot/
+    children:
+      - title: start
+        url: /frameworks/spring-boot/start/
