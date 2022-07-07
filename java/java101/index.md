@@ -1,5 +1,5 @@
 ---
-title: Java
-excerpt: Java
-taxonomy: java
+title: Java101
+excerpt: Java Basics
+taxonomy: java101
 ---
