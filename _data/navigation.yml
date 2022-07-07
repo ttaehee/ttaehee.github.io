@@ -1,75 +1,38 @@
 # main links
 main:
-  - title: "Quick-Start Guide"
-    url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
-  - title: "About"
-    url: https://mmistakes.github.io/minimal-mistakes/about/
-  - title: "Sample Posts"
-    url: /year-archive/
-  - title: "Sample Collections"
-    url: /collection-archive/
-  - title: "Sitemap"
-    url: /sitemap/
-    
-sidebar:
-  - title: 프레임워크
-    url: /frameworks/
-    children:
-      - title: 안드로이드
-        url: /frameworks/android/
-      - title: 플러터
-        url: /frameworks/flutter/
-      - title: 스프링 부트
-        url: /frameworks/spring-boot/
-  - title: 지킬
-    url: /jekyll/
-    children:
-      - title: "Front Matter"
-        url: /jekyll/front-matter/
-      - title: "localhost"
-        url: /jekyll/localhost/
-      - title: "Liquid"
-        url: /jekyll/liquid/
+  - title: Java
+    url: /java/
   - title: 언어
     url: /languages/
-    children:
-      - title: C#
-        url: /languages/cs/
-      - title: Dart
-        url: /languages/dart/
-      - title: Java
-        url: /languages/java/
-      - title: kotlin
-        url: /languages/kotlin/
   - title: 도구
     url: /tools/
+    
+sidebar:
+  - title: Java
+    url: /java/
     children:
-      - title: Git
-        url: /tools/git/
-      - title: IDE
-        url: /tools/ide/
-      - title: PowerToys
-        url: /tools/powertoys/
-      - title: Winget
-        url: /tools/winget/
-      - title: WSL
-        url: /tools/wsl/
-  
+      - title: Java101
+        url: /java/java101/
+      - title: Java advanced
+        url: /java/java-advanced/
+  - title: Spring
+    url: /spring/
+    children:
+      - title: "Spring MVC2"
+        url: /spring/spring-mvc2/
+      - title: "Spring Security"
+        url: /spring/spring-security/
 
-frameworks:
-  - title: 안드로이드
-    url: /frameworks/android/
+java:
+  - title: Java101
+    url: /java/java101/
     children:
-      - title: setup
-        url: /frameworks/android/setup/
-      - title: 프로젝트 구조
-        url: /frameworks/android/project-structure/
-      - title: 뷰 바인딩 설정
-        url: /frameworks/android/view-binding/
-      - title: 컴포넌트
-        url: /frameworks/android/component/
-      - title: 액티비티
-        url: /frameworks/android/activity/
+      - title: Java Basics
+        url: /java/java101/java-basics/
+      - title: OOP
+        url: /java/java101/oop/
+      - title: Variables
+        url: /java/java101/variables/
   - title: 플러터
     url: /frameworks/flutter/
     children:
