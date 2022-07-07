@@ -297,7 +297,7 @@ defaults:
       sidebar:
         - nav: frameworks
   
-  # Android
+ # Android
   - scope:
       path: "frameworks/android"
       type: posts
@@ -315,3 +315,14 @@ defaults:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> Flutter 더 알아보기
             url: /frameworks/flutter/
+  
+  # spring-boot
+  - scope:
+      path: "frameworks/spring-boot"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> Spring Boot 더 알아보기
+            url: /frameworks/spring-boot/
+
