@@ -20,9 +20,9 @@ foo:
 
 # main links
 main:
-  - title: "Quick-Start Guide"
+  - title: "aaa"
     url: /docs/quick-start-guide/
-  - title: "About"
+  - title: "vvv"
     url: /about/
   - title: "Sample Posts"
     url: /year-archive/
