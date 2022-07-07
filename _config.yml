@@ -254,39 +254,20 @@ defaults:
         overlay_color: "#333"
   
 
-  # frameworks
+  # Java
   - scope:
-      path: "frameworks"
+      path: "java"
     values:
       sidebar:
-        - nav: frameworks
+        - nav: Java
   
- # Android
+  # Java 101
   - scope:
-      path: "frameworks/android"
+      path: "java/java101"
       type: posts
     values:
       header:
         actions:
-          - label: <i class='fas fa-fw fa-link'></i> Android 더 알아보기
-            url: /frameworks/android/
-  
-  - scope:
-      path: "frameworks/flutter"
-      type: posts
-    values:
-      header:
-        actions:
-          - label: <i class='fas fa-fw fa-link'></i> Flutter 더 알아보기
-            url: /frameworks/flutter/
-  
-  # spring-boot
-  - scope:
-      path: "frameworks/spring-boot"
-      type: posts
-    values:
-      header:
-        actions:
-          - label: <i class='fas fa-fw fa-link'></i> Spring Boot 더 알아보기
-            url: /frameworks/spring-boot/
+          - label: <i class='fas fa-fw fa-link'></i> about java
+            url: /java/java101/
 
