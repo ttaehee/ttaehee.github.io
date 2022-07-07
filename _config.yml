@@ -255,14 +255,63 @@ compress_html:
 
 # Defaults
 defaults:
-  # _posts
+  # pages
   - scope:
-      path: ""
+      type: pages
+    values:
+      layout: category
+      author_profile: true
+      share: true
+      header:
+        overlay_color: "#437299"
+      entries_layout: grid
+      classes: wide
+      sidebar:
+        - nav: sidebar
+
+
+  # posts
+  - scope:
       type: posts
     values:
       layout: single
       author_profile: true
       read_time: true
-      comments: # true
+      comments: true
       share: true
       related: true
+      toc: true
+      toc_label: "목차"
+      toc_sticky: true
+      sidebar:
+        - nav: sidebar
+      show_date: true
+      header:
+        overlay_color: "#333"
+  
+
+  # frameworks
+  - scope:
+      path: "frameworks"
+    values:
+      sidebar:
+        - nav: frameworks
+  
+  # Android
+  - scope:
+      path: "frameworks/android"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> Android 더 알아보기
+            url: /frameworks/android/
+  
+  - scope:
+      path: "frameworks/flutter"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> Flutter 더 알아보기
+            url: /frameworks/flutter/
