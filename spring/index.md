@@ -1,5 +1,5 @@
 ---
 title: Spring
-excerpt: 
+excerpt: learn Spring
 taxonomy: spring
 ---
