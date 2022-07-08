@@ -1,5 +1,5 @@
 ---
 title: Java Advanced
-excerpt: 
+excerpt: learn Java
 taxonomy: java-advanced
 ---
