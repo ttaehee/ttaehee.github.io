@@ -1,5 +1,5 @@
 ---
-title: Java advanced
-excerpt: Java Advanced
+title: Java Advanced
+excerpt: 
 taxonomy: java-advanced
 ---
