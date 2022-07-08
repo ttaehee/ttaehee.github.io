@@ -2,10 +2,10 @@
 main:
   - title: Java
     url: /java/
-  - title: 언어
-    url: /languages/
-  - title: 도구
-    url: /tools/
+  - title: Github
+    url: https://github.com/ttaehee
+ # - title: 도구
+ #   url: /tools/
     
 sidebar:
   - title: Java
@@ -23,23 +23,23 @@ sidebar:
       - title: "Spring Security"
         url: /spring/spring-security/
 
-Java:
-  - title: Java101
-    url: /java/java101/
-    children:
-      - title: Java Basics
-        url: /java/java101/java-basics/
-      - title: OOP
-        url: /java/java101/oop/
-      - title: Variables
-        url: /java/java101/variables/
-  - title: 플러터
-    url: /frameworks/flutter/
-    children:
-      - title: start
-        url: /frameworks/flutter/start/
-  - title: 스프링부트
-    url: /frameworks/spring-boot/
-    children:
-      - title: start
-        url: /frameworks/spring-boot/start/
+#Java:
+#  - title: Java101
+#    url: /java/java101/
+#    children:
+#      - title: Java Basics
+#        url: /java/java101/java-basics/
+#      - title: OOP
+#        url: /java/java101/oop/
+#      - title: Variables
+#        url: /java/java101/variables/
+#  - title: 플러터
+#    url: /frameworks/flutter/
+#    children:
+#      - title: start
+#        url: /frameworks/flutter/start/
+#  - title: 스프링부트
+#    url: /frameworks/spring-boot/
+#    children:
+#      - title: start
+#        url: /frameworks/spring-boot/start/
