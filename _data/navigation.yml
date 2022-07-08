@@ -37,7 +37,7 @@ java:
     url: /java/java-advanced/
     children:
       - title: lombok
-#        url: /java/java-advanced/lombok/
+        url: /java/java-advanced/lombok/
 #  - title: 스프링부트
 #    url: /frameworks/spring-boot/
 #    children:
