@@ -227,7 +227,7 @@ defaults:
       author_profile: true
       share: true
       header:
-        overlay_color: "#437299"
+        overlay_color: "#0c0c0d"
       entries_layout: grid
       classes: wide
       sidebar:
