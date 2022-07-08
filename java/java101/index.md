@@ -1,5 +1,5 @@
 ---
 title: Java101
 excerpt: Java Basics
-taxonomy: java101
+taxonomy: java/java101
 ---
