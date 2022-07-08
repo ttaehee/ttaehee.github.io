@@ -270,4 +270,42 @@ defaults:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about java
             url: /java/java101/
+            
+  # Java advanced
+  - scope:
+      path: "java/java-advanced"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about java
+            url: /java/java-advanced/
+            
+ # Spring
+  - scope:
+      path: "spring"
+    values:
+      sidebar:
+        - nav: Spring
+  
+  # Spring MVC2
+  - scope:
+      path: "spring/spring-mvc2"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about spring
+            url: /spring/spring-mvc2/
+            
+            
+  # Spring Security
+  - scope:
+      path: "spring/spring-mvc2"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about spring
+            url: /spring/spring-mvc2/
 
