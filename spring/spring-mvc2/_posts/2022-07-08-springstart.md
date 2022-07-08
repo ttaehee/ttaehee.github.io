@@ -1,4 +1,4 @@
 ---
-title: Spring MVC2
+title: model
 excerpt: ""
 ---
