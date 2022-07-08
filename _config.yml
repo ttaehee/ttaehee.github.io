@@ -269,7 +269,7 @@ defaults:
       header:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about java
-            url: /java/java101/
+            url: /java/
             
   # Java advanced
   - scope:
@@ -279,7 +279,7 @@ defaults:
       header:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about java
-            url: /java/java-advanced/
+            url: /java/
             
  # Spring
   - scope:
@@ -296,16 +296,16 @@ defaults:
       header:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about spring
-            url: /spring/spring-mvc2/
+            url: /spring/
             
             
   # Spring Security
   - scope:
-      path: "spring/spring-mvc2"
+      path: "spring/spring-security"
       type: posts
     values:
       header:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about spring
-            url: /spring/spring-mvc2/
+            url: /spring/
 
