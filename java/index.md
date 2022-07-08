@@ -1,5 +1,5 @@
 ---
 title: Java
-excerpt: Java
+excerpt: ''
 taxonomy: java
 ---
