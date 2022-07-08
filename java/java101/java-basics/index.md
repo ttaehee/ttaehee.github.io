@@ -1,5 +1,5 @@
 ---
 title: Java Basics
-excerpt: ''
+excerpt: learn Java
 taxonomy: java-basics
 ---
