@@ -23,7 +23,7 @@ sidebar:
       - title: "Spring Security"
         url: /spring/spring-security/
 
-java:
+Java:
   - title: Java101
     url: /java/java101/
     children:
