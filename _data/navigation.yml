@@ -13,7 +13,7 @@ sidebar:
     children:
       - title: Java101
         url: /java/java101/
-      - title: Java advanced
+      - title: Java Advanced
         url: /java/java-advanced/
   - title: Spring
     url: /spring/
@@ -23,7 +23,7 @@ sidebar:
       - title: "Spring Security"
         url: /spring/spring-security/
 
-Java:
+java:
   - title: Java101
     url: /java/java101/
     children:
@@ -33,11 +33,11 @@ Java:
         url: /java/java101/oop/
       - title: Variables
         url: /java/java101/variables/
-#  - title: 플러터
-#    url: /frameworks/flutter/
-#    children:
-#      - title: start
-#        url: /frameworks/flutter/start/
+  - title: Java Advanced
+    url: /java/java-advanced/
+    children:
+      - title: lombok
+#        url: /java/java-advanced/lombok/
 #  - title: 스프링부트
 #    url: /frameworks/spring-boot/
 #    children:
