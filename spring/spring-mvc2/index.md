@@ -1,5 +1,5 @@
 ---
 title: Spring MVC2
-excerpt: ""
+excerpt: learn Spring
 taxonomy: spring-mvc2
 ---
