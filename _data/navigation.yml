@@ -31,8 +31,8 @@ Java:
         url: /java/java101/java-basics/
       - title: OOP
         url: /java/java101/oop/
-      - title: Variables
-        url: /java/java101/variables/
+      - title: Data Types
+        url: /java/java101/data-types/
   - title: Java Advanced
     url: /java/java-advanced/
     children:
