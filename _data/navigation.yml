@@ -35,13 +35,26 @@ Java:
         url: /java/java101/data-types/
       - title: Variables
         url: /java/java101/variables/
+      - title: Array
+        url: /java/java101/array/
   - title: Java Advanced
     url: /java/java-advanced/
     children:
       - title: Lombok
         url: /java/java-advanced/lombok/
-  - title: 스프링부트
-    url: /spring/spring-boot/
+        
+Spring:
+  - title: Spring101
+    url: /spring/spring101/
     children:
-      - title: Gradle
-        url: /spring/spring-boot/gradle/  
+      - title: Spring Basics
+        url: /spring/spring101/spring-basics/
+       - title: Spring MVC2
+        url: /spring/spring101/spring-mvc2/
+  - title: Spring Advanced
+      url: /spring/spring-advanced/
+      children:
+       - title: Spring Boot
+        url: /spring/spring-advanced/spring-boot/
+      - title: JPA
+        url: /spring/spring-advanced/jpa/
