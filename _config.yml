@@ -316,13 +316,25 @@ defaults:
       sidebar:
         - nav: OS
         
-        
- # Linux
+  # About OS
   - scope:
-      path: "linux"
+      path: "os/about-os"
+      type: posts
     values:
-      sidebar:
-        - nav: Linux
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about os
+            url: /os/
+  # Linux
+  - scope:
+      path: "os/linux"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about os
+            url: /os/
+        
         
  # AWS
   - scope:
@@ -330,3 +342,12 @@ defaults:
     values:
       sidebar:
         - nav: AWS
+  # About AWS
+  - scope:
+      path: "aws/about-aws"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about aws
+            url: /aws/
