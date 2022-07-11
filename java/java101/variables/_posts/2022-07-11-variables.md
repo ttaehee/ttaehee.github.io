@@ -1,5 +1,5 @@
 ---
-title: Variables & Memory Structure
+title: Java) Variables & Memory Structure
 excerpt: 변수 & 메모리구조
 ---
 
