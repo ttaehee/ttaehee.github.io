@@ -2,10 +2,10 @@
 main:
   - title: Java
     url: /java/
+  - title: Spring
+    url: /spring/
   - title: Github
     url: https://github.com/ttaehee
- # - title: 도구
- #   url: /tools/
     
 sidebar:
   - title: Java
@@ -41,7 +41,7 @@ Java:
       - title: Lombok
         url: /java/java-advanced/lombok/
   - title: 스프링부트
-    url: /frameworks/spring-boot/
+    url: /spring/spring-boot/
     children:
       - title: Gradle
-        url: /frameworks/spring-boot/gradle/
+        url: /spring/spring-boot/gradle/
