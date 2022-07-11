@@ -34,7 +34,7 @@ Java:
       - title: Data Types
         url: /java/java101/data-types/
       - title: Variables
-      url: /java/java101/variables/
+        url: /java/java101/variables/
   - title: Java Advanced
     url: /java/java-advanced/
     children:
