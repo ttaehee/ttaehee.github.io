@@ -309,7 +309,7 @@ defaults:
             url: /spring/
 
 
- # OS
+  # OS
   - scope:
       path: "os"
     values:
@@ -336,7 +336,7 @@ defaults:
             url: /os/
          
         
- # AWS
+  # AWS
   - scope:
       path: "aws"
     values:
