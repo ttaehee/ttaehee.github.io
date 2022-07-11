@@ -18,9 +18,9 @@ sidebar:
   - title: Spring
     url: /spring/
     children:
-      - title: "Spring MVC2"
+      - title: Spring MVC2
         url: /spring/spring-mvc2/
-      - title: "Spring Security"
+      - title: Spring Security
         url: /spring/spring-security/
 
 Java:
@@ -38,10 +38,10 @@ Java:
   - title: Java Advanced
     url: /java/java-advanced/
     children:
-      - title: lombok
+      - title: Lombok
         url: /java/java-advanced/lombok/
-#  - title: 스프링부트
-#    url: /frameworks/spring-boot/
-#    children:
-#      - title: start
-#        url: /frameworks/spring-boot/start/
+  - title: 스프링부트
+    url: /frameworks/spring-boot/
+    children:
+      - title: Gradle
+        url: /frameworks/spring-boot/gradle/
