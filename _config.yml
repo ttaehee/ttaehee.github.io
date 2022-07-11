@@ -334,8 +334,8 @@ defaults:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about os
             url: /os/
-         
-        
+
+
   # AWS
   - scope:
       path: "aws"
