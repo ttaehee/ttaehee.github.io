@@ -69,4 +69,4 @@ int c = 65;
 char d =(char) c ; // char 2byte < int 4byte
 ```
 2. Up casting : 넓은 범위로의 형변환 - 자동(implicit)으로 변환됨 (Promotion) <br/>
-3. 
+
