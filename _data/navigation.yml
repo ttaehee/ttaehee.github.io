@@ -44,4 +44,4 @@ Java:
     url: /spring/spring-boot/
     children:
       - title: Gradle
-        url: /spring/spring-boot/gradle/
+        url: /spring/spring-boot/gradle/  
