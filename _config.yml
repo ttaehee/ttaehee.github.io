@@ -288,20 +288,19 @@ defaults:
       sidebar:
         - nav: Spring
   
-  # Spring MVC2
+  # Spring 101
   - scope:
-      path: "spring/spring-mvc2"
+      path: "spring/spring101"
       type: posts
     values:
       header:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about spring
             url: /spring/
-            
-            
-  # Spring Security
+                      
+  # Spring Advanced
   - scope:
-      path: "spring/spring-security"
+      path: "spring/spring-advanced"
       type: posts
     values:
       header:
@@ -309,3 +308,25 @@ defaults:
           - label: <i class='fas fa-fw fa-link'></i> about spring
             url: /spring/
 
+
+ # OS
+  - scope:
+      path: "os"
+    values:
+      sidebar:
+        - nav: OS
+        
+        
+ # Linux
+  - scope:
+      path: "linux"
+    values:
+      sidebar:
+        - nav: Linux
+        
+ # AWS
+  - scope:
+      path: "aws"
+    values:
+      sidebar:
+        - nav: AWS
