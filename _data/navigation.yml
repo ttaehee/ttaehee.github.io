@@ -54,7 +54,7 @@ Spring:
   - title: Spring Advanced
       url: /spring/spring-advanced/
       children:
-       - title: Spring Boot
+      - title: Spring Boot
         url: /spring/spring-advanced/spring-boot/
       - title: JPA
         url: /spring/spring-advanced/jpa/
