@@ -1,5 +1,5 @@
 ---
-title: JAVA)Data Types
+title: JAVA) Data Types
 excerpt: 데이터타입
 ---
 
