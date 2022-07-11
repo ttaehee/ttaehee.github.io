@@ -1,6 +1,6 @@
 ---
 title: Java Basic
-excerpt: ""
+excerpt: 자바기초
 ---
 
 ## Java의 특징
