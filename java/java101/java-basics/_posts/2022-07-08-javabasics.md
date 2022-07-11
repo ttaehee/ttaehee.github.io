@@ -1,5 +1,5 @@
 ---
-title: Java Basic
+title: Java) Java Basic
 excerpt: 자바기초
 ---
 
