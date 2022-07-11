@@ -1,6 +1,6 @@
 ---
 title: Data Types
-excerpt: ''
+excerpt: 데이터타입
 ---
 
 # Data Types
