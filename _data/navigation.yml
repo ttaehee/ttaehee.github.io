@@ -49,7 +49,7 @@ Spring:
     children:
       - title: Spring Basics
         url: /spring/spring101/spring-basics/
-       - title: Spring MVC2
+      - title: Spring MVC2
         url: /spring/spring101/spring-mvc2/
   - title: Spring Advanced
       url: /spring/spring-advanced/
