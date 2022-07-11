@@ -79,15 +79,20 @@ OS:
   - title: About OS
     url: /os/about-os/
     children:
-      - title: Spring Basics
-        url: /spring/spring101/spring-basics/
-      - title: Spring MVC2
-        url: /spring/spring101/spring-mvc2/
-  - title: Spring Advanced
-    url: /spring/spring-advanced/
+      - title: OS Basics
+        url: /os/about-os/os-basics/
+  - title: Linux
+    url: /os/linux/
     children:
-      - title: Spring Boot
-        url: /spring/spring-advanced/spring-boot/
-      - title: JPA
-        url: /spring/spring-advanced/jpa/
+      - title: Linux Command
+        url: /os/linux/linux-command/
+
+AWS:
+  - title: About AWS
+    url: /aws/about-aws/
+    children:
+      - title: AWS Basics
+        url: /aws/about-aws/aws-basics/
+      - title: EC2
+        url: /aws/about-aws/ec2/
 
