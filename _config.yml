@@ -342,6 +342,7 @@ defaults:
     values:
       sidebar:
         - nav: AWS
+        
   # About AWS
   - scope:
       path: "aws/about-aws"
