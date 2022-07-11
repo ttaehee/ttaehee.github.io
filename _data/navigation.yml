@@ -22,6 +22,19 @@ sidebar:
         url: /spring/spring-mvc2/
       - title: Spring Security
         url: /spring/spring-security/
+  - title: OS
+    url: /os/
+    children:
+      - title: About OS
+        url: /os/about-os/
+      - title: Linux
+        url: /os/Linux/
+  - title: AWS
+    url: /aws/
+    children:
+      - title: About AWS
+        url: /aws/about-aws/
+
 
 Java:
   - title: Java101
@@ -56,5 +69,25 @@ Spring:
       children:
       - title: Spring Boot
         url: /spring/spring-advanced/spring-boot/
+      - title: My Batis
+        url: /spring/spring-advanced/my-batis/
       - title: JPA
         url: /spring/spring-advanced/jpa/
+        
+        
+OS:
+  - title: About OS
+    url: /os/about-os/
+    children:
+      - title: Spring Basics
+        url: /spring/spring101/spring-basics/
+      - title: Spring MVC2
+        url: /spring/spring101/spring-mvc2/
+  - title: Spring Advanced
+      url: /spring/spring-advanced/
+      children:
+      - title: Spring Boot
+        url: /spring/spring-advanced/spring-boot/
+      - title: JPA
+        url: /spring/spring-advanced/jpa/
+
