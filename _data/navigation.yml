@@ -65,8 +65,8 @@ Spring:
       - title: Spring MVC2
         url: /spring/spring101/spring-mvc2/
   - title: Spring Advanced
-      url: /spring/spring-advanced/
-      children:
+    url: /spring/spring-advanced/
+    children:
       - title: Spring Boot
         url: /spring/spring-advanced/spring-boot/
       - title: My Batis
@@ -84,8 +84,8 @@ OS:
       - title: Spring MVC2
         url: /spring/spring101/spring-mvc2/
   - title: Spring Advanced
-      url: /spring/spring-advanced/
-      children:
+    url: /spring/spring-advanced/
+    children:
       - title: Spring Boot
         url: /spring/spring-advanced/spring-boot/
       - title: JPA
