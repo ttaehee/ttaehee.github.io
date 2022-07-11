@@ -1,5 +1,5 @@
 ---
-title: Variables & Memory Structure
+title: Variables
 excerpt: learn Java
 taxonomy: variables
 ---
