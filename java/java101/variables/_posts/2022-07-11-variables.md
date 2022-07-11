@@ -1,8 +1,6 @@
 ---
-published: true
 title: Variables & Memory Structure
-excerpt: learn Java
-taxonomy: variables
+excerpt: 변수 & 메모리구조
 ---
 
 # Variables
