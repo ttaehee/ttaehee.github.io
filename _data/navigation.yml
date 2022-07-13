@@ -17,10 +17,6 @@ sidebar:
         url: /java/java-advanced/
       - title: Java API
         url: /java/java-api/
-      - title: List
-        url: /java/list/
-      - title: Control Statement
-        url: /java/control-statement/
   - title: Spring
     url: /spring/
     children:
@@ -56,11 +52,25 @@ Java:
         url: /java/java101/variables/
       - title: Array
         url: /java/java101/array/
+      - title: Control Statement
+        url: /java/java101/control-statement/
   - title: Java Advanced
     url: /java/java-advanced/
     children:
+      - title: List
+        url: /java/java-advanced/list/
+      - title: Map
+        url: /java/java-advanced/map/
+      - title: Set
+        url: /java/java-advanced/set/
+      - title: Data Structure
+        url: /java/java-advanced/data-structure/
+      - title: Exception
+        url: /java/java-advanced/exception/
       - title: Lombok
         url: /java/java-advanced/lombok/
+      - title: Java Thread
+        url: /java/java-advanced/java-thread/
   - title: Java API
     url: /java/java-api/
     children:
