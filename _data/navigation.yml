@@ -20,8 +20,8 @@ sidebar:
   - title: Spring
     url: /spring/
     children:
-      - title: Spring MVC2
-        url: /spring/spring-mvc2/
+      - title: Spring Basics
+        url: /spring/spring-basics/
       - title: Spring Security
         url: /spring/spring-security/
   - title: OS
@@ -67,8 +67,6 @@ Java:
         url: /java/java-advanced/data-structure/
       - title: Exception
         url: /java/java-advanced/exception/
-      - title: Lombok
-        url: /java/java-advanced/lombok/
       - title: Java Thread
         url: /java/java-advanced/java-thread/
   - title: Java API
@@ -81,22 +79,22 @@ Java:
         
         
 Spring:
-  - title: Spring101
-    url: /spring/spring101/
+  - title: Spring Basics
+    url: /spring/spring-basics/
     children:
-      - title: Spring Basics
-        url: /spring/spring101/spring-basics/
-      - title: Spring MVC2
-        url: /spring/spring101/spring-mvc2/
-  - title: Spring Advanced
-    url: /spring/spring-advanced/
-    children:
+      - title: Spring Framework
+        url: /spring/spring-basics/spring-framework/
       - title: Spring Boot
-        url: /spring/spring-advanced/spring-boot/
+        url: /spring/spring-basics/spring-boot/
+  - title: JDBC
+    url: /spring/jdbc/
+    children:
+      - title: About JDBC
+        url: /spring/jdbc/about-jdbc/
       - title: My Batis
-        url: /spring/spring-advanced/my-batis/
+        url: /spring/jdbc/my-batis/
       - title: JPA
-        url: /spring/spring-advanced/jpa/
+        url: /spring/jdbc/jpa/
         
         
 OS:
