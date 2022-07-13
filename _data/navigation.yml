@@ -17,6 +17,10 @@ sidebar:
         url: /java/java-advanced/
       - title: Java API
         url: /java/java-api/
+      - title: List
+        url: /java/list/
+      - title: Control Statement
+        url: /java/control-statement/
   - title: Spring
     url: /spring/
     children:
