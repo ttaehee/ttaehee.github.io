@@ -20,8 +20,8 @@ sidebar:
   - title: Spring
     url: /spring/
     children:
-      - title: Spring Basics
-        url: /spring/spring-basics/
+      - title: Spring Framework
+        url: /spring/spring-framework/
       - title: JDBC
         url: /spring/jdbc/
   - title: OS
@@ -79,15 +79,15 @@ Java:
         
         
 Spring:
-  - title: Spring Basics
-    url: /spring/spring-basics/
+  - title: Spring Framework
+    url: /spring/spring-framework/
     children:
-      - title: Spring Framework
-        url: /spring/spring-basics/spring-framework/
+      - title: Spring Basics
+        url: /spring/spring-framework/spring-basics/
       - title: Spring Boot
-        url: /spring/spring-basics/spring-boot/
+        url: /spring/spring-framework/spring-boot/
       - title: Spring Security
-        url: /spring/spring-basics/spring-security/
+        url: /spring/spring-framework/spring-security/
   - title: JDBC
     url: /spring/jdbc/
     children:
