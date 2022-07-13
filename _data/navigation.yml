@@ -22,8 +22,8 @@ sidebar:
     children:
       - title: Spring Basics
         url: /spring/spring-basics/
-      - title: Spring Security
-        url: /spring/spring-security/
+      - title: JDBC
+        url: /spring/jdbc/
   - title: OS
     url: /os/
     children:
@@ -86,6 +86,8 @@ Spring:
         url: /spring/spring-basics/spring-framework/
       - title: Spring Boot
         url: /spring/spring-basics/spring-boot/
+      - title: Spring Security
+        url: /spring/spring-basics/spring-security/
   - title: JDBC
     url: /spring/jdbc/
     children:
