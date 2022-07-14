@@ -1,5 +1,5 @@
 ---
-title: Spring) Mac command - sudo, yum
+title: OS) Mac command2 - sudo, yum
 excerpt: mac 터미널 명령어
 ---
 # Mac 터미널 명령어2
