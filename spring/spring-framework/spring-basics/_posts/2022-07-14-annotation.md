@@ -16,9 +16,8 @@ Java와 같은 객체지향 프로그래밍 언어에서 reflection을 사용하
 ### @ComponentScan
 1. <component-scan> 선언에 의해 특정 패키지 안의 클래스들을 스캔  
 2. component annotation 이 있는 클래스를 찾아서 Context에 bean 등록, 인스턴스 생성  
-  이때 자동으로 등록되는 Bean의 이름은 클래스의 첫 문자가 소문자로 바뀐이름 적용  
-  (HomeController -> homeController)  
-  * ApplicationContext.xml 에 <bean id="abc" class="ABC"/> 직접등록과 같음  
+  이때 자동으로 등록되는 Bean의 이름은 클래스의 첫 문자가 소문자로 바뀐이름 적용 (HomeController -> homeController)  
+= ApplicationContext.xml 에 \<bean id="abc" class="ABC"/\> 직접등록과 같음  
 
 - @Component를 구체화 : @Controller, @Service, @Repository
 	- 해당 클래스가 controller, service, repository 로 사용됨을 spring framework에 알림 (가독성)
@@ -98,4 +97,5 @@ GET /user/{userId}invoices?date=190101
 - @After : taget method의 결과(성공,예외)에 관계없이 완료되면 advice 기능수행
 - @Around : 핵심관심사의 실패여부와 상관없이 target method 호출 전, 후 수행
 - @AfterReturning : target method가 성공적으로 결과값 반환 이후 수행
-- @AfterThrowing : target method가 수행중 예외를 던기면 수행
+- @AfterThrowing : target method가 수행중 예외를 던면 수행 <br/> 
+
