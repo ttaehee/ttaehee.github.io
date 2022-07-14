@@ -5,7 +5,7 @@ excerpt: 예외처리
 
 # Exception
 : 프로그램을 사용하는 사용자의 잘못된 조작 or 개발자의 잘못된 코딩에 따라 발생되는 오류  
-&nbsp; 자바는 예외를 클래스를 통해 관리함
+ 자바는 예외를 클래스를 통해 관리함
 - `FileNotFoundException` : 존재하지 않는 파일 열려고 할 때
 - `ArithmeticException` : 0으로 숫자를 나눌 때
 - `ArrayIndexOutOfBoundsException` : 배열의 크기보다 클 때
@@ -57,7 +57,7 @@ finally : return 있어도 실행 ( System.exit(0)은 프로세스종료라 fina
 동시에 두개의 예외를 처리하지는 않음 - 먼저 발생된 예외만 처리하고 빠져나감  
 => 위에 더 상위 Exception 두면 다 잡음, 자세히 알고싶으면 하위 먼저 쓰기! <br/><br/>
 
-## 2. throws
+### 2. throws
 예외 던지기, 떠넘기기
 - 예외를 일으키는 메서드를 `호출한 메서드로` 예외를 넘기고 책임을 전가
 - 예외를 넘겨받은 메소드는 try - catch 문을 이용하여 예외를 처리  
