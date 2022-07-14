@@ -10,29 +10,95 @@ main:
 sidebar:
   - title: Java
     url: /java/
-    children:
-      - title: Java101
-        url: /java/java101/
-      - title: Java Advanced
-        url: /java/java-advanced/
-      - title: Java API
-        url: /java/java-api/
+
   - title: Spring
     url: /spring/
-    children:
-      - title: Spring Framework
-        url: /spring/spring-framework/
-      - title: JDBC
-        url: /spring/jdbc/
+
   - title: OS
     url: /os/
-    children:
-      - title: About OS
-        url: /os/about-os/
-      - title: Linux
-        url: /osinux/
+
   - title: AWS
     url: /aws/
+
+
+Java:
+  - title: Java101
+    url: /java/java101/
     children:
-      - title: About AWS
-        url: /aws/about-aws/
+      - title: Java Basics
+        url: /java/java101/java-basics/
+      - title: OOP
+        url: /java/java101/oop/
+      - title: Data Types
+        url: /java/java101/data-types/
+      - title: Variables
+        url: /java/java101/variables/
+      - title: Array
+        url: /java/java101/array/
+      - title: Control Statement
+        url: /java/java101/control-statement/
+  - title: Java Advanced
+    url: /java/java-advanced/
+    children:
+      - title: List
+        url: /java/java-advanced/list/
+      - title: Map
+        url: /java/java-advanced/map/
+      - title: Set
+        url: /java/java-advanced/set/
+      - title: Data Structure
+        url: /java/java-advanced/data-structure/
+      - title: Exception
+        url: /java/java-advanced/exception/
+      - title: Java Thread
+        url: /java/java-advanced/java-thread/
+  - title: Java API
+    url: /java/java-api/
+    children:
+      - title: Arrays class
+        url: /java/java-api/arrays/
+      - title: Math class
+        url: /java/java-api/math/
+        
+        
+Spring:
+  - title: Spring Framework
+    url: /spring/spring-framework/
+    children:
+      - title: Spring Basics
+        url: /spring/spring-framework/spring-basics/
+      - title: Spring Boot
+        url: /spring/spring-framework/spring-boot/
+      - title: Spring Security
+        url: /spring/spring-framework/spring-security/
+  - title: JDBC
+    url: /spring/jdbc/
+    children:
+      - title: About JDBC
+        url: /spring/jdbc/about-jdbc/
+      - title: My Batis
+        url: /spring/jdbc/my-batis/
+      - title: JPA
+        url: /spring/jdbc/jpa/
+        
+        
+OS:
+  - title: About OS
+    url: /os/about-os/
+    children:
+      - title: OS Basics
+        url: /os/about-os/os-basics/
+  - title: Linux
+    url: /os/linux/
+    children:
+      - title: Linux Command
+        url: /os/linux/linux-command/
+
+AWS:
+  - title: About AWS
+    url: /aws/about-aws/
+    children:
+      - title: AWS Basics
+        url: /aws/about-aws/aws-basics/
+      - title: EC2
+        url: /aws/about-aws/ec2/
