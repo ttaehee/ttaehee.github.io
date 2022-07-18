@@ -1,9 +1,9 @@
 ---
-title: OS) Mac command
-excerpt: mac 터미널 명령어
+title: OS) Linux Basic Command
+excerpt: linux 기본명령어
 ---
 
-# Mac 터미널 명령어
+# Linux Basic Command
 command + space + terminal 입력
 
 - `ls` : 현재 경로에 존재하는 파일/폴더 확인하기 (list of directory)
