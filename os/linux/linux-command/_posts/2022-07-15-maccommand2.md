@@ -1,8 +1,8 @@
 ---
-title: OS) Mac command2 - sudo, yum
-excerpt: mac 터미널 명령어
+title: OS) Linux command2 - sudo, yum
+excerpt: sudo, yum
 ---
-# Mac 터미널 명령어2
+# Linux command2
 ## sudo  
 : root권한(관리자권한)  
 - `chgrp [options] group file_list` : 파일 또는 디렉토리의 소유그룹을 변경  
