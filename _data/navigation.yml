@@ -4,6 +4,10 @@ main:
     url: /java/
   - title: Spring
     url: /spring/
+  - title: OS
+    url: /os/
+  - title: AWS
+    url: /aws/
   - title: Github
     url: https://github.com/ttaehee
     
@@ -93,6 +97,8 @@ OS:
     children:
       - title: Linux Command
         url: /os/linux/linux-command/
+      - title: Linux Directory Structure
+        url: /os/linux/linux-directory/
 
 AWS:
   - title: About AWS
