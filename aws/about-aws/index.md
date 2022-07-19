@@ -1,5 +1,5 @@
 ---
-title: About AWS
+title: AWS 101
 excerpt: learn AWS
-taxonomy: about-aws
+taxonomy: aws101
 ---
