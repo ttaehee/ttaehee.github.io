@@ -45,10 +45,10 @@ Linux 는 `Unix 계열`의 OS -> Unix 의 많은 부분을 그대로 사용함
   - 부팅에 필요한 명령어
   - 부팅 후 시스템사용자들이 사용할 수 있는 일반적 명령어도 위치
 
-### `/lib` : Essectial Shared Libraries
-- 프로그램들이 의존하고 있는 라이브러리 파일들 존재
+### `/lib` : Essential Shared Libraries
+- 프로그램들이 의존하고 있는 **라이브러리 파일**들 존재
   - `/usr/bin` (응용프로그램의 실행파일)의 binary 를 실행하기 위한 library 는 `/usr/lib`에 위치
-- 대부분의 libraries은 링크로 연결되어 있음
+- 대부분의 libraries는 링크로 연결되어 있음
 - `/lib/modules` : 커널 모듈 파일 존재
 
 ### `/usr` : User Binaries & Read-Only Data
