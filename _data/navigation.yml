@@ -8,6 +8,8 @@ main:
     url: /os/
   - title: AWS
     url: /aws/
+  - title: CS
+    url: /cs/
   - title: Github
     url: https://github.com/ttaehee
     
@@ -23,6 +25,9 @@ sidebar:
 
   - title: AWS
     url: /aws/
+    
+  - title: CS
+    url: /cs/
 
 
 Java:
@@ -50,8 +55,6 @@ Java:
         url: /java/java-advanced/map/
       - title: Set
         url: /java/java-advanced/set/
-      - title: Data Structure
-        url: /java/java-advanced/data-structure/
       - title: Exception
         url: /java/java-advanced/exception/
       - title: Java Thread
@@ -117,3 +120,17 @@ AWS:
         url: /aws/aws-services/route53/
       - title: Amazon VPC
         url: /aws/aws-services/vpc/
+        
+CS:
+  - title: Data Structure
+    url: /cs/data-structure/
+    children:
+      - title: Linear
+        url: /cs/data-structure/linear/
+      - title: NonLinear
+        url: /cs/data-structure/non-linear/
+  - title: Network
+    url: /cs/network/
+    children:
+      - title: Rest API
+        url: /cs/network/rest-api/
