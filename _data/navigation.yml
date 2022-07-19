@@ -102,12 +102,12 @@ OS:
 
 AWS:
   - title: AWS 101
-    url: /aws/about-aws/
+    url: /aws/aws101/
     children:
       - title: AWS Basics
-        url: /aws/about-aws/aws-basics/
+        url: /aws/aws101/aws-basics/
       - title: AWS Database Server
-        url: /aws/about-aws/database-server/
+        url: /aws/aws101/database-server/
   - title: AWS Services
     url: /aws/aws-services/
     children:
