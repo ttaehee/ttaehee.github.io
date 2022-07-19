@@ -16,16 +16,12 @@ main:
 sidebar:
   - title: Java
     url: /java/
-
   - title: Spring
     url: /spring/
-
   - title: OS
     url: /os/
-
   - title: AWS
-    url: /aws/
-    
+    url: /aws/  
   - title: CS
     url: /cs/
 
@@ -120,7 +116,6 @@ AWS:
         url: /aws/aws-services/route53/
       - title: Amazon VPC
         url: /aws/aws-services/vpc/
-
 
 CS:
   - title: Data Structure
