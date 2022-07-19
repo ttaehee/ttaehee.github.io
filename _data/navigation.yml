@@ -101,10 +101,19 @@ OS:
         url: /os/linux/linux-directory/
 
 AWS:
-  - title: About AWS
+  - title: AWS 101
     url: /aws/about-aws/
     children:
       - title: AWS Basics
         url: /aws/about-aws/aws-basics/
-      - title: EC2
-        url: /aws/about-aws/ec2/
+      - title: AWS Database Server
+        url: /aws/about-aws/database-server/
+  - title: AWS Services
+    url: /aws/aws-services/
+    children:
+      - title: Amazon EC2
+        url: /aws/aws-services/ec2/
+      - title: Amazon Route53
+        url: /aws/aws-services/route53/
+      - title: Amazon VPC
+        url: /aws/aws-services/vpc/
