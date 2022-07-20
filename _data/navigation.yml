@@ -24,9 +24,9 @@ sidebar:
     url: /aws/  
   - title: CS
     url: /cs/
-    children:
-      - title: Data Structure
-        url: /cs/data-structure/
+    #children:
+    #  - title: Data Structure
+    #    url: /cs/data-structure/
 
 
 Java:
