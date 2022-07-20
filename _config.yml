@@ -288,9 +288,9 @@ defaults:
       sidebar:
         - nav: Spring
   
-  # Spring 101
+  # Spring Framework
   - scope:
-      path: "spring/spring101"
+      path: "spring/apring-framework"
       type: posts
     values:
       header:
@@ -298,9 +298,9 @@ defaults:
           - label: <i class='fas fa-fw fa-link'></i> about spring
             url: /spring/
                       
-  # Spring Advanced
+  # JDBC
   - scope:
-      path: "spring/spring-advanced"
+      path: "spring/jdbc"
       type: posts
     values:
       header:
@@ -343,12 +343,48 @@ defaults:
       sidebar:
         - nav: AWS
         
-  # About AWS
+  # AWS 101
   - scope:
-      path: "aws/about-aws"
+      path: "aws/aws101"
       type: posts
     values:
       header:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about aws
             url: /aws/
+  # AWS Services
+  - scope:
+      path: "aws/aws-services"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about aws
+            url: /aws/
+            
+            
+  # CS
+  - scope:
+      path: "cs"
+    values:
+      sidebar:
+        - nav: CS
+        
+  # Data Structure
+  - scope:
+      path: "cs/data-structure"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about cs
+            url: /cs/
+  # Network
+  - scope:
+      path: "cs/network"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about cs
+            url: /cs/
