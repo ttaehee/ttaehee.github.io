@@ -44,6 +44,7 @@ public class Purchase {
 ### Assocation (1:N)
 - CustomProduct has `User`, `Product`   
 - Purchase has `User`  
+
 ### Collection (list)
 **User  \>  Purchase  \>  CustomProduct  \>  CustomParts(minusParts, plusParts)**   
 한명의 유저는 구매내역 여러개  
