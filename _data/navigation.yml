@@ -24,6 +24,9 @@ sidebar:
     url: /aws/  
   - title: CS
     url: /cs/
+    children:
+      - title: Data Structure
+        url: /cs/data-structure/
 
 
 Java:
@@ -99,6 +102,7 @@ OS:
       - title: Linux Directory Structure
         url: /os/linux/linux-directory/
 
+
 AWS:
   - title: AWS 101
     url: /aws/aws101/
@@ -117,6 +121,7 @@ AWS:
       - title: Amazon VPC
         url: /aws/aws-services/vpc/
 
+
 CS:
   - title: Data Structure
     url: /cs/data-structure/
@@ -130,3 +135,4 @@ CS:
     children:
       - title: Rest API
         url: /cs/network/rest-api/
+
