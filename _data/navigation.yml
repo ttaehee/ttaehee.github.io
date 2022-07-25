@@ -65,6 +65,8 @@ Java:
         url: /java/java-api/arrays/
       - title: Math class
         url: /java/java-api/math/
+      - title: Enum class
+        url: /java/java-api/enum/
         
         
 Spring:
