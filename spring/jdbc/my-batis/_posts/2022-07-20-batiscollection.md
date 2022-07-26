@@ -56,6 +56,12 @@ public class Purchase {
 - Purchase  
 `List<CustomProduct> customProduct` <br/><br/>
 
+**getListPurchase()** 로   
+ㄴ user의 \<purchase list\>   
+&nbsp; ㄴ purchase 의 \<product list\>   
+&nbsp;&nbsp;&nbsp; ㄴ product의 \<customparts list\> 데이터 얻어옴  
+<br/><br/>
+
 ## Mybatis resultMap
 - constructor - id - result - association - collection -discriminator 순으로 작성해야함 <br/><br/>
 
@@ -97,12 +103,6 @@ customproduct_no는 getListMinusParts를 실행할 때의 파라미터 인자로
     </collection>
 </resultMap>
 ```
-<br/><br/>
-
-getListPurchase() 로   
-ㄴ user의 \<purchase list\>   
-&nbsp; ㄴ purchase 의 \<product list\>   
-&nbsp;&nbsp;&nbsp; ㄴ product의 \<customparts list\> 데이터 얻어옴  
 <br/><br/>
 
 
