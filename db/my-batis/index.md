@@ -1,5 +1,5 @@
 ---
 title: My Batis
-excerpt: learn Spring
+excerpt: learn DB
 taxonomy: my-batis
 ---
