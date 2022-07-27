@@ -1,5 +1,5 @@
 ---
-title: Spring) MyBatis Dynamic SQL
+title: DB) MyBatis Dynamic SQL
 excerpt: for each, where
 ---
 
