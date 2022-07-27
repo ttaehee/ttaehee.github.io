@@ -4,10 +4,12 @@ main:
     url: /java/
   - title: Spring
     url: /spring/
-  - title: OS
-    url: /os/
+  - title: DB
+    url: /db/
   - title: AWS
     url: /aws/
+  - title: OS
+    url: /os/
   - title: CS
     url: /cs/
   - title: Github
@@ -18,10 +20,12 @@ sidebar:
     url: /java/
   - title: Spring
     url: /spring/
+  - title: DB
+    url: /db/
+  - title: AWS
+    url: /aws/
   - title: OS
     url: /os/
-  - title: AWS
-    url: /aws/  
   - title: CS
     url: /cs/
     #children:
@@ -79,32 +83,37 @@ Spring:
         url: /spring/spring-framework/spring-boot/
       - title: Spring Security
         url: /spring/spring-framework/spring-security/
+
+
+DB:
+  - title: Oracle
+    url: /db/oracle/
+    children:
+      - title: Oracle Port
+        url: /db/oracle/oracle-port/
   - title: JDBC
-    url: /spring/jdbc/
+    url: /db/jdbc/
     children:
       - title: About JDBC
-        url: /spring/jdbc/about-jdbc/
-      - title: My Batis
-        url: /spring/jdbc/my-batis/
-      - title: JPA
-        url: /spring/jdbc/jpa/
-        
-        
-OS:
-  - title: About OS
-    url: /os/about-os/
+        url: /db/jdbc/about-jdbc/
+  - title: MyBatis
+    url: /db/my-batis/
     children:
-      - title: OS Basics
-        url: /os/about-os/os-basics/
-  - title: Linux
-    url: /os/linux/
+      - title: About MyBatis
+        url: /db/my-batis/about-mybatis/
+      - title: MyBatis Dynamic Query
+        url: /db/my-batis/dynamic-query/
+      - title: MyBatis Mapping
+        url: /db/my-batis/mapping/
+  - title: JPA
+    url: /db/jpa/
     children:
-      - title: Linux Command
-        url: /os/linux/linux-command/
-      - title: Linux Directory Structure
-        url: /os/linux/linux-directory/
+      - title: About JPA
+        url: /db/jpa/about-jpa/
+      - title: Entity Mapping
+        url: /db/jpa/entity-mapping/
 
-
+        
 AWS:
   - title: AWS 101
     url: /aws/aws101/
@@ -121,7 +130,22 @@ AWS:
       - title: Amazon Route53
         url: /aws/aws-services/route53/
       - title: Amazon VPC
-        url: /aws/aws-services/vpc/
+        url: /aws/aws-services/vpc/ 
+        
+        
+OS:
+  - title: About OS
+    url: /os/about-os/
+    children:
+      - title: OS Basics
+        url: /os/about-os/os-basics/
+  - title: Linux
+    url: /os/linux/
+    children:
+      - title: Linux Command
+        url: /os/linux/linux-command/
+      - title: Linux Directory Structure
+        url: /os/linux/linux-directory/
 
 
 CS:
