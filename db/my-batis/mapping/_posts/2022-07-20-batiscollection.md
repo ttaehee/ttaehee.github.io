@@ -1,5 +1,5 @@
 ---
-title: Spring) MyBatis mapping
+title: DB) MyBatis mapping
 excerpt: resultMap, association, collection
 ---
 
