@@ -1,5 +1,5 @@
 ---
 title: JPA
-excerpt: learn Spring
+excerpt: learn DB
 taxonomy: jpa
 ---
