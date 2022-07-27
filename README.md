@@ -33,29 +33,25 @@
     * [AOP](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/spring-framework/spring-basics/_posts/2022-07-15-aop.md)
     * [Annotation](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/spring-framework/spring-basics/_posts/2022-07-14-annotation.md)
     * [Lombok](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/spring-framework/spring-basics/_posts/2022-07-13-lombok.md)
+    * [Log](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/spring-framework/spring-basics/_posts/2022-07-27-log.md)
+* Spring Boot
+* Spring Security
 
-* JDBC
-  * About JDBC
-    * [JDBC](https://ttaehee.github.io/spring/jdbc/about-jdbc/jdbc/)
-  * MyBatis
-    * [MyBatis](https://ttaehee.github.io/spring/jdbc/my-batis/mybatis/)
-    * [MyBatis Dynamic SQL](https://ttaehee.github.io/spring/jdbc/my-batis/batisdynamic/)
-    * [MyBatis mapping](https://ttaehee.github.io/spring/jdbc/my-batis/batiscollection/)
-  * JPA
-  
 <br/>
 
-## OS
-* About OS
-  * OS Basics
-    * [Operating System](https://ttaehee.github.io/os/about-os/os-basics/os/)
-* Linux
-  * Linux Command
-    * [Linux Command1](https://github.com/ttaehee/ttaehee.github.io/blob/master/os/linux/linux-command/_posts/2022-07-15-maccommand.md)
-    * [Linux Command2 - sudo, yum](https://github.com/ttaehee/ttaehee.github.io/blob/master/os/linux/linux-command/_posts/2022-07-15-maccommand2.md)
-  * Linux Directory Structure
-    * [Linux Directory Structure](https://ttaehee.github.io/os/linux/linux-directory/linuxdirectory/)
-
+## DB
+* Oracle
+  * [Oracle Port](https://github.com/ttaehee/ttaehee.github.io/blob/master/db/oracle/oracle-port/_posts/2022-07-22-oracleport.md)
+* JDBC
+  * [About JDBC](https://github.com/ttaehee/ttaehee.github.io/blob/master/db/jdbc/about-jdbc/_posts/2022-07-20-jdbc.md)
+* MyBatis
+  * [About MyBatis](https://github.com/ttaehee/ttaehee.github.io/blob/master/db/my-batis/about-mybatis/_posts/2022-07-20-mybatis.md)
+  * [Dynamic Query](https://github.com/ttaehee/ttaehee.github.io/blob/master/db/my-batis/dynamic-query/_posts/2022-07-20-batisdynamic.md)
+  * [MyBatis mapping](https://github.com/ttaehee/ttaehee.github.io/blob/master/db/my-batis/mapping/_posts/2022-07-20-batiscollection.md)
+* JPA
+  * [About JPA](https://github.com/ttaehee/ttaehee.github.io/blob/master/db/jpa/about-jpa/_posts/2022-07-23-jpa.md)
+  * [Entity Mapping](https://github.com/ttaehee/ttaehee.github.io/blob/master/db/jpa/entity-mapping/_posts/2022-07-25-entity.md)
+  
 <br/>
 
 ## AWS
@@ -69,14 +65,28 @@
     * [Amazon EC2](https://ttaehee.github.io/aws/aws-services/ec2/ec2/)
     * [move EC2 region](https://ttaehee.github.io/aws/aws-services/ec2/region/)
   * [Amazon Route 53](https://ttaehee.github.io/aws/aws-services/route53/route/)
-  * Amazon VPC
+  * [Amazon VPC](https://ttaehee.github.io/aws/aws-services/vpc/vpc/)
+
+<br/>
+
+## OS
+* About OS
+  * OS Basics
+    * [Operating System](https://ttaehee.github.io/os/about-os/os-basics/os/)
+* Linux
+  * Linux Command
+    * [Linux Command1](https://github.com/ttaehee/ttaehee.github.io/blob/master/os/linux/linux-command/_posts/2022-07-15-maccommand.md)
+    * [Linux Command2 - sudo, yum](https://github.com/ttaehee/ttaehee.github.io/blob/master/os/linux/linux-command/_posts/2022-07-15-maccommand2.md)
+  * [Linux Directory Structure](https://ttaehee.github.io/os/linux/linux-directory/linuxdirectory/)
 
 <br/>
 
 ## CS
 * Data Structure
   * Linear
+    * [Stack & Queue](https://github.com/ttaehee/ttaehee.github.io/blob/master/cs/data-structure/linear/_posts/2022-07-21-queue.md)
   * NonLinear
+    * [Graph & Tree](https://github.com/ttaehee/ttaehee.github.io/blob/master/cs/data-structure/non-linear/_posts/2022-07-21-tree.md)
 * Network
   * [Rest API](https://ttaehee.github.io/cs/network/rest-api/restapi/)
 <br/>
