@@ -297,16 +297,78 @@ defaults:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about spring
             url: /spring/
-                      
-  # JDBC
+
+
+  # DB
   - scope:
-      path: "spring/jdbc"
+      path: "db"
+    values:
+      sidebar:
+        - nav: DB
+        
+  # Oracle
+  - scope:
+      path: "db/oracle"
       type: posts
     values:
       header:
         actions:
-          - label: <i class='fas fa-fw fa-link'></i> about spring
-            url: /spring/
+          - label: <i class='fas fa-fw fa-link'></i> about db
+            url: /db/
+  # JDBC
+  - scope:
+      path: "db/jdbc"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about db
+            url: /db/
+  # MyBatis
+  - scope:
+      path: "db/my-batis"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about db
+            url: /db/
+  # JPA
+  - scope:
+      path: "db/jpa"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about db
+            url: /db/
+
+
+  # AWS
+  - scope:
+      path: "aws"
+    values:
+      sidebar:
+        - nav: AWS
+        
+  # AWS 101
+  - scope:
+      path: "aws/aws101"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about aws
+            url: /aws/
+  # AWS Services
+  - scope:
+      path: "aws/aws-services"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about aws
+            url: /aws/
 
 
   # OS
@@ -335,33 +397,6 @@ defaults:
           - label: <i class='fas fa-fw fa-link'></i> about os
             url: /os/
 
-
-  # AWS
-  - scope:
-      path: "aws"
-    values:
-      sidebar:
-        - nav: AWS
-        
-  # AWS 101
-  - scope:
-      path: "aws/aws101"
-      type: posts
-    values:
-      header:
-        actions:
-          - label: <i class='fas fa-fw fa-link'></i> about aws
-            url: /aws/
-  # AWS Services
-  - scope:
-      path: "aws/aws-services"
-      type: posts
-    values:
-      header:
-        actions:
-          - label: <i class='fas fa-fw fa-link'></i> about aws
-            url: /aws/
-            
             
   # CS
   - scope:
