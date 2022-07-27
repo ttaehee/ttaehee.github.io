@@ -1,5 +1,5 @@
 ---
 title: About JDBC
-excerpt: learn Spring
+excerpt: learn DB
 taxonomy: about-jdbc
 ---
