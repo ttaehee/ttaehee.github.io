@@ -1,5 +1,5 @@
 ---
-title: JDBC) Change Oracle Port
+title: DB) Change Oracle Port
 excerpt: 오라클 8080 포트 변경
 ---
 
