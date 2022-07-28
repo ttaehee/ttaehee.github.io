@@ -3,7 +3,7 @@ title: Spring) Spring Controller Unit Test
 excerpt: JUnit5 & Mockito
 ---
 
-## Spring Controller 단위테스트 예시
+## JUnit5 & Mockito를 이용한 Spring Controller 단위테스트 예시
 
 ### 회원가입/ 유저목록 조회 API  
 
