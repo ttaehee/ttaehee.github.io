@@ -17,7 +17,7 @@ excerpt: 스프링이 제공하는 트랜잭션
 
 ### AOP를 이용한 트랜잭션 분리  
 
-- business logig code 와 transaction code 가 같이 있음  
+- business logic code 와 transaction code 가 같이 있음  
 
 ```java
 public void addUsers(List<User> userList) {
@@ -67,12 +67,12 @@ public class UserService {
 ```
 
 <br/>
-
+ 
 ## @Transactional  
-@Transactional 붙은 클래스, 메서드 앞뒤에 프록시 생성  
+@Transactional 붙은 클래스, 메서드 앞뒤에 프록시 생성 <br/><br/>
 모든 예외상황에서 롤백 되는게 아님  
 기본적으로 error, unchecked exception 만 롤백  
-= checked exception에 대해서 롤백 안되게 설계되어 있음  
+= checked exception에 대해서 롤백 안되게 설계되어 있음 <br/><br/> 
 => 모든 예외에 대해서 전부 트랜잭션 롤백하고싶으면 rollbackFor={Exception.class}  
 
 <br/>
