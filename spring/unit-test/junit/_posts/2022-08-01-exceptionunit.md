@@ -3,7 +3,7 @@ title: Spring) Junit5 Exception Test
 excerpt: junit5로 예외테스트하기
 ---
 
-## junit5로 예외테스트하기
+## JUnit5로 예외테스트하기
 
 <br/> 
 
