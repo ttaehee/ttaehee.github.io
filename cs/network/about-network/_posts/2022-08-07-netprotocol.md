@@ -1,6 +1,6 @@
 ---
-title: CS) TCP, UDP, IP, ICMP
-excerpt: 데이터전송 프로토콜
+title: CS) Data Transfer Protocol
+excerpt: IP, TCP, UDP, ICMP
 ---
 
 # 데이터전송 프로토콜
