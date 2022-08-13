@@ -4,7 +4,7 @@ excerpt: stringbuffer class
 ---
 
 # StringBuffer Class
-immutable class  
+mutable class  
 기본적으로 16 버퍼 생성 <br/><br/>
 
 - append() : 문자열로 변환 후, 마지막에 추가
