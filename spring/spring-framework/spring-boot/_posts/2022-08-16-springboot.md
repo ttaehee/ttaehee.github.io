@@ -10,11 +10,7 @@ excerpt: 스프링과 스프링부트
 - jar file로 배포 가능
 
 ### application.yml
-web.mxl  
-+  
-root-context.xml : 한번만 new 하면 되는 애들 ex) 데이터베이스  
-+  
-servlet-context.xml : 지속적으로 new 해서 써야하는 애들  
+`web.mxl +  root-context.xml + servlet-context.xml`     
 
 - 참고) 설정파일
   - xml : `<name>value</name>`
