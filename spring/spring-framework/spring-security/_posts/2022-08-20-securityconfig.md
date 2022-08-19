@@ -5,7 +5,7 @@ excerpt: 스프링시큐리티 기본세팅
 
 SpringBoot, JPA, Spring Security 를 사용해서 Blog 만드는중!  
 지난번엔 [SpringBoot Project setting](https://ttaehee.github.io/spring/spring-framework/spring-boot/setting/)
-을 하고, 오늘은 Spring Security setting 후 회원가입, 로그인을 구현했다  
+을 하고, 오늘은 Spring Security setting 후 회원가입, 로그인을 구현(어렵다,,)  
 
 <br/>
 
@@ -126,7 +126,45 @@ and()
 
 <br/>
 
-### PrincipalDetail (implements UserDetails)
+### 비밀번호 hash화
+
+```
+@Service
+public class UserService {
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
+	@Transactional
+	public void 회원가입(User user) {
+		String rawPassword = user.getPassword();
+		String encPassword = encoder.encode(rawPassword);
+		user.setPassword(encPassword);
+		user.setRole(RoleType.USER);
+		userRepository.save(user);
+	}
+	
+}
+```
+
+회원가입 시 BCryptPasswordEncoder의 `encode()` 로 hash화  
+
+<br/>
+
+**참고) BCrypt 알고리즘**  
+복호화 불가능하기 때문에 `단반향` 알고리즘  
+- BCrypt 알고리즘은 SHA 알고리즘과 다르게 동일한 평문도 매번 다른 해시값으로 나타남  
+	- BCrypt 값 비교 :` matches(text, hash)` 사용,  
+	첫 번째 파라미터로 평문의 텍스트, 두 번째 파라미터로 인코딩 값을 사용
+
+<br/>
+
+### PrincipalDetail (implements UserDetails)  
+
+Spring Security에서 사용자의 정보를 담는 인터페이스
 
 ```
 public class PrincipalDetail implements UserDetails{
@@ -145,16 +183,6 @@ public class PrincipalDetail implements UserDetails{
 	@Override
 	public String getUsername() {
 		return user.getUsername();
-	}
-	
-	//계정이 갖고있는 권한목록을 리턴
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		
-		Collection<GrantedAuthority> collectors = new ArrayList<>();	
-		collectors.add(()->{return "ROLE_"+user.getRole();});
-		
-		return collectors;
 	}
 	
 	//계정이 만료되었는지 리턴(true : 만료안됨)
@@ -180,12 +208,22 @@ public class PrincipalDetail implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
+	
+	//계정이 갖고있는 권한목록을 리턴
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		
+		Collection<GrantedAuthority> collectors = new ArrayList<>();	
+		collectors.add(()->{return "ROLE_"+user.getRole();});
+
+		return collectors;
+	}
 }
 ```
 
 <br/>
 
-### PrincipalDetailService (implements UserDetailsService)
+### PrincipalDetailService (implements UserDetailsService)  
 
 ```
 @Service
@@ -207,18 +245,24 @@ public class PrincipalDetailService implements UserDetailsService{
 
 `return new PrincipalDetail(principal)` : 입력된 username과 동일한 사용자가 있으면 PrincipalDetail(UserDetails) 타입으로 시큐리티의 세션에 유저정보가 저장이 됨
 
+<br/>
 
+### Controller  
 
+```
+@GetMapping({"", "/"})
+    public String index(@AuthenticationPrincipal PrincipalDetail principal) {
+	return "index";
+}
+```
 
+- @AuthenticationPrincipal : Session에서 현재 사용자 정보를 조회
 
-
-
-
-
-<br/><br/>  
+<br/>
 
 Reference  
 https://bamdule.tistory.com/53  
 https://kimchanjung.github.io/programming/2020/07/02/spring-security-02/    
-https://knoc-story.tistory.com/78
+https://knoc-story.tistory.com/78  
+https://bbubbush.tistory.com/36
 <br/>
