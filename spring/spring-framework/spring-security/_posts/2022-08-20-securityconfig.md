@@ -36,8 +36,7 @@ dependencies {
 
 ### SecurityConfig.java (extends WebSecurityConfigurerAdapter)
 
-WebSecurityConfigurerAdapter를 상속받은 커스텀 설정을 빈으로 등록하면  
-스프링부트의 기본 시큐리티 설정은 더이상 제공되지 않음(커스터마이징 활성화)  
+WebSecurityConfigurerAdapter를 상속받은 커스텀 설정을 빈으로 등록하면 스프링부트의 기본 시큐리티 설정은 더이상 제공되지 않음(커스터마이징 활성화)  
 
 ```
 @Configuration
@@ -46,9 +45,9 @@ WebSecurityConfigurerAdapter를 상속받은 커스텀 설정을 빈으로 등�
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 ```
 
-- @Configuration : 해당 클래스를 Configuration으로 등록, 빈등록(IoC)
-- @EnableWebSecurity : Spring Security는 활성화 되어있고, 시큐리티 필터(추가 설정)가 등록
-- @EnableGlobalMethodSecurity(prePostEnabled = true) : Controller에서 특정 권한이 있는 유저만 접근을 허용하려면 @PreAuthorize 어노테이션을 사용하는데, 해당 어노테이션을 활성화 시킴
+- `@Configuration` : 해당 클래스를 Configuration으로 등록, 빈등록(IoC)
+- `@EnableWebSecurity` : Spring Security는 활성화 되어있고, 시큐리티 필터(추가 설정)가 등록
+- `@EnableGlobalMethodSecurity(prePostEnabled = true)` : Controller에서 특정 권한이 있는 유저만 접근을 허용하려면 @PreAuthorize 어노테이션을 사용하는데, 해당 어노테이션을 활성화 시킴
 
 <br/>
 
@@ -62,8 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
   }
 ```
 
-- PrincipalDetailService : 로그인 요청 시, 입력된 유저 정보와 DB의 회원정보를 비교해 인증된 사용자인지 체크하는 로직이 정의
-- BCryptPasswordEncoder : 비밀번호 암호화/복호화 로직 담긴 객체
+- `PrincipalDetailService` : 로그인 요청 시, 입력된 유저 정보와 DB의 회원정보를 비교해 인증된 사용자인지 체크하는 로직이 정의
+- `BCryptPasswordEncoder` : 비밀번호 암호화/복호화 로직 담긴 객체
   
 <br/>
   
@@ -82,7 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 ```
 AuthenticationManager를 생성하기 위해 authenticationManagerBean()을 상속받아 사용  
 
-AuthenticationManager는 사용자 인증을 담당  
+`AuthenticationManager`는 사용자 인증을 담당  
 `auth.userDetailsService(service)`에 `org.springframework.security.core.userdetails.UserDetailsService` 인터페이스를 구현한 Service(나는 principalDetailService)를 넘겨야함  
 시큐리티가 대신 로그인해줄 때 password를 가로채기를 하는데 해당 password가 뭘로 해쉬가 되어 회원가입이 되었는지 알아야 같은 해쉬로 암호화해서 DB에 있는 해쉬랑 비교할 수 있음
 
@@ -106,23 +105,24 @@ AuthenticationManager는 사용자 인증을 담당
   }
 }
 ```
-configure(HttpSecurity http) : filter chain 안으로 스프링 시큐리티는 허용 + HTTP로 거르기
+
+`configure(HttpSecurity http)` : filter chain 안으로 스프링 시큐리티는 허용 + HTTP로 거르기
 
 <br/>
 
 http()  
-- csrf().disable() : csrf 토큰 비활성화 (현재 테스트 중이기 때문에 disable() 걸어두는 게 좋음)
+- `csrf().disable()` : csrf 토큰 비활성화 (현재 테스트 중이기 때문에 disable() 걸어두는 게 좋음)
   - 시큐리티는 기본적으로 요청 시 CSRF Token이 있어야 응답해줌
-- authorizeRequests() : HttpServletRequest 요청 URL에 따라 접근 권한을 설정
-- antMatchers("pathPattern") : 요청 URL 경로 패턴을 지정
-- permitAll() : 모든 유저 접근 허용
-- authenticated() : 인증된 유저만 접근 허용
+- `authorizeRequests()` : HttpServletRequest 요청 URL에 따라 접근 권한을 설정
+- `antMatchers("pathPattern")` : 요청 URL 경로 패턴을 지정
+- `permitAll()` : 모든 유저 접근 허용
+- `authenticated()` : 인증된 유저만 접근 허용
 
 and()  
-- formLogin() : form Login 설정을 진행
-- loginPage("path") : 커스텀 로그인 페이지 경로와 로그인 인증 경로를 등록
-- loginProcessingUrl("path") : path url로 들어오는 로그인요청을 가로챔
-- defaultSuccessUrl("path") : 로그인 인증을 성공하면 이동하는 페이지를 등록
+- `formLogin()` : form Login 설정을 진행
+- `loginPage("path")` : 커스텀 로그인 페이지 경로와 로그인 인증 경로를 등록
+- `loginProcessingUrl("path")` : path url로 들어오는 로그인요청을 가로챔
+- `defaultSuccessUrl("path")` : 로그인 인증을 성공하면 이동하는 페이지를 등록
 
 <br/>
 
@@ -250,13 +250,28 @@ public class PrincipalDetailService implements UserDetailsService{
 ### Controller  
 
 ```
-@GetMapping({"", "/"})
-    public String index(@AuthenticationPrincipal PrincipalDetail principal) {
-	return "index";
+@PostMapping("/api/board")
+public ResponseDto<Integer> save(
+      @RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
+    boardService.글쓰기(board, principal.getUser());
+    return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
 }
 ```
 
-- @AuthenticationPrincipal : Session에서 현재 사용자 정보를 조회
+controller에서 사용하고 싶을 때
+- `@AuthenticationPrincipal` : Session에서 현재 사용자 정보를 조회
+
+<br/>
+
+### jsp
+
+```
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="principal"/>
+</sec:authorize>
+```
+
+세션에 principal 저장
 
 <br/>
 
