@@ -1,5 +1,5 @@
 ---
-title: Spring) Spring Repository Layer Unit Test
+title: Spring) Repository Layer Unit Test
 excerpt: Book project, JUnit5
 ---
 
@@ -145,7 +145,7 @@ delete_test()시의 들어간 데이터(@BeforeEach로 넣는)는 id가 2L로 �
 
 - `@Sql("파일")` : 명시한 파일은 테스트를 실행하는데 적합한 상태로 DB를 초기화하기 위해 DELETE, INSERT, CREATE와 같은 쿼리 포함
   - delete_test()에서 pk인 id를 사용해야 해서 table drop 하고 create하는 sql문 담긴 파일(tableInit.sql) 실행   
-    => `아이디를 찾는 메서드`(findById(id))에는 사용해줘야함
+    => `아이디를 찾는 메서드`(findById() 등)에는 사용해줘야함
 - classpath:db/tableInit.sql
   - classpath(resource 영역, src/main/resources)에 있는 db폴더에 있는 tableInit.sql 파일
 
