@@ -36,10 +36,12 @@
   * [JUnit4](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/unit-test/junit/_posts/2022-07-28-junit4.md)
   * [JUnit5](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/unit-test/junit/_posts/2022-07-28-junit5.md)
   * [JUnit5 & Mockito](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/unit-test/junit/_posts/2022-07-29-mockito.md)
-  * [JUnit5 & Mockito를 이용한 Spring Controller 단위테스트](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/unit-test/junit/_posts/2022-07-29-controllertest.md)
-  * [JUnit5 & Mockito를 이용한 Spring Service Layer 단위테스트](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/unit-test/junit/_posts/2022-07-30-servicetest.md)
+  * [Controller Unit Test](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/unit-test/junit/_posts/2022-07-29-controllertest.md)
+  * [Service Layer Unit Test(Mockito)](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/unit-test/junit/_posts/2022-07-30-servicetest.md)
   * [MockTest](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/unit-test/junit/_posts/2022-07-30-mock.md)
   * [JUnit5로 예외테스트하기](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/unit-test/junit/_posts/2022-08-01-exceptionunit.md)
+  * [Repository Layer Unit Test
+](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/unit-test/junit/_posts/2022-08-26-repositorytest.md)
 * Spring Framework
   * Spring Basics
     * [Spring](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/spring-framework/spring-basics/_posts/2022-07-14-spring.md)
@@ -56,7 +58,9 @@
     * [SpringBoot Project Setting](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/spring-framework/spring-boot/_posts/2022-08-16-setting.md)
     
 * Spring Security
-
+    * [About Spring Security](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/spring-framework/spring-security/_posts/2022-08-19-security.md)
+    * [Spring Security Setting](https://github.com/ttaehee/ttaehee.github.io/blob/master/spring/spring-framework/spring-security/_posts/2022-08-20-securityconfig.md)
+    
 <br/>
 
 ## DB
@@ -107,6 +111,7 @@
     * [Stack & Queue](https://github.com/ttaehee/ttaehee.github.io/blob/master/cs/data-structure/linear/_posts/2022-07-21-queue.md)
   * NonLinear
     * [Graph & Tree](https://github.com/ttaehee/ttaehee.github.io/blob/master/cs/data-structure/non-linear/_posts/2022-07-21-tree.md)
+    * [Priority Queue & Heap](https://github.com/ttaehee/ttaehee.github.io/blob/master/cs/data-structure/non-linear/_posts/2022-08-24-priorityqueue.md)
 * Network
   * [Network](https://github.com/ttaehee/ttaehee.github.io/blob/master/cs/network/about-network/_posts/2022-08-06-network.md)
   * [Data Transfer Protocol](https://github.com/ttaehee/ttaehee.github.io/blob/master/cs/network/about-network/_posts/2022-08-07-netprotocol.md)
@@ -117,5 +122,8 @@
   * Traffic
     * [Huge Traffic Handling](https://github.com/ttaehee/ttaehee.github.io/blob/master/cs/network/traffic/_posts/2022-08-14-traffic.md)
     * [Load Balancing](https://github.com/ttaehee/ttaehee.github.io/blob/master/cs/network/traffic/_posts/2022-08-14-loadbalancing.md)
-  
+* Web
+  * Security
+    * [XSS/CSRF(XSRF)](https://github.com/ttaehee/ttaehee.github.io/blob/master/cs/web/security/_posts/2022-08-21-csrf.md)
+    * [OAuth 2.0](https://github.com/ttaehee/ttaehee.github.io/blob/master/cs/web/security/_posts/2022-08-22-oauth.md)
 <br/>
