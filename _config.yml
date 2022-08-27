@@ -439,3 +439,24 @@ defaults:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about cs
             url: /cs/
+            
+  # Server
+   - scope:
+      path: "cs/server"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about cs
+            url: /cs/
+            
+  # Web
+  - scope:
+      path: "cs/web"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about cs
+            url: /cs/
+            
