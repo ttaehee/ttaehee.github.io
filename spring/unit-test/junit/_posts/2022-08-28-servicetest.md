@@ -16,7 +16,9 @@ DB : h2
 testImplementation("org.assertj:assertj-core:3.23.1")
 ```
 
-참고) JUnit 의 assertThat & AssertJ의 assertThat  
+<br/>
+
+참고)   
 - JUnit 의 assertThat
   - 메소드들을 import 해놓아야함, 안그럼 자동완성 안됨  
   - 필요한 메소드 중 데이터타입에 맞는 알맞은 항목 찾아야함  
@@ -42,7 +44,7 @@ testImplementation("org.assertj:assertj-core:3.23.1")
 
 ### BookServiceTest.java
 
-1. 단위테스트 작성준비  
+단위테스트 작성준비  
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -69,12 +71,12 @@ public class BookServiceTest {
 ![qwe](https://user-images.githubusercontent.com/103614357/187077034-e50f843a-4514-4b11-98a0-d564df011a75.png)   
 
 - `Mockito 사용 이유`  
-  : Repository 테스트는 이미 완료했기 때문에 서비스-레파지토리-DB 까지 테스트할 필요가 없음(무겁기만함)      
+  Repository 테스트는 이미 완료했기 때문에 서비스-레파지토리-DB 까지 테스트할 필요가 없음(무겁기만함)      
   -> `Repository는 메모리에 로드할 필요 없음` => 가짜객체 Mock으로!  
 
 <br/>
 
-2. 책 등록 단위테스트 메소드
+책 등록 단위테스트 메소드
 
 ```java
     @DisplayName("책 등록")
@@ -101,7 +103,7 @@ public class BookServiceTest {
 
 <br/>
 
-3. 책 수정 단위테스트 메소드
+책 수정 단위테스트 메소드
 
 ```java
     @DisplayName("책 수정")
@@ -130,7 +132,7 @@ public class BookServiceTest {
 
 <br/>
 
-### Dto 생성이유
+### Dto  
 
 - Domain : `Book.java`  
 - Dto : `BookRespDto.java`, `BookSaveReqDto.java` 생성   
@@ -142,17 +144,18 @@ jpa:
   open-in-view: true
 ```
 
-true일 경우 영속성 컨텍스트가 트랜잭션 범위를 넘어선 레이어(Controller)까지 살아있음   
-= `Controller단까지 영속화된 객체(Persistent Context)`를 넘겨주게 되면 `lazy loading` 이라는 변수 발생!  
+true일 경우 영속성 컨텍스트가 트랜잭션 범위를 넘어선 레이어(Controller)까지 살아있음 = `Controller단까지 영속화된 객체(Persistent Context)`를 넘겨주게 되면   
+`lazy loading` 이라는 변수 발생!  
 
 <br/>
 
-참고) lazy loading : 연관관계 있는 애들까지 다 가져옴  
-사용자가 보지 않는 것들을 당장 로딩하지 않고  
-나중에 사용자가 필요로 하는 시점에 로딩하는 것  
+참고)  
+- Lazy Loading(지연로딩) : 연관된 엔티티를 실제 사용하는 시점에 데이터베이스에서 조회   
+- Eager Loading(즉시로딩) : 엔티티를 조회할 때 연관된 엔티티도 함께 조회 (처음부터 연관된 모든 엔티티를 조회해서 영속성 컨텍스트에 올려놓는 것)
 
 <br/>
 
+**과정**  
 1. Controller : Dto를 받아서 Service로  
 2. Service : Dto를 받아서 Object(book)로 바꿔서 Repository로  
 
@@ -180,8 +183,7 @@ Book bookPS = bookRepository.save(dto.toEntity());
 7. `Controller에서 DB세션 종료`  
     - select는 가능  
     - 근데 만약, bookPS를 Service에서 넘겨줘서 `Controller에서 bookPS.getId()`를 해버리면?  
-      => DB에서 끌고오니까 lazy loading  
-      => 클라이언트로 보낼 때 message converter가 bookPS와 연관관계 있는 애들까지 JSON으로 다 보냄 굳이 요청하지 않은 정보인데도!  
+      => 클라이언트로 보낼 때 message converter가 bookPS에 있는 getter때문에 연관관계 있는 애들을 이때 DB에서 끌고오니까 lazy loading  
 
 ==> 결론 : `Service에서 Controller로 Dto로 보내주기!`  
       
