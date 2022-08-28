@@ -150,14 +150,24 @@ true일 경우 영속성 컨텍스트가 트랜잭션 범위를 넘어선 레이
 <br/>
 
 참고)  
-- Lazy Loading(지연로딩) : 연관된 엔티티를 실제 사용하는 시점에 데이터베이스에서 조회   
-- Eager Loading(즉시로딩) : 엔티티를 조회할 때 연관된 엔티티도 함께 조회 (처음부터 연관된 모든 엔티티를 조회해서 영속성 컨텍스트에 올려놓는 것)
+- `Lazy Loading(지연로딩)` : 연관된 엔티티를 실제 사용하는 시점에 데이터베이스에서 조회   
+- `Eager Loading(즉시로딩)` : 엔티티를 조회할 때 연관된 엔티티도 함께 조회 (처음부터 연관된 모든 엔티티를 조회해서 영속성 컨텍스트에 올려놓는 것)
 
 <br/>
 
 **과정**  
-1. Controller : Dto를 받아서 Service로  
-2. Service : Dto를 받아서 Object(book)로 바꿔서 Repository로  
+1) Controller : Dto를 받아서 Service로  
+2) Service : Dto를 받아서 Object(book)로 바꿔서 Repository로  
+3) Repository : Object(book) 받아서 CRUD ex) save()  
+4) Persistent Context check : 없으면 DB(메모리에)에 book 저장 -> `영속화된 Book 객체(bookPS)`생성   
+5) `Service에서 transaction 종료` + commit(메모리에서 HDD로 보내서 저장) or rollback(안보내고 메모리에서 지움) 
+    - 값 변경은 끝    
+6) `Controller에서 DB세션 종료`  
+    - select는 가능  
+    - 근데 만약, bookPS를 Service에서 넘겨줘서 `Controller에서 bookPS.getId()`를 해버리면?  
+      => 클라이언트로 보낼 때 message converter가 bookPS에 있는 getter때문에 연관관계 있는 애들을 이때 DB에서 끌고오니까 lazy loading  
+
+==> 결론 : `Service에서 Controller로 Dto로 보내주기!`  
 
 ```
 //BookSaveReqDto.java
@@ -175,17 +185,6 @@ Book bookPS = bookRepository.save(dto.toEntity());
 ```
 
 (Controller에서 받은 Dto(`dto`)를 Entity(`dto.toEntity()`)로 바꿔서 Repository로)   
-
-4. Repository : Object(book) 받아서 CRUD ex) save()  
-5. Persistent Context check : 없으면 DB(메모리에)에 book 저장 -> `영속화된 Book 객체(bookPS)`생성   
-6. `Service에서 transaction 종료` + commit(메모리에서 HDD로 보내서 저장) or rollback(안보내고 메모리에서 지움) 
-    - 값 변경은 끝    
-7. `Controller에서 DB세션 종료`  
-    - select는 가능  
-    - 근데 만약, bookPS를 Service에서 넘겨줘서 `Controller에서 bookPS.getId()`를 해버리면?  
-      => 클라이언트로 보낼 때 message converter가 bookPS에 있는 getter때문에 연관관계 있는 애들을 이때 DB에서 끌고오니까 lazy loading  
-
-==> 결론 : `Service에서 Controller로 Dto로 보내주기!`  
       
 ```
 //Book.java
