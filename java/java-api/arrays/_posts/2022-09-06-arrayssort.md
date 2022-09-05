@@ -6,13 +6,12 @@ excerpt: 배열 정렬하기
 ## Arrays.sort()  
 기본 정렬조건 : `오름차순`  
 => Class 내에 기본적으로 구현되어있는 `Comparable` Interface의 `compareTo()` 를 기준으로 하기 때문  
-내부적으로 객체를 Comparable로 형변환 -> compareTo() 호출해서 비교, 정렬
+=> 내부적으로 객체를 Comparable로 형변환 -> compareTo() 호출해서 비교, 정렬
 
 <br/>
 
 참고)  
 Java에서 `인스턴스를 서로 비교하는 클래스`들은 모두 Comparable 인터페이스가 구현 되어 있음  
-=> Comparable 구현해서 compareTo() 오버라이딩한 클래스 : sort() 통해 비교 가능  
 
 <br/>
 
@@ -53,7 +52,8 @@ Arrays.sort(arr);
 
 <br/>
 
-- `Comparator를 구현한 Class`(Custom)에서 `compare()` override + sort() 호출시 구현한 클래스 명시(new Custom())  
+- `Comparator를 구현한 Class`(Custom)에서 `compare()` override  
+    \+ sort() 호출시 구현한 클래스 명시(new Custom())  
 
 ```
 class Custom implements Comparator<String> {
@@ -108,7 +108,7 @@ Arrays.sort(arr, (o1, o2) -> o2.compareTo(o1));
 <br/> 
 
 ### 2차원 배열 정렬 
-2차원 평면 위의 점 N개  
+2차원 평면 위의 점 n개  
 x좌표 오름차순, x좌표 같으면 y좌표 오름차순 정렬 코드   
 
 ```
@@ -155,7 +155,7 @@ return값이 양수인 경우, 두 값의 자리가 변경되면서 정렬
 
 ### java.util.Comparator(FunctionalInterface)
 
-Comparator 인터페이스는 `추가정렬을 정의`(비교 기준이 여러개 일때) 시 사용하기 때문에  
+Comparator 인터페이스는 `추가정렬을 정의`(비교 기준이 여러개 일때) 시 사용하기 때문에
 정렬할 클래스에 구현하는 것이 아니라 따로 클래스를 구현해서 만들어 주는 것이 좋음  
 
 <br/>
