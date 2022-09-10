@@ -1,6 +1,6 @@
 ---
-title: CS) Token vs Session Authentication
-excerpt: 토큰기반, 세션기반 인증 차이
+title: CS) Token vs Session Authentication / JWT
+excerpt: 토큰기반, 세션기반 인증 차이 / JWT란
 ---
 
 <br/>  
@@ -77,7 +77,7 @@ JSON 데이터(인증에 필요한 정보들)를 Base64URL을 통해 인코딩�
 ![제목 없음](https://user-images.githubusercontent.com/103614357/189476499-e143779b-6701-481f-8eb1-8a2127feccf6.png)  
 
 
-1) application 실행 -> `JWT`가 `static 변수` & `로컬 스토리지`에 저장    
+1) application 실행 -> `JWT`를 `static 변수` & `로컬 스토리지`에 저장    
   참고) static 변수에 저장 이유   
   HTTP 통신 할 때마다 HTTP 헤더에 JWT 담아 보내는데, 이를 로컬 스토리지에서 계속 불러오면 `오버헤드`가 발생하기 때문   
 
@@ -116,8 +116,8 @@ alg과 typ 두 가지 정보로 구성
 ![제목 없음](https://user-images.githubusercontent.com/103614357/189481312-623328ac-d016-4f7e-9600-1e27adb8ab61.png)  
 
 - `alg`: 헤더를 암호화 하는 것이 아니고, `Signature를 해싱`하기 위한 `알고리즘 방식`을 지정  
-  Signature 및 토큰 검증에 사용 ex) HS256(SHA256) 또는 RSA
-- `typ`: 토큰의 타입을 지정 ex) JWT
+  Signature 및 토큰 검증에 사용 &nbsp; ex) HS256(SHA256) 또는 RSA
+- `typ`: 토큰의 타입을 지정 &nbsp;  ex) JWT
 
 <br/>
 
