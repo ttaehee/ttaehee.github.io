@@ -1,5 +1,5 @@
 ---
 title: Algorithm
-excerpt: learn Algorithm
+excerpt: learn Computer Science
 taxonomy: algorithm
 ---
