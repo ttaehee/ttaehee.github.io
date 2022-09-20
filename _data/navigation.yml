@@ -90,11 +90,6 @@ Spring:
         url: /spring/spring-framework/spring-boot/
       - title: Spring Security
         url: /spring/spring-framework/spring-security/
-  - title: Unit Test
-    url: /spring/unit-test/
-    children:
-      - title: JUnit Test
-        url: spring/unit-test/junit/
   - title: Test Code
     url: /spring/test-code/
     children:
@@ -102,6 +97,10 @@ Spring:
         url: /spring/test-code/unit-test/
       - title: Integration Test
         url: /spring/test-code/integration-test/
+      - title: JUnit
+        url: /spring/test-code/junit/
+      - title: Mockito
+        url: /spring/test-code/mockito/
         
 
 DB:
