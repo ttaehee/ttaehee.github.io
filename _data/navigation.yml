@@ -73,16 +73,14 @@ Java:
         url: /java/java-api/enum/
       - title: StringBuffer class
         url: /java/java-api/stringbuffer/
+  - title: JDK
+    url: /java/jdk/
+    children:
+      - title: JVM
+        url: /java/jdk/jvm/
         
         
 Spring:
-  - title: Unit Test
-    url: /spring/unit-test/
-    children:
-      - title: About Unit Test
-        url: /spring/unit-test/about-unit-test/
-      - title: JUnit Test
-        url: spring/unit-test/junit/
   - title: Spring Framework
     url: /spring/spring-framework/
     children:
@@ -92,7 +90,19 @@ Spring:
         url: /spring/spring-framework/spring-boot/
       - title: Spring Security
         url: /spring/spring-framework/spring-security/
-
+  - title: Unit Test
+    url: /spring/unit-test/
+    children:
+      - title: JUnit Test
+        url: spring/unit-test/junit/
+  - title: Test Code
+    url: /spring/test-code/
+    children:
+      - title: Unit Test
+        url: /spring/test-code/unit-test/
+      - title: Integration Test
+        url: /spring/test-code/integration-test/
+        
 
 DB:
   - title: Oracle
@@ -158,6 +168,13 @@ OS:
 
 
 CS:
+  - title: Algorithm
+    url: /cs/algorithm/
+    children:
+      - title: Regex
+        url: /cs/algorithm/regex/
+      - title: Time Complexity
+        url: /cs/algorithm/time-complexity/
   - title: Data Structure
     url: /cs/data-structure/
     children:
@@ -168,21 +185,21 @@ CS:
   - title: Network
     url: /cs/network/
     children:
+      - title: Web
+        url: /cs/network/web/ 
       - title: About Network
         url: /cs/network/about-network/ 
       - title: Huge Traffic Handling
         url: /cs/network/traffic/ 
-      - title: Rest API
-        url: /cs/network/rest-api/ 
       - title: HTTP/HTTPS
         url: /cs/network/http/ 
   - title: Server
     url: /cs/server/
     children:
+      - title: Authentication
+        url: /cs/server/authentication/ 
       - title: Cache
         url: /cs/server/cache/ 
-  - title: Web
-    url: /cs/web/
-    children:
-      - title: Security
-        url: /cs/web/security/ 
+      - title: Rest API
+        url: /cs/server/rest-api/ 
+        
