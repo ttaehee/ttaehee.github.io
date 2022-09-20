@@ -281,6 +281,15 @@ defaults:
           - label: <i class='fas fa-fw fa-link'></i> about java
             url: /java/
             
+  # JDK
+  - scope:
+      path: "java/jdk"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about java
+            url: /java/
             
             
  # Spring
@@ -290,19 +299,19 @@ defaults:
       sidebar:
         - nav: Spring
         
-  # Unit Test
+  # Spring Framework
   - scope:
-      path: "spring/unit-test"
+      path: "spring/apring-framework"
       type: posts
     values:
       header:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about spring
             url: /spring/
-  
-  # Spring Framework
+
+  # Test Code
   - scope:
-      path: "spring/apring-framework"
+      path: "spring/test-code"
       type: posts
     values:
       header:
@@ -421,6 +430,16 @@ defaults:
       sidebar:
         - nav: CS
         
+  # Algorithm
+  - scope:
+      path: "cs/algorithm"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about cs
+            url: /cs/
+            
   # Data Structure
   - scope:
       path: "cs/data-structure"
@@ -430,6 +449,7 @@ defaults:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about cs
             url: /cs/
+            
   # Network
   - scope:
       path: "cs/network"
@@ -438,19 +458,11 @@ defaults:
       header:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about cs
-            url: /cs/            
+            url: /cs/ 
+            
   # Server
   - scope:
       path: "cs/server"
-      type: posts
-    values:
-      header:
-        actions:
-          - label: <i class='fas fa-fw fa-link'></i> about cs
-            url: /cs/
-  # Web
-  - scope:
-      path: "cs/web"
       type: posts
     values:
       header:
