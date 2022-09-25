@@ -52,18 +52,17 @@ Spring에서 제공하는 http 통신에 사용할 수 있는 템플릿
 
 ![제목 없음](https://user-images.githubusercontent.com/103614357/192153179-e5a090fc-4367-4445-9884-1c0fcc2d3f53.png)  
 
-1. application이 내부에서 REST API 요청을 위해 RestTemplate을 생성하고, URI, HTTP 메소드 등의 헤더를 담아 요청 
-RestTemplate의 메서드 호출.
+1. application이 내부에서 REST API 요청을 위해 RestTemplate을 생성하고, RestTemplate의 메서드 호출(URI, HTTP 메소드, requestEntity를 담아 요청)    
 
 2. RestTemplate은 HttpMessageConverter를 이용하여 requestEntity(Java Object)를 요청 메세지(Request Body에 담을 Message(JSON 등))로 변환  
 
 3. RestTemplate은 ClientHttpRequestFactory에서 ClientHttpRequest를 받아와서 요청 전달    
-  참고)    
-  &nbsp; RestTemplate은 통신과정을 ClientHttpRequestFactory(ClientHttpRequest, ClientHttpResponse)에 위임    
-  &nbsp; (ClientHttpRequestFactory의 실체는 HttpURLConnection, Apache HttpComponents, HttpClient와 같은 HTTP Client)
+  참고)     
+  &nbsp; - RestTemplate은 통신과정을 ClientHttpRequestFactory(ClientHttpRequest, ClientHttpResponse)에 위임    
+  &nbsp; - ClientHttpRequestFactory의 실체는 HttpURLConnection, Apache HttpComponents, HttpClient와 같은 HTTP Client  
 
 4. ClientHttpRequest는 요청메세지를 만들어 HTTP 프로토콜을 통해 서버와 통신   
-(= 실질적으론 ClientHttpRequest가 HTTP 통신으로 요청 수행)  
+  = 실질적으론 ClientHttpRequest가 HTTP 통신으로 요청 수행  
 
 5. RestTemplate은 ResponseErrorHandler로 에러 핸들링 수행, 오류 있다면 처리로직을 태움   
   ResponseErrorHandler는 오류가 있다면 ClientHttpResponse에서 응답데이터를 가져와서 처리   
