@@ -19,18 +19,38 @@ DispatcherServlet, View Resolver, Interceptor, Handler, View 등으로 구성
 
 4. DispatcherServlet은 `HandlerMapping`에게 요청정보 보냄  
   HandlerMapping은 request uri에 알맞은 `Handler객체`를 가져옴  
-  (실제 Handler의 mapping은 DispatcherServlet에 주입된 HandlerMapping 구현체에 의해 됨)    
+  (실제 Handler의 mapping은 DispatcherServlet에 주입된 HandlerMapping 구현체(RequestMappingHandlerMapping)에 의해 됨)    
 
-5. 가져온 Handler를 실행(invoke) 시킬 수 있는 `HandlerAdapter`객체를 가져옴    
-  (Handler 클래스타입마다 적용시킬 Adapter가 다르므로) 
+5. 가져온 Handler를 실행(invoke) 시킬 수 있는 `HandlerAdapter`객체를 가져옴     
+  (Handler 클래스타입마다 적용시킬 Adapter가 다르므로   
+  = 스프링은 HandlerAdapter라는 어댑터 인터페이스를 통해 어댑터 패턴을 적용함으로써 컨트롤러의 구현 방식에 상관없이 요청을 위임)   
+  (DispatcherServlet은 Controller로 요청을 직접 위임하는 것이 아니라 HandlerAdapter를 통해 요청 위임)   
 
-6. (적용할 Interceptor가 존재한다면) `Interceptor의 preHandle` 실행  
+ ![제목 없음](https://user-images.githubusercontent.com/103614357/193285977-23f9ee05-ddfc-4510-8e67-a29aa046d510.png)  
+ 
+6. mapping된 Controller가 존재하면 @RequestMapping을 통해 매칭  
+ (@RequestMapping은 RequestMappingHandlerAdapter를 어노테이션화 한 것)  
 
-7. mapping된 Controller가 존재하면 @RequestMapping을 통해 요청을 처리할 메소드로 이동  
+7. HandlerAdapter가 Controller로 요청을 넘기기 전에 공통적인 전/후처리 과정  
+- (적용할 Interceptor가 존재한다면) `Interceptor의 preHandle` 실행  
+- (HandlerMethod)Argument Resolver : 컨트롤러의 메서드의 인자로 사용자가 임의의 값을 전달하는 방법을 제공하고자 할 때 사용 (파라미터를 유연하게 처리할 수 있게 해줌)    
+  - 요청 시에 @RequestParam, @RequestBody 등을 처리  
+  - 파라미터 값을 확인하여 정보를 전달받으면 Argument Resolver가 해당 parameter의 객체를 생성하여 Handler를 호출함과 동시에 객체 또한 같이 전달     
+ 
+  (ReturnValueHandler : 응답 시에 ResponseEntity의 Body를 Json으로 직렬화하는 등의 처리함)  
+ 
+  참고)  
+  Argument Resolver와 Return Value Handler만 있다고 객체를 생성하여 전달하고, 반환 값을 반환할 수는 없음  
+  값들이 어떠한 Class, Media Type인지 확인하는 절차 필요 => MessageConverter가 수행   
+  ex) @Controller라면 String 값이 ViewResolver를 호출하지만 @ResponseBody가 붙어 있다면 MessageConverter 호출   
   
-8. `Controller-Service-DAO-Service-Controller` 로 데이터 전달  
+8. @RequestMapping을 통해 요청을 처리할 메소드로 이동   
+ `Controller-Service-DAO-Service-Controller` 로 데이터 전달   
    
-9. Controller -> `DispatcherServlet` : `요청에 맞는 view정보` 전달  
+9. HandlerAdapter가 반환값 처리  
+ Controller ->HandlerAdapter가 반환값을 처리 -> `DispatcherServlet` : `요청에 맞는 view정보` 전달     
+ (RestController -> `HandlerAdapter` : `ResponseEntity` 반환     
+ HandlerAdapter -> `DispatcherServlet` : HttpEntityMethodProcessor가 MessageConverter를 사용해 응답 객체를 직렬화하고 응답 상태(HttpStatus)를 설정)   
   
 10. (적용할 Interceptor가 존재한다면) `Interceptor의 postHandle` 실행  
   
@@ -93,5 +113,6 @@ https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc
 https://velog.io/@vector9999/servlet-context.xml%EA%B3%BC-root-context.xml%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90   
 https://popo015.tistory.com/115 
 https://ss-o.tistory.com/160   
-https://nankisu.tistory.com/46  
+https://nankisu.tistory.com/46   
+https://maenco.tistory.com/entry/Spring-MVC-Argument-Resolver%EC%99%80-ReturnValue-Handler   
 <br/>
