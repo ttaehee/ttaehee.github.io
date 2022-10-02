@@ -3,7 +3,9 @@ title: Spring) Framework & Library
 excerpt: 프레임워크와 라이브러리의 차이점  
 ---
 
-Framework & Library : application을 개발하는데 있어 편성(쉽고 빠르게) + 코드 재사용 가능
+<br/>
+
+Framework & Library : 둘 다 application을 개발하는데 있어 편의성(쉽고 빠르게) + 코드 재사용 가능
 
 <br/>
 
