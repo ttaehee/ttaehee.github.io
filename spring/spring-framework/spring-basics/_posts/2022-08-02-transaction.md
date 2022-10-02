@@ -41,7 +41,11 @@ public void addUsers(List<User> userList) {
 <br/>
 
 - @Transactional 이용해서 코드 분리 (선언적 트랜잭션처리) -> 핵심 비지니스 로직만 남김 
-  - 트랜잭션코드(부가기능코드)를 클래스 밖으로 빼내서 `별도의 모듈로` 만듬(AOP) 
+  - 트랜잭션코드(부가기능코드)를 클래스 밖으로 빼내서 `별도의 모듈로` 만듬(AOP)   
+    - @Transactional은 Spring의 Aop이용  
+    - AOP는 Dynamic Proxy 이용  
+    - Dynamic Proxy는 인터페이스 기반으로 동작   
+    	=> 인터페이스가 있어야만 동작함  
   - `DB와 관련된` 트랜잭션이 필요한 `Service` class or method에 @Transactional 붙여주기    
   - 트랜잭션 기능이 포함된 프록시 객체가 생성되어 자동으로 commit 혹은 rollback을 진행
     - @Transactional이 붙은 메서드는 메서드가 포함하고 있는 작업 중에 `하나라도 실패할 경우` 전체 작업을 취소
@@ -95,8 +99,6 @@ public class UserService {
 ```java
 @Transactional(isolation=Isolation.DEFAULT)
 public void addUser(User user) throws Exception {
-	// 로직
-}
 ```
 
 - DEFAULT : 기본
@@ -112,30 +114,54 @@ public void addUser(User user) throws Exception {
 ```java
 @Transactional(propagation=Propagation.REQUIRED)
 public void addUser(User user) throws Exception {
-	// 로직
-}
-```
+```  
+
+<br/>
+
+![제목 없음](https://user-images.githubusercontent.com/103614357/193441154-11ac6005-3301-45a8-9e72-5a060410a06f.png)       
 
 - REQUIRED : default
   - 진행중인 트랜잭션이 있다면 해당 트랜잭션 속성 따름
-  - 진행중이 아니라면 새로운 트랜잭션 생성
+  - 진행중이 아니라면 새로운 트랜잭션 생성   
+
+<br/>
+
+![제목 없음](https://user-images.githubusercontent.com/103614357/193441266-b477721e-22c9-4f53-b943-3bd67f733393.png)  
+
 - REQUIRES_NEW : 항상 새로운 트랜잭션 생성
   - 진행중인 트랜잭션이 있다면 잠깐 보류
   - 해당 트랜잭션 작업 먼저 진행
-- SUPPORT
-  - 진행중인 트랜잭션이 있다면 해당 트랜잭션 속성 따름
-  - 없다면 트랜잭션 설정 안함
-- NOT_SUPPORT
-  - 진행중인 트랜잭션 있다면 보류, 트랜잭션 없이 작업수행
+
+<br/>
+
+![제목 없음](https://user-images.githubusercontent.com/103614357/193441308-4c556277-38ae-4141-847c-870672e53424.png)  
+
 - MANDATORY
   - 진행중인 트랜잭션이 있어야만 작업수행
   - 없으면 Exception 발생
+
+<br/>
+
+![제목 없음](https://user-images.githubusercontent.com/103614357/193441361-0bd6c774-45d2-45bc-b2de-63d1d8dec406.png)  
+
 - NEVER
   - 진행중인 트랜잭션 있으면 Exception
   - 진행중이지 않을 때만 작업수행
+
+<br/>
+
+![제목 없음](https://user-images.githubusercontent.com/103614357/193441338-72f5cce9-b87f-4de4-be47-19ade2cf807e.png)  
+
 - NESTED
   - 진행중인 트랜잭션 있으면 중첩된 트랜잭션 실행
   - 없으면 REQUIRED와 동일하게 실행
+
+- SUPPORT
+  - 진행중인 트랜잭션이 있다면 해당 트랜잭션 속성 따름
+  - 없다면 트랜잭션 없이 작업수행
+
+- NOT_SUPPORT
+  - 진행중인 트랜잭션 있다면 보류, 트랜잭션 없이 작업수행
 
 <br/>
 
@@ -146,8 +172,6 @@ public void addUser(User user) throws Exception {
 ```java
 @Transactional(noRollbackFor=Exception.class)
 public void addUser(User user) throws Exception {
-	// 로직
-}
 ```
 
 <br/>
@@ -159,8 +183,6 @@ public void addUser(User user) throws Exception {
 ```java
 @Transactional(rollbackFor=Exception.class)
 public void addUser(User user) throws Exception {
-	// 로직
-}
 ```
 
 <br/>
@@ -173,8 +195,6 @@ default : -1 (no timeout)
 ```java
 @Transactional(timeout=10)
 public void addUser(User user) throws Exception {
-	// 로직
-}
 ```
 
 <br/>
@@ -187,8 +207,6 @@ true 시 insert, update, delete 실행 시 예외발생 = select만 가능
 ```java
 @Transactional(readonly = true)
 public void addUser(User user) throws Exception {
-	// 로직
-}
 ```
 
 <br/>
@@ -204,4 +222,6 @@ public void addUser(User user) throws Exception {
 Reference  
 https://mangkyu.tistory.com/154  
 https://velog.io/@kdhyo/JavaTransactional-Annotation-%EC%95%8C%EA%B3%A0-%EC%93%B0%EC%9E%90-26her30h  
-토비의스프링(저자:이일민)  
+토비의스프링(저자:이일민)    
+https://deveric.tistory.com/86  
+<br/>
