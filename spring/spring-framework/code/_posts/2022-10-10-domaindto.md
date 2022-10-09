@@ -153,7 +153,7 @@ public class UserRequestDto {
   -> Repository 클래스의 Entity Manager의 flush가 호출될 때 DB에 값이 반영  
   -> 다른 로직들에도 영향    
   - DTO는 View와 통신하면서 필연적으로 데이터 변경이 많음   
-    -> Entity의 값이 변경되지 않도로고 분리해야  
+    -> Entity의 값이 변경되지 않도록 따로 분리하기    
 
 <br/>
 
