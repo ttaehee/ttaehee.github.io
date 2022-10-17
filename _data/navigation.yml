@@ -65,6 +65,8 @@ Java:
   - title: Java API
     url: /java/java-api/
     children:
+      - title: Object class
+        url: /java/java-api/object/
       - title: Arrays class
         url: /java/java-api/arrays/
       - title: Math class
@@ -90,6 +92,8 @@ Spring:
         url: /spring/spring-framework/spring-boot/
       - title: Spring Security
         url: /spring/spring-framework/spring-security/
+      - title: Code
+        url: /spring/spring-framework/code/
   - title: Test Code
     url: /spring/test-code/
     children:
@@ -201,4 +205,6 @@ CS:
         url: /cs/server/cache/ 
       - title: Rest API
         url: /cs/server/rest-api/ 
+      - title: MSA
+        url: /cs/server/msa/ 
         
