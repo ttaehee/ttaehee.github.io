@@ -12,6 +12,8 @@ main:
     url: /os/
   - title: CS
     url: /cs/
+  - title: DevCourse
+    url: /dev-course/
   - title: Github
     url: https://github.com/ttaehee
     
@@ -28,6 +30,8 @@ sidebar:
     url: /os/
   - title: CS
     url: /cs/
+  - title: DevCourse
+    url: /dev-course/
     #children:
     #  - title: Data Structure
     #    url: /cs/data-structure/
