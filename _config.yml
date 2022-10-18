@@ -470,3 +470,10 @@ defaults:
           - label: <i class='fas fa-fw fa-link'></i> about cs
             url: /cs/
           
+          
+  # DevCourse
+  - scope:
+      path: "dev-course"
+    values:
+      sidebar:
+        - nav: DevCourse
