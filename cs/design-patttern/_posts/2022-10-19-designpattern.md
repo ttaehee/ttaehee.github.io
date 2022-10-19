@@ -7,16 +7,19 @@ excerpt: SOLID원칙 & 디자인패턴과 종류
 ### 1.SRP(Single Responsibility Principle) : 단일 책임 원칙  
 - 하나의 모듈은 `한 가지 책임`을 가져야 한다는 것(해당 모듈이 여러 대상 또는 액터들에 대해 책임을 가져서는 안됨) = 모듈이 변경되는 이유가 한가지여야 함을 의미    
    
-### OCP(Open-Closed Priciple) : 개방 폐쇄 원칙  
+### 2. OCP(Open-Closed Priciple) : 개방 폐쇄 원칙  
 - 확장에 대해 열려있고 수정에 대해서는 닫혀있어야
   - 확장에 대해 열려 있다: 요구사항이 변경될 때 `새로운 동작을 추가`하여 애플리케이션의 기능확장 가능    
   - 수정에 대해 닫혀 있다: 기존의 `코드를 수정하지 않고` 애플리케이션의 동작을 추가하거나 변경가능    
-### LSP(Liskov Substitution Priciple) : 리스코프 치환 원칙  
+
+### 3. LSP(Liskov Substitution Priciple) : 리스코프 치환 원칙  
  - 하위 타입은 상위 타입을 대체할 수 있어야  
  - 추상객체로 사용되는 부분에 구상객체가 들어가도 상관없어야
-### ISP(Interface Segregation Principle) : 인터페이스 분리 원칙  
+
+### 4. ISP(Interface Segregation Principle) : 인터페이스 분리 원칙  
 - 목적과 관심이 각기 다른 클라이언트가 있다면 인터페이스를 통해 적절하게 분리  
-### DIP(Dependency Inversion Principle) : 의존 역전 원칙   
+
+### 5. DIP(Dependency Inversion Principle) : 의존 역전 원칙   
 - 고수준 모듈은 저수준 모듈의 구현에 의존해서는 안됨, 저수준 모듈이 고수준 모듈에서 정의한 추상 타입에 의존해야 한다는 것  
   - 고수준 모듈: 변경이 없는 추상화된 클래스(또는 인터페이스)
   - 저수준 모듈: 변하기 쉬운 구체 클래스  
