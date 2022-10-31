@@ -1,6 +1,6 @@
 ---
-title: CS) Prototype Pattern
-excerpt: 디자인패턴 - 생성 패턴 - 프로토타입
+title: CS) Composite Pattern
+excerpt: 디자인패턴 - 구조 패턴 - 컴포지트
 --- 
 
 ## Composite Pattern
@@ -24,11 +24,9 @@ excerpt: 디자인패턴 - 생성 패턴 - 프로토타입
 - Composite
     - Component 인터페이스를 구현한 것
     - 집합객체
-    - Component 요소(Leaf or Composite)를 자식으로 가짐
-        
-        → Component 요소를 관리하기 위한 메소드를 추가적으로 구현해야함
-        
-    - 예제코드에서 Directory
+    - Component 요소(Leaf or Composite)를 자식으로 가짐   
+        → Component 요소를 관리하기 위한 메소드를 추가적으로 구현해야함          
+    - 예제코드에서 Directory  
 
 <br/><br/>
 
