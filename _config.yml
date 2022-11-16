@@ -472,7 +472,7 @@ defaults:
             
   # Design Pattern
   - scope:
-      path: "cs/design-pattern"
+      path: "cs/design-patttern"
       type: posts
     values:
       header:
