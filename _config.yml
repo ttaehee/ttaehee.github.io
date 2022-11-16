@@ -469,6 +469,17 @@ defaults:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about cs
             url: /cs/
+            
+  # Design Pattern
+  - scope:
+      path: "cs/design-pattern"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about cs
+            url: /cs/
+            
           
           
   # DevCourse
