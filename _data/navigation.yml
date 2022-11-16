@@ -211,4 +211,8 @@ CS:
         url: /cs/server/rest-api/ 
       - title: MSA
         url: /cs/server/msa/ 
+      - title: WAS
+        url: /cs/server/was/ 
+  - title: Design Pattern
+    url: /cs/design-pattern/
         
