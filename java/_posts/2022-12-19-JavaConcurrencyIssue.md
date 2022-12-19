@@ -1,3 +1,8 @@
+---
+title: JAVA) Java Concurrency Issue
+excerpt: 자바의 동시성이슈  
+---
+
 ## 자바의 동시성이슈(공유자원 접근) 
 
 ### 용어정리      
