@@ -98,6 +98,12 @@ Spring:
         url: /spring/spring-framework/spring-security/
       - title: Code
         url: /spring/spring-framework/code/
+      - title: Cache
+        url: /spring/spring-framework/cache/
+  - title: Spring HTTP
+    url: /spring/spring-http/
+      - title: Rest Template
+        url: /spring/spring-http/resttemplate/
   - title: Test Code
     url: /spring/test-code/
     children:
