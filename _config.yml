@@ -363,8 +363,34 @@ defaults:
       header:
         actions:
           - label: <i class='fas fa-fw fa-link'></i> about db
-            url: /db/
-
+            url: /db/            
+  # QeuryDSL
+  - scope:
+      path: "db/query-dsl"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about db
+            url: /db/            
+  # Index
+  - scope:
+      path: "db/index"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about db
+            url: /db/       
+  # Lock
+  - scope:
+      path: "db/lock"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about db
+            url: /db/ 
 
 
   # AWS
