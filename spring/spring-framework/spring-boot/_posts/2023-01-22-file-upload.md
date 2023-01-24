@@ -3,7 +3,7 @@ title: Spring) Image upload
 excerpt: SpringBoot project에서 이미지 파일 업로드하기(Local)       
 ---   
 
-<br/> 
+<br/>   
      
 이번주는 팀 프로젝트 구현 기간이었다!           
 
@@ -36,12 +36,6 @@ excerpt: SpringBoot project에서 이미지 파일 업로드하기(Local)
     나의 할일에는 코테준비 + 면접준비도 있다는 사실..! 잊지말자      
   - 설 기간동안은 정리 + 모던자바인액션 책 + 알고리즘 (+ 구현은 쉬기)     
     지난번 플젝처럼 너무 기능구현에만 집중하며 달리는 느낌이 들어 지난주 내용을 정리할겸 쉬려한다   
-
-<br/>
-
-- 훈팀 미팅!   
-
-  ![0108](https://user-images.githubusercontent.com/103614357/213906531-daa39ae6-23ff-4b72-abed-baf696855cf0.png)
 
 <br/><br/>
 
