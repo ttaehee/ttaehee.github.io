@@ -140,6 +140,12 @@ DB:
         url: /db/jpa/about-jpa/
       - title: Entity Mapping
         url: /db/jpa/entity-mapping/
+  - title: QueryDSL
+    url: /db/query-dsl/
+  - title: Index
+    url: /db/index/
+  - title: Lock
+    url: /db/lock/
 
         
 AWS:
