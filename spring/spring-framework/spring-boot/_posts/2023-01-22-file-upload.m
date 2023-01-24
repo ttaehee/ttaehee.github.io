@@ -1,11 +1,9 @@
 ---   
-title: DevCourse) [15주차] 01.20
-excerpt: BE 팀프로젝트 - Image upload(Local)        
+title: Spring) Image upload
+excerpt: SpringBoot project에서 이미지 파일 업로드하기(Local)       
 ---   
 
-<br/>
-
-# 데브코스 백엔드 3기 99일차   
+<br/> 
      
 이번주는 팀 프로젝트 구현 기간이었다!           
 
