@@ -1,11 +1,9 @@
----   
-title: DevCourse) [16주차] 01.23
-excerpt: BE 팀프로젝트 - No offset pagination + QueryDSL         
----   
+---
+title: DB) QueryDSL
+excerpt: QueryDSL 사용해서 No offset pagination 구현하기, MySQL Descending index
+---
 
 <br/>
-
-# 데브코스 백엔드 3기 102일차   
 
 QueryDSL과 No offeset, 그리고 MySQL의 Descending index 정리하기!   
 
@@ -95,16 +93,13 @@ buildscript {
         queryDslVersion = "5.0.0"
     }
 }
-
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.7'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-
     //QueryDSL
     id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
-
 dependencies {
     ...
     
@@ -112,7 +107,6 @@ dependencies {
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 }
-
 tasks.named('test') {
     useJUnitPlatform()
 }
@@ -126,7 +120,6 @@ tasks.named('test') {
 ```
 //QueryDSL
 def querydslDir = "$buildDir/generated/querydsl"
-
 querydsl {
     jpa = true
     querydslSourcesDir = querydslDir
@@ -174,10 +167,8 @@ configurations {
 ```java
 @Configuration
 public class QueryDslConfig {
-
 	@PersistenceContext
 	EntityManager entityManager;
-
 	@Bean
 	public JPAQueryFactory jpaQueryFactory() {
 		return new JPAQueryFactory(entityManager);
@@ -215,14 +206,10 @@ Gradle Tasks에서 compileQuerydsl을 실행하면
 @Repository
 @RequiredArgsConstructor
 public class ProductCustomRepositoryImpl implements ProductCustomRepository {
-
 	private final JPAQueryFactory jpaQueryFactory;
-
 	QProduct qProduct = QProduct.product;
-
 	@Override
 	public List<Product> findAllByCursor(Long cursorId, int pageSize) {
-
 		return jpaQueryFactory
 				.selectFrom(qProduct)
 				.where(ltProductId(cursorId))
@@ -230,12 +217,10 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
 				.limit(pageSize)
 				.fetch();
 	}
-
 	private BooleanExpression ltProductId(Long cursorId) {
 		if (cursorId == null) {
 			return null;
 		}
-
 		return qProduct.id.lt(cursorId);
 	}
 }
