@@ -378,9 +378,108 @@ private String getFullPath(String uniqueName) {
 
 - 실제 저장하는 로직   
   - 이미지를 저장하기로 지정한 폴더가 없으면 상위폴더를 생성한다  
-  
+
 <br/><br/>   
-  
+	
+## MockMultipartFile로 multipart/form-data 전송 테스트하기    
+	
+### Integration test
+	
+```java
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+@DisplayName("Controller layer를 통해 ")
+public class ProductAdminControllerTest extends MysqlTestContainer {
+	@Autowired
+	MockMvc mockMvc;
+	
+	@Test
+	@DisplayName("등록 요청을 받아 상품을 등록한다")
+	void register() throws Exception {
+		//given
+		MockMultipartFile mockMultipartFile
+			= new MockMultipartFile("images", "test.png", MediaType.IMAGE_PNG_VALUE, "test".getBytes());
+
+		//when
+		ResultActions resultActions = mockMvc.perform(multipart("/api/v1/admin/product")
+			.file(mockMultipartFile)
+			.param("name", "Nike Zoom Vomero 5 SP")
+			.param("releasePrice", "189000")
+			.param("description", "Anthracite 2023")
+			.param("sizes", "200"));
+
+		//then
+		resultActions
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$.data.id").value(2));
+	}
+```
+	
+- `@SpringBootTest` : 통합테스트
+- `@AutoConfigureMockMvc` : MockMvc 자동 설정
+	
+<br/>  
+
+[Spring Rest Docs 공식문서](https://docs.spring.io/spring-restdocs/docs/current/reference/htmlsingle/)
+	
+![2](https://user-images.githubusercontent.com/103614357/215111377-8cdf35d6-9ec3-437d-8a58-1d9a7f7ba240.png)    	
+	
+- `MockMultipartFile` : MultipartFile 인터페이스를 상속받아 모의 구현함
+	- `MockMultipartFile(String name, String originalFilename, String contentType, byte[] content)`
+		- 나는 이미지를 dto로 받을 때, `List<MultipartFile> images)`로 받기 때문에 name에 iamges를 넣었다
+		- 파일의 이름(originalFilename)과 내용(content)은 dummy data이다
+		- contentType은 선언되어 있는 상수를 이용했다 `static final String MediaType.IMAGE_PNG_VALUE = "image/png"`
+	- `MockMultipartFile(String name, String originalFilename, String contentType, InputStream contentStream)`
+		- 이렇게 구현 할 시에는, contentStream 자리에 FileInputStream으로 실제 컴퓨터에 저장되어 있는 이미지를 불러오면 된다    
+			- ex) `new FileInputStream("업로드 할 실제 파일 path 입력")`
+<br/>
+	
+![제목 없음](https://user-images.githubusercontent.com/103614357/215110585-33c87c8b-130a-4387-ab05-db441f51e90b.png) 	
+	
+- mockMvc.perform(MockMultipartHttpServletRequestBuilder)
+	- multipart()는 MockMultipartHttpServletRequestBuilder를 생성
+	
+<br/>
+	 
+- 참고) multipart()로 요청을 보내는 방식은 항상 Post로 보냄  
+
+<br/><br/>     
+      
+#### MockMvc에서 MockMultipartFile을 Patch 요청으로 보내는 법
+- MockMvcRequestBuilders를 이용해서 요청 보낼 Http method 명시
+	- 수정 시에는 patch http method를 써서, 아래와 같이 명시해주었다 
+	
+```java
+@Test
+@DisplayName("수정 요청을 받아 상품을 수정한다")
+void update() throws Exception {
+	//given
+	...
+
+	MockMultipartHttpServletRequestBuilder mockMultipartHttpServletRequestBuilder =
+			MockMvcRequestBuilders.multipart("/api/v1/admin/product");
+	mockMultipartHttpServletRequestBuilder
+			.with(request -> {
+				request.setMethod("PATCH");
+				return request;
+			});
+
+	//when
+	ResultActions resultActions = mockMvc.perform(mockMultipartHttpServletRequestBuilder
+			.file(mockMultipartFile)
+			.param("id", "1")
+			.param("releasePrice", "189000")
+			.param("description", "Anthracite 2023")
+			.param("sizes", "200"));
+
+	//then
+	...
+}
+``` 
+			
+<br/><br/>
+	
 ## 그 외 고려했던 or 중인 사항들  
   
 - 이미지 정보를 MultipartFile로 받지 않고, base64로 인코딩된 값을 JSON 포맷으로 받는 방식도 있었는데,      
@@ -412,6 +511,7 @@ https://www.inflearn.com/questions/307133/image-%EC%A0%84%EC%86%A1%EA%B3%BC-%ED%
 https://hello-bryan.tistory.com/343          
 https://chb2005.tistory.com/102    
 https://velog.io/@jyyoun1022/SPRING%ED%8C%8C%EC%9D%BC-%EC%97%85%EB%A1%9C%EB%93%9C-%EC%B2%98%EB%A6%AC       
-https://way-be-developer.tistory.com/m/292   
-
+https://way-be-developer.tistory.com/m/292        
+https://stackoverflow.com/questions/38571716/how-to-put-multipart-form-data-using-spring-mockmvc     
+	
 <br/>   
