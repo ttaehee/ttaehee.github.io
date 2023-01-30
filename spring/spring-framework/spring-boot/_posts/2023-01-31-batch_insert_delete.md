@@ -1,0 +1,272 @@
+---
+title: Spring) Batch insert & Batch delete
+excerpt: JdbcTemplate과 JPQL을 사용해서 여러건의 데이터 처리하기 
+---
+
+<br/>
+
+- 현재 JPA를 사용하고 있는데     
+  saveAll, deleteAll 메서드 적용 시, Hibernate SQL query log에서 쿼리가 단 건씩 나가는 것 발견      
+  데이터의 수가 적으면 괜찮겠지만, 많아지면 부담일듯하다      
+  그리고 일단, 로그가 너무 많이 찍힘,,   
+  - insertAll은 JdbcTemplate를 사용해서 batch insert를 구현    
+    JPA batch insert를 사용할 수도 있었지만 GenerationType.IDENTITY 사용 시, Hiberbate에서 batch insert가 비활성화 처리 된다고 한다    
+    - why? DB에 Insert가 되어야 id 값을 알 수 있기 때문에, 쓰기 지연이 아닌 즉각적으로 쿼리를 날릴 수 밖에 없음          
+      = 1차 캐시에 쌓아둘 수 없음
+  - deleteAll은 JPQL로 좀 더 수월하게 batch delete를 구현하였다   
+
+<br/>   
+  
+## JdbcTemplate의 batchUpdate()   
+
+[Spring 공식문서의 JDBC Batch](https://docs.spring.io/spring-framework/docs/current/reference/html/data-access.html#jdbc-advanced-jdbc)    
+
+![제목 없음](https://user-images.githubusercontent.com/103614357/215502350-0310a113-d3b6-4ea3-9983-7140a537b405.png)    
+
+```
+INSERT INTO table1 (col1, col2) VALUES
+(val11, val12),
+(val21, val22),
+(val31, val32);
+```
+
+- Batch 작업은 보통 대량의 작업을 한번에 처리하는 경우를 말함   
+  - batch insert가 개별 insert에 비해 훨씬 효율적 
+
+<br/> 
+
+- 개별 Insert : 보통 쿼리를 던지고 응답을 받은 후에야 다음 쿼리를 전달 -> 지연이 많이 발생    
+- Batch Insert : 하나의 트랜잭션으로 묶임 -> 하나의 쿼리문으로 수행 => 성능 좋음    
+  
+<br/><br/>  
+
+### 추가 옵션 설정하기   
+
+- application-db.yml   
+
+```
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/shoe_kream?&rewriteBatchedStatements=true&profileSQL=true&logger=Slf4JLogger
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+```
+   
+- rewriteBatchedStatements
+  - batch 형태의 SQL로 재작성 해주는 옵션
+  - MySQL default false -> true로 변경해주어야 함   
+- profileSQL
+  - Driver에서 전송하는 쿼리 출력
+- logger
+  - MySQL driver는 default System.err로 출력하도록 설정되어 있음 -> Slf4jLogger로 변경
+
+<br/>   
+
+### 구현하기    
+[jdbc-batch-inserts-docs](https://www.baeldung.com/spring-jdbc-batch-inserts)    
+
+```java
+@Repository
+@RequiredArgsConstructor
+public class ProductOptionCustomRepositoryImpl implements ProductOptionCustomRepository {
+
+	private final JdbcTemplate jdbcTemplate;
+
+	@Override
+	public List<Long> saveAllBulk(List<ProductOption> productOptions) {
+	    return Arrays.stream(
+		    jdbcTemplate.batchUpdate(
+		        """
+		        INSERT INTO product_option 
+		        (`size`, product_id, highest_price, lowest_price, created_at, updated_at)
+		        VALUES (?,?,?,?,?,?)
+		        """,
+		        new BatchPreparedStatementSetter() {
+            
+		            @Override
+		            public void setValues(PreparedStatement preparedStatement, int index) throws SQLException {
+
+		                LocalDateTime createdAt = productOptions.get(index).getCreatedAt();
+		                if (createdAt == null) {
+		                    createdAt = LocalDateTime.now();
+		                }
+
+		                preparedStatement.setInt(1, productOptions.get(index).getSize());
+		                preparedStatement.setLong(2, productOptions.get(index).getProduct().getId());
+		                preparedStatement.setInt(3, 0);
+		                preparedStatement.setInt(4, 0);
+		                preparedStatement.setObject(5, createdAt);
+		                preparedStatement.setObject(6, LocalDateTime.now());
+		            }
+
+		            @Override
+		            public int getBatchSize() {
+		                return productOptions.size();
+		            }
+		        }
+		    ))
+		    .boxed()
+		    .map(Long::valueOf)
+		    .toList();
+		}
+}
+```
+
+<br/><br/>
+
+### save(), saveAll(), 내가 만든 batch insert method 성능 비교해보기       
+
+```java
+@SpringBootTest
+@ActiveProfiles("test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class BatchTest extends MysqlTestContainer {
+
+	private static final int COUNT = 10000;
+
+	public static Product PRODUCT = Product.builder()
+			.id(1L)
+			.name("상품 이름")
+			.description("상품 설명")
+			.releasePrice(50000)
+			.build();
+
+	@Autowired
+	private ProductOptionRepository productOptionRepository;
+
+	@BeforeAll
+	void init() {
+		ProductOption productOption = ProductOption.builder()
+				.size(200)
+				.product(PRODUCT)
+				.build();
+		productOptionRepository.save(productOption);
+	}
+
+	@Test
+	@DisplayName("single insert")
+	void save() {
+		long startTime = System.currentTimeMillis();
+
+		for (long i = 1; i <= COUNT; i++) {
+			ProductOption productOption = ProductOption.builder()
+					.size(200)
+					.product(PRODUCT)
+					.build();
+			productOptionRepository.save(productOption);
+		}
+
+		long endTime = System.currentTimeMillis();
+		System.out.println("==============================================");
+		System.out.printf("single insert 수행시간 : %d\n", endTime - startTime);
+		System.out.println("==============================================");
+	}
+
+	@Test
+	@DisplayName("saveAll insert")
+	void saveAll() {
+		long startTime = System.currentTimeMillis();
+
+		List<ProductOption> productOptions = new ArrayList<>();
+
+		for (long i = 1; i <= COUNT; i++) {
+			ProductOption productOption = ProductOption.builder()
+					.size(200)
+					.product(PRODUCT)
+					.build();
+			productOptions.add(productOption);
+		}
+
+		productOptionRepository.saveAll(productOptions);
+
+		long endTime = System.currentTimeMillis();
+		System.out.println("==============================================");
+		System.out.printf("saveAll insert 수행시간 : %d\n", endTime - startTime);
+		System.out.println("==============================================");
+	}
+
+	@Test
+	@DisplayName("batch insert")
+	void saveAllBatch() {
+		long startTime = System.currentTimeMillis();
+
+		List<ProductOption> productOptions = new ArrayList<>();
+
+		for (long i = 1; i <= COUNT; i++) {
+			ProductOption productOption = ProductOption.builder()
+					.size(200)
+					.product(PRODUCT)
+					.build();
+			productOptions.add(productOption);
+		}
+
+		productOptionRepository.saveAllBulk(productOptions);
+
+		long endTime = System.currentTimeMillis();
+		System.out.println("==============================================");
+		System.out.printf("batch insert 수행시간 : %d\n", endTime - startTime);
+		System.out.println("==============================================");
+	}
+}
+```
+
+<img width="524" alt="KakaoTalk_20230131_020435252" src="https://user-images.githubusercontent.com/103614357/215545721-9f5e1310-505d-4c9e-8bdb-0714d844d3ff.png">  
+
+<img width="531" alt="KakaoTalk_20230131_020438861" src="https://user-images.githubusercontent.com/103614357/215545733-2fb9d977-fecc-4314-a73a-6dd183b0fefc.png">  
+
+<img width="496" alt="KakaoTalk_20230131_020437101" src="https://user-images.githubusercontent.com/103614357/215545739-d41e720f-af15-40cd-8051-a6ab952d30af.png">  
+  
+- 10000개 데이터 기준으로 보니 시간차이가 엄청나다    
+  대용량 데이터 처리 시에는 batch insert 구현이 필수일듯 하다  
+  
+- 처음에 테스트하는데 batch insert가 saveAll보다 느려서 뭐지?했는데     
+  rewriteBatchedStatements 옵션을 application-test.yml에는 안해줘서였다   
+  
+<br/><br/>
+
+## Batch Delete    
+
+- JPA의 deleteAll 또한 단건의 delete 쿼리들이 나가게 된다    
+
+- 해결
+  - 기본 함수인 `deleteInBatch(Iterable<T> entities)` 이용
+    - 좋은 방법이지만 삭제하고자 하는 Entity들을 메모리상에 가져와서 호출해야 하는 단점 존재
+  - `@Modifying` 이용 : 자유롭게 조건을 설정하여 단 한 번의 쿼리로 Bulk Delete를 할 수 있음
+  
+<br/><br/>  
+   
+- 나는 `@Modifying`을 사용해 구현했다   
+
+```java
+@Modifying(clearAutomatically = true)    
+@Query("DELETE FROM ProductOption productOption WHERE productOption.product.id = :productId")
+void deleteAllByProductId(Long productId);
+```
+
+- `clearAutomatically = true` : method 실행 직후, 영속성 컨텍스트를 clear 하라는 의미     
+
+<br/>
+
+- 옵션해줘야 하는 이유    
+  - Bulk 연산은 영속성 컨텍스트를 무시하고 바로 DB로 감    
+    -> 영속성 컨텍스트에 존재하는 객체들은 변경이 전혀 반영되지 않음   
+    - ex) A를 가져옴       
+      -> Modifying을 통해서 A를 수정함(1차 캐시는 변경이 안된채로 바로 DB로 감)       
+      -> A를 가져옴 (변경되지 않은 결과가 나옴)      
+
+<br/><br/>   
+  
+- inser, delete 시 모두 단 1개의 쿼리로 동작하는 것 확인함     
+  콘솔창이 깔끔해졌다!    
+
+<br/><br/>
+
+Reference       
+https://docs.spring.io/spring-framework/docs/current/reference/html/data-access.html#jdbc-advanced-jdbc     
+https://techblog.woowahan.com/2695/       
+https://homoefficio.github.io/2020/01/25/Spring-Data%EC%97%90%EC%84%9C-Batch-Insert-%EC%B5%9C%EC%A0%81%ED%99%94/     
+https://traeper.tistory.com/208        
+https://soongjamm.tistory.com/153    
+
+<br/>  
