@@ -201,6 +201,10 @@ Gradle Tasks에서 compileQuerydsl을 실행하면
 => Querydsl의 BooleanExpression을 사용하자     
 
 <br/>
+
+```
+CREATE INDEX index_product_name ON product (`name`);
+```
   
 ```
 @Repository
@@ -212,7 +216,10 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
 	public List<Product> findAllByCursor(Long cursorId, int pageSize) {
 		return jpaQueryFactory
 				.selectFrom(qProduct)
-				.where(ltProductId(cursorId))
+				.where(
+					ltProductId(cursorId),
+					qProduct.name.like(searchWord + "%")
+				)
 				.orderBy(qProduct.id.desc())
 				.limit(pageSize)
 				.fetch();
@@ -230,12 +237,21 @@ public class ProductCustomRepositoryImpl implements ProductCustomRepository {
 - QueryDSL의 where는 null이 parameter로 올 경우 조건문에서 제외함     
   - ltProductId(Long cursorId)에서 cursorId가 null일 경우 where 조건문에 null이 들어가 제외됨   
 
-<br/>  
+<br/>
 
 - 요청에서 받은 cursorId보다 작은 아이디의 상품을 pageSize만큼 조회한다   
 - 그리고 Service layer에서 조회한 데이터 중 마지막 데이터의 id를 lastId로 해서 같이 응답해주었다  
   - 다음번 페이지 요청시 lastId를 보내게끔   
   - 처음엔 Slice를 이용해서 boolean hasNext를 보냈는데, lastId 보내는 방법이 더 깔끔한듯해 변경했다   
+
+<br/>  
+
+- 추가(23/01/30)
+- 상품 목록 조회 시, 검색 기능을 추가했다    
+  검색어와 같이 요청 시, 검색어가 포함된 상품만 조회하도록 하였다     
+  - 처음에 일단 기능이 돌아가는것에 초점을 맞추어, Like와 %를 사용해 구현하였고    
+    대신, full scan은 막고자 뒤에만 %를 붙였다
+  - 시간이 된다면 중간값 검색 기능을 위해, 리팩토링 시 Full-Text search를 공부해 적용해 볼 예정   
 
 <br/>
 
