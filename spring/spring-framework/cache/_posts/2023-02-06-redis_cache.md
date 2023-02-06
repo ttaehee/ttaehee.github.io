@@ -72,13 +72,14 @@ $ brew install redis
 
 - redis server 실행중인지 확인
   - 새로운 터미널 창에서 확인
-  - 응답 pong = 서버 실행중임을 의미   
-- redis-cli : command line interface로 데이터를 저장, 조회, 삭제    
-  - 테스트로 keys 명령어를 사용해보았는데, O(N)으로 전체 장애의 대부분이 KEYS, SAVE 설정 사용으로 발생할 정도라고 해서 비활성화했다    
+  - 응답 pong = 서버 실행중임을 의미  
 
   ```
   $ redis-cli ping
   ```
+  
+- redis-cli : command line interface로 데이터를 저장, 조회, 삭제    
+  - 테스트로 keys 명령어를 사용해보았는데, O(N)으로 전체 장애의 대부분이 KEYS, SAVE 설정 사용으로 발생할 정도라고 해서 비활성화했다    
 
   <img width="422" alt="KakaoTalk_20230206_150638776" src="https://user-images.githubusercontent.com/103614357/216898523-c2d23358-7745-4f79-b999-c172f467287f.png">
 
@@ -129,7 +130,7 @@ public class RedisProperties {
 <br/><br/>
 
 - RedisConfig.java
-  - RedisTemplate 방식 사용    
+  - RedisTemplate 방식 사용  
     - 참고) Spring Data Redis는 Redis에 RedisTemplate, RedisRepository 방식의 접근 방식 제공 
 
 ```java
@@ -151,17 +152,19 @@ public class RedisConfig {
 		return redisTemplate;
 	}
 
-	@Bean
-	public RedisTemplate<String, CouponEventRegisterRequest> couponEventRedisTemplate() {
-		RedisTemplate<String, CouponEventRegisterRequest> redisTemplate = new RedisTemplate<>();
-		redisTemplate.setConnectionFactory(redisConnectionFactory());
-		redisTemplate.setKeySerializer(new StringRedisSerializer());
-		redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(CouponEventRegisterRequest.class));
-		return redisTemplate;
-	}
-
 }
 ```
+
+- RedisConnectionFactory interface 구현체  
+  - LettuceConnectionFactory : [성능이 조금 더 좋아 선택했음](https://jojoldu.tistory.com/418)   
+    - 비동기 방식으로 요청 -> TPS/CPU/Connection 개수와 응답속도 등 전 분야에서 Jedis 보다 뛰어남    
+  - JedisConnectionFactory
+- RedisTemplate  
+  - Redis data access code를 간소화 하기 위해 제공되는 클래스 
+  - Connection management 수행  
+  - 주어진 객체들을 자동으로 직렬화/역직렬화
+  - 트랜잭션 기능 제공
+    - 롤백 지원은 안함    
 
 <br/><br/>
 
@@ -176,7 +179,7 @@ public class RedisConfig {
 @RequiredArgsConstructor
 public enum CacheType {
 	PRODUCT("product", ConstantConfig.DEFAULT_TTL_SEC, ConstantConfig.DEFAULT_MAX_SIZE),
-	PRODUCTS("products", ConstantConfig.DEFAULT_TTL_SEC, ConstantConfig.DEFAULT_MAX_SIZE),
+	PRODUCTS("products", ConstantConfig.DEFAULT_TTL_SEC, ConstantConfig.DEFAULT_MAX_SIZE)
 
 	private final String cacheName;
 	private final int expiredAfterWrite;
@@ -227,8 +230,16 @@ public class RedisCacheConfig {
 }
 ```
 
-- 이번에도 지난번과 마찬가지로 cache type에 정리해둔 캐시 종류들을 사용하기 위해 stream 사용   
-  - 지난번엔 list를 이용했다면 이번엔 map을 사용하였다    
+- Serializer
+  - JdkSerializationRedisSerializer: default   
+  - StringRedisSerializer: String 값을 정상적으로 읽어서 저장 but Entity나 VO같은 type은 cast 할 수 없음      
+  - Jackson2JsonRedisSerializer(classType.class): classType 값을 json 형태로 저장    
+    - 특정 classType에만 적용되게 되는 단점      
+  - GenericJackson2JsonRedisSerializer: 모든 classType을 json 형태로 저장할 수 있는 범용적인 Jackson2JsonRedisSerializer
+    - caching에 class type도 저장된다는 단점
+    - but RedisTemplate을 이용해 다양한 타입 객체를 캐싱할 때 사용하기에 좋음
+
+- 이번에도 지난번과 마찬가지로 cache type에 정리해둔 캐시 종류들을 사용해 세팅         
 
 <br/>
 
@@ -244,6 +255,23 @@ public class RedisCacheConfig {
 캐시를 저장할 저장소를 알려주고, 어떠한 cache manager를 사용할건지만 알려주면 변경됨      
 깔끔해서 너무 좋다!    
 
+<br/><br/>
+
+### 결과(성능 개선)   
+
+- caching 전    
+
+![KakaoTalk_20230206_161423051](https://user-images.githubusercontent.com/103614357/216955233-eba0727e-2812-45e5-83a2-81eeab67c358.png)      
+
+- caching 후  
+
+![KakaoTalk_20230206_161424395](https://user-images.githubusercontent.com/103614357/216955246-8a38c8b8-bcb9-489f-a7fa-31f1053be9d1.png)      
+
+<br/>
+  
+=> 데이터 10건 조회 기준, 26초에서 8초로 개선되었다        
+다이나믹하다..!   
+  
 <br/><br/>
 
 Reference     
