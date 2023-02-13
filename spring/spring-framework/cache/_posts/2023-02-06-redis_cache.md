@@ -261,15 +261,15 @@ public class RedisCacheConfig {
 
 - caching 전    
 
-![KakaoTalk_20230206_161423051](https://user-images.githubusercontent.com/103614357/216955233-eba0727e-2812-45e5-83a2-81eeab67c358.png)      
+![KakaoTalk_20230206_161423051](https://user-images.githubusercontent.com/103614357/216955233-eba0727e-2812-45e5-83a2-81eeab67c358.png)        
 
 - caching 후  
 
-![KakaoTalk_20230206_161424395](https://user-images.githubusercontent.com/103614357/216955246-8a38c8b8-bcb9-489f-a7fa-31f1053be9d1.png)      
+![KakaoTalk_20230213_180006324](https://user-images.githubusercontent.com/103614357/218416905-bf35450d-bac2-4127-814c-2aafe9ea763f.png)   
 
 <br/>
   
-=> 데이터 10건 조회 기준, 26초에서 8초로 개선되었다        
+=> 데이터 10건 조회 기준, 26초에서 3초로 개선되었다        
 다이나믹하다..!   
   
 <br/><br/>
