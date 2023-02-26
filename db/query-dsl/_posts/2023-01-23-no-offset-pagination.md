@@ -1,6 +1,6 @@
 ---
-title: DB) QueryDSL
-excerpt: QueryDSL 사용해서 No offset pagination 구현하기, MySQL Descending index
+title: DB) No offset pagination 구현으로 조회 성능 올리기
+excerpt: QueryDSL과 MySQL Descending index 사용하기
 ---
 
 <br/>
