@@ -1,6 +1,6 @@
 ---
-title: JAVA) java.lang.Reflection
-excerpt: reflection api
+title: JAVA) JPA Entity에 기본생성자가 꼭 필요한 이유는 무엇인가
+excerpt: Reflection이란 무엇이고 어디에 왜 어떻게 쓰이는걸까 
 ---
 
 <br/>
