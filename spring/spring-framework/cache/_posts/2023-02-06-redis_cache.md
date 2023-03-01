@@ -1,5 +1,5 @@
 ---   
-title: Spring) Redis cache
+title: Spring) Redis cache 사용해서 목록 조회 성능 올리기  
 excerpt: SpringBoot project에서 Global cache 사용하기        
 ---   
 
@@ -251,9 +251,9 @@ public class RedisCacheConfig {
 
 <br/>
    
-=> Spring의 추상화 덕분에 구현부분은 바꿀게 전혀 없었다!     
+=> Spring의 추상화 덕분에 구현부분은 바꿀게 전혀 없었다         
 캐시를 저장할 저장소를 알려주고, 어떠한 cache manager를 사용할건지만 알려주면 변경됨      
-깔끔해서 너무 좋다!    
+깔끔해서 너무 좋다!     
 
 <br/><br/>
 
