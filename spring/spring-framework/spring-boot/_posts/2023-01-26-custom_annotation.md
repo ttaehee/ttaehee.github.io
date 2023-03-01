@@ -1,5 +1,5 @@
 ---   
-title: Spring) Custom Annotation
+title: Spring) 데이터 유효성 검증 Custom Annotation으로 구현해 비즈니스 로직과 분리하기
 excerpt: SpringBoot project에서 커스텀 어노테이션 만들기     
 ---   
 
