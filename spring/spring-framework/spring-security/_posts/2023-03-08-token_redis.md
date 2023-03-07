@@ -85,7 +85,130 @@ refresh token은 access token의 보안을 위해 나온 개념이기 때문에 
 
 <br/><br/>
 
-## EC2에 Redis 설치하기     
+## Redis의 BGSAVE 관련 에러
+
+프론트에서 갑자기 로그인이 안된다며 서버가 돌아가고있는지 확인해달라고 했다    
+오잉..!    
+확인해본 바 서버는 잘 돌아가고 있는데 로그를 확인해보니 레디스 쪽이 문제인듯 했다    
+
+```
+io.lettuce.core.RedisCommandExecutionException: MISCONF Redis is configured to save RDB snapshots
+```
+
+<br/>   
+
+[해결에 참고한 글](https://charsyam.wordpress.com/2013/01/28/%EC%9E%85-%EA%B0%9C%EB%B0%9C-redis-%EC%84%9C%EB%B2%84%EA%B0%80-misconf-redis-is-configured-to-save-rdb-snapshots-%EC%97%90%EB%9F%AC%EB%A5%BC-%EB%82%B4%EB%A9%B0-%EB%8F%99%EC%9E%91%ED%95%98%EC%A7%80/)   
+
+- Redis는 Persistent를 위해 BGSAVE로 RDB를 만들어냄   
+  BGSAVE 실패하면 write 커맨드를 전부 거부함    
+  (어떤 경우에 실패하는거지? 다양한 이유가 있다고 함 vm_overcommit_memory 정책문제 or 디스크 이슈 등)         
+  - redis를 데이터 저장용으로 사용 중이기 때문에 rdb를 끌 순 없었다
+  - 따라서 해당 옵션을 비활성화했다  `config set stop-writes-on-bgsave-error no`   
+
+  ```
+  [root@localhost ~]# redis-cli
+  127.0.0.1:6379> config set stop-writes-on-bgsave-error no
+  OK
+  127.0.0.1:6379> quit
+  ```
+
+<br/><br/>
+
+## 구현하기   
+
+- KeyValueRepository.java
+
+```java
+public interface KeyValueRepository {
+	void save(String key, String value, long expireSeconds);
+
+	String get(String key);
+
+	void delete(String key);
+}
+```
+
+- RedisRepository.java
+
+```java
+@Component
+@RequiredArgsConstructor
+public class RedisRepository implements KeyValueRepository {
+
+	private final StringRedisTemplate stringRedisTemplate;
+
+	@Override
+	public void save(String key, String value, long expireSeconds) {
+		ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+		valueOperations.set(key, value, Duration.ofSeconds(expireSeconds));
+	}
+
+	@Override
+	public String get(String key) {
+		ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+		return valueOperations.get(key);
+	}
+
+	@Override
+	public void delete(String key) {
+		stringRedisTemplate.delete(key);
+	}
+}
+```   
+
+- service layer   
+
+```java
+@Transactional
+public MemberLoginResponse reissueMember(MemberReissueRequest memberReissueRequest) {
+    String accessToken = memberReissueRequest.accessToken();
+    String refreshToken = memberReissueRequest.refreshToken();
+    jwtTokenProvider.validateToken(refreshToken);
+    String memberId = jwtTokenProvider.extractMember(accessToken);
+
+    if (!redisRepository.get(memberId).equals(refreshToken)) {
+      throw new InvalidRefreshTokenException("인증 정보가 만료되었습니다.");
+    }
+
+    redisRepository.delete(memberId);
+    WumoJwt wumoJwt = getWumoJwt(memberId);
+
+    return toMemberLoginResponse(wumoJwt);
+}
+
+private WumoJwt getWumoJwt(String memberId) {
+    WumoJwt wumoJwt = jwtTokenProvider.generateToken(memberId);
+    redisRepository.save(
+      memberId,
+      wumoJwt.getRefreshToken(),
+      jwtTokenProvider.getRefreshTokenExpireSeconds()
+    );
+    return wumoJwt;
+}
+```
+
+- 현재는 redis를 사용하지만, 추후에는 변경될 수 있으니(변경 가능성은 적지만) 부모 클래스를 KeyValueRepository로 지어보았다    
+  변수 네이밍은 어려워   
+  
+<br/>
+
+### 패키지 고민   
+redis에 접근하는게 추후에는 Member domain뿐이진 아닐것 같기도 하고   
+도메인 정보를 가지고 있느냐 생각했을때 아니기 때문에              
+redis 관련 클래스들은 global 패키지 안에 두었다      
+
+<br/><br/>
+
+## 글로벌 회사들의 토큰 정책   
+
+- 내가 구현한 것처럼 access token 발급할 때, refresh token도 새로 발급하는 정책   
+- refresh token을 아예 사용하지 않는 정책(애플의 토큰 정책)
+- refresh token을 사용하지 않으면서 access token을 short-term, long-term 2가지로 분리하는 정책(페이스북의 토큰 정책)
+- 서비스에서 관리하는 고유한 키값으로 token을 재발급 받는 정책 [구글의 토큰 정책](https://developers.google.com/identity/protocols/oauth2/web-server?hl=ko#httprest_2)
+
+<br/><br/>
+
+## 나중에 참고하기 위함) EC2에 Redis 설치하기     
 
 [참고한 글](https://small-stap.tistory.com/109?category=989595)      
 
@@ -199,43 +322,5 @@ sudo service redis-server star
 redis-cli
 127.0.0.1:6379>
 ```
-
-<br/><br/>
-
-## Redis의 BGSAVE 관련 에러
-
-프론트에서 갑자기 로그인이 안된다며 서버가 돌아가고있는지 확인해달라고 했다    
-오잉..!    
-확인해본 바 서버는 잘 돌아가고 있는데 로그를 확인해보니 레디스 쪽이 문제인듯 했다    
-
-```
-io.lettuce.core.RedisCommandExecutionException: MISCONF Redis is configured to save RDB snapshots
-```
-
-<br/>   
-
-[해결에 참고한 글](https://charsyam.wordpress.com/2013/01/28/%EC%9E%85-%EA%B0%9C%EB%B0%9C-redis-%EC%84%9C%EB%B2%84%EA%B0%80-misconf-redis-is-configured-to-save-rdb-snapshots-%EC%97%90%EB%9F%AC%EB%A5%BC-%EB%82%B4%EB%A9%B0-%EB%8F%99%EC%9E%91%ED%95%98%EC%A7%80/)   
-
-- Redis는 Persistent를 위해 BGSAVE로 RDB를 만들어냄   
-  BGSAVE 실패하면 write 커맨드를 전부 거부함    
-  (어떤 경우에 실패하는거지? 다양한 이유가 있다고 함 vm_overcommit_memory 정책문제 or 디스크 이슈 등)         
-  - redis를 데이터 저장용으로 사용 중이기 때문에 rdb를 끌 순 없었다
-  - 따라서 해당 옵션을 비활성화했다  `config set stop-writes-on-bgsave-error no`   
-
-```
-[root@localhost ~]# redis-cli
-127.0.0.1:6379> config set stop-writes-on-bgsave-error no
-OK
-127.0.0.1:6379> quit
-```
-
-<br/><br/>
-
-## 글로벌 회사들의 토큰 정책   
-
-- 내가 구현한 것처럼 access token 발급할 때, refresh token도 새로 발급하는 정책   
-- refresh token을 아예 사용하지 않는 정책(애플의 토큰 정책)
-- refresh token을 사용하지 않으면서 access token을 short-term, long-term 2가지로 분리하는 정책(페이스북의 토큰 정책)
-- 서비스에서 관리하는 고유한 키값으로 token을 재발급 받는 정책 [구글의 토큰 정책](https://developers.google.com/identity/protocols/oauth2/web-server?hl=ko#httprest_2)
 
 <br/>
