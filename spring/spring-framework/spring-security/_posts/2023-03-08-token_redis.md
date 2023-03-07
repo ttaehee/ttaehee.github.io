@@ -85,7 +85,7 @@ refresh token은 access token의 보안을 위해 나온 개념이기 때문에 
 
 <br/><br/>
 
-## Redis의 BGSAVE 관련 에러
+## redis의 BGSAVE 관련 에러 해결
 
 프론트에서 갑자기 로그인이 안된다며 서버가 돌아가고있는지 확인해달라고 했다    
 오잉..!    
@@ -100,7 +100,7 @@ io.lettuce.core.RedisCommandExecutionException: MISCONF Redis is configured to s
 [해결에 참고한 글](https://charsyam.wordpress.com/2013/01/28/%EC%9E%85-%EA%B0%9C%EB%B0%9C-redis-%EC%84%9C%EB%B2%84%EA%B0%80-misconf-redis-is-configured-to-save-rdb-snapshots-%EC%97%90%EB%9F%AC%EB%A5%BC-%EB%82%B4%EB%A9%B0-%EB%8F%99%EC%9E%91%ED%95%98%EC%A7%80/)   
 
 - Redis는 Persistent를 위해 BGSAVE로 RDB를 만들어냄   
-  BGSAVE 실패하면 write 커맨드를 전부 거부함    
+  BGSAVE 실패하면 write 명령어를 전부 거부함    
   (어떤 경우에 실패하는거지? 다양한 이유가 있다고 함 vm_overcommit_memory 정책문제 or 디스크 이슈 등)         
   - redis를 데이터 저장용으로 사용 중이기 때문에 rdb를 끌 순 없었다
   - 따라서 해당 옵션을 비활성화했다  `config set stop-writes-on-bgsave-error no`   
@@ -111,6 +111,25 @@ io.lettuce.core.RedisCommandExecutionException: MISCONF Redis is configured to s
   OK
   127.0.0.1:6379> quit
   ```
+  
+<br/>
+
+- stop-writes-on-bgsave-error
+	- 백그라운드에서 RDB로 데이터를 저장할 때 오류 발생에 대한 처리를 설정
+	- yes : RDB에 데이터를 저장하다 실패하면 모든 쓰기 요청을 거부함  
+	- no : 쓰기 요청은 처리하지만 RDB에 데이터가 저장되지 않음   
+
+<br/>
+
+**참고**   
+
+- Redis는 백업을 위해 RDB 방식과 AOF 방식 지원
+	- RDB 저장 방법
+		- SAVE or BGSAVE 명령어로 RDB 저장함  
+		- save 명령 : redis에서 클라이언트 요청 못받음    
+		- bgsave 명령 : 자식 프로세스를 생성하여 백그라운드에서 메모리에 있는 데이터를 RDB로 저장함
+			- 백그라운드로 수행하기 때문에 클라이언트 요청 처리 가능   
+			  -> save보다 bgsave 명령어 통한 저장 권고
 
 <br/><br/>
 
