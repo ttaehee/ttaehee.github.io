@@ -29,7 +29,7 @@ excerpt: Spring Security & JWT & Redis를 활용한 토큰 기반 인증 구현�
 
 <br/><br/>
 
-### refresh token을 저장을 Redis에 한 이유와 고민했던 점        
+### refresh token 저장을 Redis에 한 이유와 고민했던 점        
 - 일단 redis는 데이터 저장의 기간을 정하기 매우 편하다   
   refresh token은 일정 시간 이후 만료되어야 한다는 점에서 redis의 데이터 유효기간(time to live)을 지정할 수 있다는 점이 좋았다     
 - 두번째, access token의 만료 기간을 짧게 잡는 만큼 refresh token에 접근할 일이 꽤 많을텐데    
@@ -81,7 +81,7 @@ refresh token은 access token의 보안을 위해 나온 개념이기 때문에 
 - client에서 가지고 있던 access token과 refresh token을 같이 보내며 재발급 요청     
   - access token에 담긴 회원 정보로 redis에서 refresh token 정보 가져와서 client에서 보낸 refresh token과 비교     
     - 검증되었다면 새로운 access token과 refresh token 발급해서 응답    
-    - 없다면 잘못된 요청이라고 판단하여 400 code 반환
+    - 없다면 만료되었다는 의미일테니, 마찬가지로 인증되지 않은 사용자와 같다고 생각하여 401 code를 사용했다  
 
 <br/><br/>
 
@@ -227,7 +227,7 @@ redis 관련 클래스들은 global 패키지 안에 두었다
 
 <br/><br/>
 
-## 나중에 참고하기 위함) EC2에 Redis 설치하기     
+## 나중에 참고하기 위해 정리해두기) EC2에 Redis 설치하기     
 
 [참고한 글](https://small-stap.tistory.com/109?category=989595)      
 
