@@ -214,6 +214,16 @@ private WumoJwt getWumoJwt(String memberId) {
 - 현재는 redis를 사용하지만, 추후에는 변경될 수 있으니(변경 가능성은 적지만) 부모 클래스를 KeyValueRepository로 지어보았다    
   변수 네이밍은 어려워   
   
+	![KakaoTalk_20230306_230214406](https://user-images.githubusercontent.com/103614357/224497169-0b9f1730-175a-4f6c-9d3a-3b21e8f82b21.png)	
+
+<br/>
+
+- RedisTemplate 그냥 썻다가   
+
+	![KakaoTalk_20230306_230215780](https://user-images.githubusercontent.com/103614357/224497618-c8573b80-3534-470e-b188-8faf3b38b2cb.png)
+	
+	- 이렇게 나왔다 직렬화 부분만 String으로 바꾸어줘도 되지만 제공해주는 StringRedisTemplate으로 변경했다      
+
 <br/>
 
 ### 패키지 고민   
