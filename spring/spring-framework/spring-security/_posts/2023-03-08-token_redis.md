@@ -5,6 +5,8 @@ excerpt: Spring Security & JWT & Redis를 활용한 토큰 기반 인증 구현�
 
 <br/> 
 
+- [참고) 토큰 기반 로그인 및 access token, refresh token 발급 구현 정리](https://ttaehee.github.io/spring/spring-framework/spring-security/jwt_login/)
+
 - 사실 JWT와 같은 Claim 기반 토큰을 사용하면 refresh token을 서버쪽에서 꼭 저장할 필요는 없지만,     
   토큰 탈취시 대응하겠다는 취지로 강제 로그아웃, 유저 차단이 가능하도록 서버쪽에서 refresh token을 저장하도록 구현했다    
   처음에는 데이터베이스에 저장했는데 스케줄러 등을 사용해 주기적으로 refresh token을 만료처리 해주어야 하는 과정이 서버의 자원을 사용하는 데에 있어 비효율적이라고 생각했고 redis를 사용했다   
