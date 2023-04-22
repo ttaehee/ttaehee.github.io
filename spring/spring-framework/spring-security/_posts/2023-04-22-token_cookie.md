@@ -12,7 +12,9 @@ excerpt: Cookie 옵션 설정(httpOnly, samsite, secure, maxAge 등)
   - local storage에 보관하는 것은 JS로 접근할 수 있어 보안에 취약    
   - cookie는 일단 모든 HTTP 요청에 포함되어 보내지며 httpOnly나 secure 옵션을 사용하면 JS로 접근 불가
          
-  => 따라서 우리는 위의 이유들과 보안 강화를 위해 refresh token 저장에 httpOnly cookie를 사용하기로 했다     
+  => 따라서 우리는 위의 이유들과 보안 강화를 위해 refresh token 저장에 httpOnly cookie를 사용하기로 했다    
+  XSS와 CSRF 공격 모두 막을 수 있도록 서버에서 토큰 발급 시, body에 access token을, httpOnly cookie에 refresh token을 담아 응답하고   
+  프론트에서 access token을 private variable로 관리하기로 했다    
 
 <br/>
 
@@ -112,6 +114,13 @@ cookie : 클라이언트(브라우저) 로컬에 저장되는 키와 값이 들�
 
 <br/>
 
+### maxAge
+- 따로 설정하지 않는다면 `쿠키의 생존주기 = 브라우저의 생존주기`이기 때문에     
+  브라우저를 닫으면 저장되었던 쿠키도 사라짐    
+  => maxAge 옵션을 통해 브라우저와 별개로 외부파일로 저장하자
+
+<br/>
+
 ### samsite
 - 쿠키가 같은 도메인에서만 접근할 수 있어야 하는지 여부를 결정하는 옵션
 - cookie에서도 cors처럼 origin이 다를경우 각 브라우저마다 정해놓은 보안정책이 존재
@@ -131,13 +140,6 @@ cookie : 클라이언트(브라우저) 로컬에 저장되는 키와 값이 들�
 - 20년 크롬 80 버전이 배포되면서 SameSite의 기본값이 Lax로 변경           
   -> 이에 따라 예외사항에 포함되지 않으면 다른 도메인 간의 요청에서 쿠키를 담아주지 않음   
 - 또한, 기본 SameSite 속성으로 None을 사용하려면 반드시 해당 쿠키는 secure 쿠키여야함    
-
-<br/>
-
-### maxAge
-- 따로 설정하지 않는다면 `쿠키의 생존주기 = 브라우저의 생존주기`이기 때문에     
-  브라우저를 닫으면 저장되었던 쿠키도 사라짐    
-  => maxAge 옵션을 통해 브라우저와 별개로 외부파일로 저장하자
 
 <br/><br/>
 
