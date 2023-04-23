@@ -47,7 +47,7 @@ excerpt: arraylist add() 동작 방식
     <img width="665" alt="스크린샷 2023-04-22 오후 6 43 28" src="https://user-images.githubusercontent.com/103614357/233776431-b1486e07-35c5-407a-a129-d850d2eb364f.png">
   
     - 현재 배열의 길이에 해당 하는 oldCapacity로 두고    
-      oldCapacity + (oldCapacity >> 1) 를 새로운 capacity로 설정
+      `oldCapacity + (oldCapacity >> 1)`을 새로운 capacity로 설정
       - `oldCapacity >> 1`은 1 right shift이므로 2로 나눈 것과 같음
 
     => 이후, 기존의 elementdata 값들을 포함하고 새로운 capacity 크기를 갖는 배열을 copyof() 메소드를 통해 복사하여 사용
@@ -77,8 +77,8 @@ excerpt: arraylist add() 동작 방식
 <br/><br/>
 
 Reference      
-[Class ArrayList<E>](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html)     
-[[Collection]ArrayList](https://m.blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=pistolcaffe&logNo=221019498243&proxyReferer=https:%2F%2Fwww.google.com%2F)     
-[array(배열)과 arrayList(리스트)의 차이](https://zorba91.tistory.com/287)
+[Class ArrayList](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html)        
+[ArrayList](https://m.blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=pistolcaffe&logNo=221019498243&proxyReferer=https:%2F%2Fwww.google.com%2F)        
+[array(배열)과 arrayList(리스트)의 차이](https://zorba91.tistory.com/287)    
   
 <br/>
