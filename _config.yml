@@ -16,9 +16,9 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 
 # Site Settings
 locale                   : "ko-KR"
-title                    : "taehee's TIL"
+title                    : "taehee's coding"
 title_separator          : "|"
-subtitle                 : "Today I Learned !"
+subtitle                 : "I am one step closer today"
 name                     : "taehee"
 description              : ""
 url                      : "https://ttaehee.github.io"
