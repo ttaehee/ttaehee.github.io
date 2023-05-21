@@ -39,9 +39,9 @@ excerpt: 설계부터 구현 과정과 고려사항들
 
 ## 설계 시 고려한 내용
 ### 1. 속도    
-외부 api 호출 시 **데이터의 로딩 속도 저하**가 있어 비동기적으로 처리하였다    
-이는 chat gpt와 mail 전송 시 모두 **비동기로 처리**하였다    
-thread pool 관련하여 추가로 공부해서 커스터마이징 하려한다    
+외부 api 호출 시 **데이터의 로딩 속도 저하**가 있어 병렬 처리하였다    
+([관련 내용 정리) 모든 사용자에게 메일을 전송하는 작업 처리 시, parallelStream 사용이 유리할까](https://ttaehee.github.io/java/java-advanced/stream/parallel_stream/))    
+thread pool 관련하여 추가로 공부해서 커스터마이징 하려한다     
 
 <br/>
 
@@ -77,7 +77,7 @@ thread pool 관련하여 추가로 공부해서 커스터마이징 하려한다
 ## 구현   
 ### Open AI API 연동    
 면접 질문을 Open AI(Chat GPT)로부터 가져오기 위해 Open AI API를 사용했다      
-[OpenAI](https://platform.openai.com/overview)에서 키를 발급받고, **api 호출을 위해 OpenFeignClient**를 사용했다     
+[OpenAI에서 키](https://platform.openai.com/overview)를 발급받고, **api 호출을 위해 OpenFeignClient**를 사용했다     
 ([지난번에 정리한 OpenFeignClient](https://ttaehee.github.io/spring/spring-http/open_feign/))  
 
 <br/>
@@ -132,5 +132,26 @@ public class QuestionService {
 
 매일 새벽 5시에 모든 사용자에게 일괄적으로 질문이 담긴 메일이 전송될 수 있도록 스케줄링 기능을 사용하였다    
 스케줄링에는 `spring-boot-starter`에 기본으로 지원되는 spring scheduler를 사용하였다   
+
+<br/><br/>
+
+## 마무리
+
+### 설계를 자주 해보며 발전해 나가자    
+설계 과정에서의 클래스들말고도, 실제 구현하면서 필요하다고 생각되는 아이들이 생겼다(위에 적었던, 예를 들면 질문들을 한줄씩 문자열로 정리해주는 아이라든지)     
+사실 필요한 기능들은 그대로이지만, 미처 분리를 생각하지 못한것이라는 생각이 든다   
+설계는 많이 해볼수록 발전한다고 하니까 이러한 경험들을 기록해두고 기억해두어야겠다    
+
+<br/>
+
+### Open AI(Chat GPT) 연동은 재미있었다     
+chat gpt를 호출하니 무언가 재미있었다    
+신박하고 새로웠달까    
+그리고 외부 api 호출에 OpenFeignClient를 2번째 사용해보았는데 덕분에 훨씬 익숙해졌다      
+
+<br/>
+
+### parallel stream을 사용해보았다
+Java에서 stream API를 사용하면서 한 번도 parallel stream을 처음 사용해보며 공부해보는 경험이었다   
 
 <br/>
