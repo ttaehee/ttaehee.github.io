@@ -146,7 +146,8 @@ parallelStream은 병렬 처리라 무조건 더 빠를거라는 생각은 하�
 <br/><br/>
 
 Reference       
-Effective Java
+Effective Java     
+[Java 8 parallelization](https://java-8-tips.readthedocs.io/en/stable/parallelization.html#conclusion)     
+[Should I always use a parallel stream when possible?](https://stackoverflow.com/questions/20375176/should-i-always-use-a-parallel-stream-when-possible)    
 
 <br/>
-
