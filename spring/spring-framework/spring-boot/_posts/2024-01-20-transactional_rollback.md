@@ -68,9 +68,9 @@ public Inner inner() {
     → `B.java의 inner()`는 호출한 쪽인 `A.java의 test()`의 이미 만들어진 트랜잭션에 참여하게 될 것이다   
     → 따라서 호출한 쪽에서 try catch를 통해 예외처리를 할 수 있을 것이다     
  
-    ⇒ 디버깅을 통해 원하는대로 catch되어 요기까지 오는걸 확인함   
+    ⇒ 디버깅을 통해 원하는대로 catch되어 요기까지 오는걸 확인함      
 
-3. 그러나 끝까지 처리되지 않고(=return 하지 않고) `UnexpectedRollbackException` 발생
+=> 그러나 끝까지 처리되지 않고(=return 하지 않고) `UnexpectedRollbackException` 발생
 
 ![image](https://github.com/ttaehee/ttaehee.github.io/assets/103614357/c6c5e0fb-bfaf-4ee2-99b5-740723f696b5)
 
