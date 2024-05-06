@@ -1,6 +1,6 @@
 ---
-title: DB) JPA
-excerpt: Java Persistence API
+title: DB) JPA의 deleteAll로 인한 N+1 해결하기
+excerpt: bulk delete 구현하기
 ---
 
 
