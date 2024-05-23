@@ -11,7 +11,8 @@ excerpt: bulk delete 구현하기
 
 ## 상황
 
-Cron 돌려야 하는 작업을 관리하는 테이블(CronBatchTask)에서 처리 완료된 row를 한번에 삭제하려고함
+Cron 돌려야 하는 작업을 관리하는 테이블에서 처리 완료된 row를 한번에 삭제하려고함
+(테이블 이름을 CronBatchTask 라고 임의로 지칭)
 
 <br/>
 
@@ -25,7 +26,7 @@ Cron 돌려야 하는 작업을 관리하는 테이블(CronBatchTask)에서 처�
 - ex)
   
 ```java
-List<CronBatchTask> cronBatchTaskList = cronBatchTaskRepository.findByTaskType(CronTaskType.CREATE_COMMISSION);
+List<CronBatchTask> cronBatchTaskList = cronBatchTaskRepository.findByTaskType(CronTaskType.TEST);
 ... (관련 처리)
 cronBatchTaskRepository.deleteAll(cronBatchTaskList);
 ```
@@ -96,7 +97,7 @@ public void deleteAllBy(List<Long> cronBatchTaskIdList) {
 내가 알아본 방법중 마지막 방법, 요 아이도 JPA에서 제공해주는 아이다         
 
 ```java
-List<CronBatchTask> cronBatchTaskList = cronBatchTaskRepository.findByTaskType(CronTaskType.CREATE_COMMISSION);
+List<CronBatchTask> cronBatchTaskList = cronBatchTaskRepository.findByTaskType(CronTaskType.TEST);
 ... (관련 처리)
 cronBatchTaskRepository.deleteAllInBatch(cronBatchTaskList)
 ```
@@ -114,7 +115,7 @@ cronBatchTaskRepository.deleteAllInBatch(cronBatchTaskList)
 
 <br/>
 
-<img src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/e8e33b96-30aa-4026-ae8c-718798a5e072" width="600"/>
+<img width="582" alt="스크린샷 2024-05-23 오후 11 44 09" src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/66fb2968-a7cd-47c8-8faf-cf4a94e2ce7f">
 
 좋은 방법이지만 삭제하고자 하는 Entity들을 메모리상에 가져와서 호출해야 하기 때문에 지난번에는 선택하지 않았다     
 하지만 이번에는 위에 작성했듯이 삭제 전, 해당 entity 관련해서 필요한 작업이 있었어서 어차피 1차캐시에 저장되어 있을 상황이었기 때문에 단점이라고 받아들여지지 않았다    
