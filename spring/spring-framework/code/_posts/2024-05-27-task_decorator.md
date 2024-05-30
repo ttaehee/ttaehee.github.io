@@ -153,7 +153,7 @@ public class TaskController {
 @Service
 @RequiredArgsConstructor
 public class TaskService {
-	private static String TOKEN = "token";
+	private static final String TOKEN = "token";
 
 	private final HttpServletRequest httpServletRequest;
 
