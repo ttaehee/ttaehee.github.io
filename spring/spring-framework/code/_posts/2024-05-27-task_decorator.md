@@ -44,7 +44,12 @@ ThreadLocal에 대해 조금 알아보고 가자면 각 thread마다 별도의 �
 Java logging framework에서 제공하는 기술인 MDC도 ThreadLocal을 이용해 만들었기 때문에 알고보니 나도 ThreadLocal을 간접적으로 사용중이었다    
 
 - MDC (Mapped Diagnostic Context) : 프로그램 실행을 추적할 때 유용한 정보를 저장할 때 사용        
-  - [참고) Baeldung : Improved Java Logging with Mapped Diagnostic Context](https://www.baeldung.com/mdc-in-log4j-2-logback)   
+  - [참고) Baeldung : Improved Java Logging with Mapped Diagnostic Context](https://www.baeldung.com/mdc-in-log4j-2-logback)
+  - Java logging framework(slf4j 등)에서 지원
+  - 현재 실행중인 thread 단위에 meta 정보를 넣고 관리하는 공간
+  - Map 형태(Key, Value)로 값 저장
+  - 각 thread는 자체 MDC를 가지기 위해 threadLocal 로 구현되어 있음
+      - 동일한 logger를 사용하더라도 로깅한 메시지는 thread마다 다른 context(MDC) 정보를 가지게됨   
 
 <br/><br/>
 
@@ -52,8 +57,8 @@ Java logging framework에서 제공하는 기술인 MDC도 ThreadLocal을 이용
 
 ### 생각했던 방법들   
 그러면 @Async를 사용한 비동기 태스크에서 요청 객체에 접근하려면 어떻게 해야할까?       
-- 1 - 일단 간단하게 기존 thread에서 넘겨주려고 해보았다    
-  - 1의 문제점 : 그런데 비동기이기 때문에 각각의 thread의 작업이 끝나는 시간이 다른데, 기존 thread의 작업이 끝나면 thread가 비워져서 더이상 접근할 수가 없었다     
+- 1 - 일단 간단하게 메인 thread에서 넘겨주려고 해보았다    
+  - 1의 문제점 : 그런데 비동기이기 때문에 각각의 thread의 작업이 끝나는 시간이 다른데, 메인 thread의 작업이 끝나면 thread가 비워져서 더이상 접근할 수가 없었다     
 - 2 - 그러면 복사한값을 넘겨줘보자 를 목표로 구현하다가 발견한 TaskDecorator     
 
 <br/>
@@ -118,23 +123,80 @@ public class ThreadPoolConfig {
 
 <br/>
 
-taeheeTaskExecutor로 진행하니 호출 thread의 context가 전달되어 더이상 에러가 발생하지 않았다   
+### 테스트코드 
 
-// 테스트코드 추가하기
+```java
+@RestController
+@RequestMapping("/task")
+@RequiredArgsConstructor
+public class TaskController {
+	private final TaskService taskService;
 
+	@RequestMapping("/test")
+	public void test() {
+		for(int i = 1; i < 10; i++){
+			taskService.asyncMethod(i);
+		}
+	}
+
+	@RequestMapping("/custom")
+	public void custom() {
+		for(int i = 1; i < 10; i++){
+			taskService.customAsyncMethod(i);
+		}
+	}
+}
+```
+
+```java
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class TaskService {
+	private static String TOKEN = "token";
+
+	private final HttpServletRequest httpServletRequest;
+
+	@Async("taskExecutor")
+	public void asyncMethod(int s) {
+		log.info(s + " : " + httpServletRequest.getHeader(TOKEN));
+	}
+
+	@Async("taeheeTaskExecutor")
+	public void customAsyncMethod(int s) {
+		log.info(s + " : " + httpServletRequest.getHeader(TOKEN));
+	}
+}
+```
 
 <br/>
 
-- 추가) RejectedExecutionHandler
-    - thread pool이 작업처리에 대한 한계에 도달 시, 새로운 요청 거부되는 경우 있음 이런 경우 처리 방식 지정
-        - 1) AbortPolicy (Default) 거부된 실행 요청 발생 시, RejectedExecutionException 예외 발생
-        - 2) CallerRunsPolicy : 거부된 실행 요청을 해당 요청 호출한 thread에서 직접 실행
-        - 3) DiscardPolicy : 거부된 실행 요청 무시
-        - 4) DiscardOldestPolicy : 거부된 실행 요청 대신 가장 오래된 요청 제거 후 새로운 요청 수락
+- taskExecutor (TaskDecorator 미사용)
+  
+<img width="1314" alt="스크린샷 2024-05-30 오후 11 50 51" src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/f9906889-d073-4b24-8158-0d7662ab16ac">
 
 <br/>
 
-// CallerRunsPolicy를 적용 이유랑 설명 추가하기
+- taeheeTaskExecutor (TaskDecorator 사용)
+    - taeheeTaskExecutor로 진행하니 호출 thread의 context가 전달되어 더이상 에러가 발생하지 않았다  
+  
+<img width="994" alt="스크린샷 2024-05-30 오후 11 51 48" src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/7d58a202-76d6-464a-bea4-e5b7447945a8">
+
+<br/><br/>
+
+추가) RejectedExecutionHandler
+- thread pool이 작업처리에 대한 한계에 도달 시, 새로운 요청 거부되는 경우 있음 이런 경우 처리 방식 지정
+    - 1) AbortPolicy (Default) 거부된 실행 요청 발생 시, RejectedExecutionException 예외 발생
+    - 2) CallerRunsPolicy : 거부된 실행 요청을 해당 요청 호출한 thread에서 직접 실행
+    - 3) DiscardPolicy : 거부된 실행 요청 무시
+    - 4) DiscardOldestPolicy : 거부된 실행 요청 대신 가장 오래된 요청 제거 후 새로운 요청 수락
+
+<br/>
+
+해당 작업이 반드시 처리되었으면 해서 CallerRunsPolicy를 적용하였다    
+단점으로는 응답이 느려질 수 있고 호출 thread는 blocking 될 수 있다는 점이 있으나,    
+thread pool의 작업 처리 능력을 초과하는 경우에도 요청을 처리할 수 있어 실행이 보장되기도 하고    
+해당 작업에서 동시에 돌아가는 thread가 5개 이내로 예상되었기 때문에 호출 thread 까지 쓰일일은 많이 없을것이라 판단했다       
 
 <br/><br/>
 
@@ -142,6 +204,6 @@ Reference
 [Baeldung : An Introduction to ThreadLocal in Java](https://www.baeldung.com/java-threadlocal)   
 [우아한 기술블로그 : 로그 및 SQL 진입점 정보 추가 여정](https://techblog.woowahan.com/13429/)    
 inflearn (김영한 스프링 핵심 원리 고급편 - ThreadLocal)        
-
+[Baeldung : Improved Java Logging with Mapped Diagnostic Context](https://www.baeldung.com/mdc-in-log4j-2-logback)
 
 <br/>
