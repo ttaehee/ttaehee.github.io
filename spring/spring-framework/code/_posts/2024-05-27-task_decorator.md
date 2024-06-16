@@ -56,10 +56,21 @@ Java logging framework에서 제공하는 기술인 MDC도 ThreadLocal을 이용
 ## 해결
 
 ### 생각했던 방법들   
-그러면 @Async를 사용한 비동기 태스크에서 요청 객체에 접근하려면 어떻게 해야할까?       
+그러면 @Async를 사용한 비동기 태스크에서 요청 객체에 접근하려면 어떻게 해야할까?    
+
 - 1 - 일단 간단하게 메인 thread에서 넘겨주려고 해보았다    
-  - 1의 문제점 : 그런데 비동기이기 때문에 각각의 thread의 작업이 끝나는 시간이 다른데, 메인 thread의 작업이 끝나면 thread가 비워져서 더이상 접근할 수가 없었다     
-- 2 - 그러면 복사한값을 넘겨줘보자 를 목표로 구현하다가 발견한 TaskDecorator     
+  - 1의 문제점 : 그런데 비동기이기 때문에 각각의 thread의 작업이 끝나는 시간이 다른데, 메인 thread의 작업이 끝나면 thread가 비워져서 더이상 접근할 수가 없었다
+    
+- 2 - Dispatchservlet의 threadContextInheritable 값을 true로 바꾸기    
+  - 참고) threadContextInheritable : RequestContextHolder 를 자식 thread에 상속되게 할지 여부를 결정하는 값 (기본값 false)
+    - FrameworkServlet.java : HttpServletRequest을 처리
+      
+      <img width="795" alt="스크린샷 2024-06-16 오후 8 48 10" src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/a490a081-9c40-47ae-94de-3832ca1abd90">   
+      <img width="711" alt="스크린샷 2024-06-16 오후 8 46 33" src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/b6c1ac47-3eef-4f18-a2b4-3dec116a2bb0">    
+      <img width="548" alt="스크린샷 2024-06-16 오후 8 44 14" src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/9210d073-45e0-4496-9d66-97caa5837492">    
+  - 2의 문제점 : 해당 코드의 영향도가 spring 전반적으로 미치게된다 일이 너무 커져        
+    
+- 3 - 그러면 복사한값을 넘겨줘보자 를 목표로 구현하다가 발견한 TaskDecorator     
 
 <br/>
 
@@ -173,9 +184,9 @@ public class TaskService {
 
 - taskExecutor (TaskDecorator 미사용)
   
-<img width="1314" alt="스크린샷 2024-05-30 오후 11 50 51" src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/f9906889-d073-4b24-8158-0d7662ab16ac">
+<img width="1314" alt="스크린샷 2024-05-30 오후 11 50 51" src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/f9906889-d073-4b24-8158-0d7662ab16ac"> 
 
-<br/>
+<br/><br/>
 
 - taeheeTaskExecutor (TaskDecorator 사용)
     - taeheeTaskExecutor로 진행하니 호출 thread의 context가 전달되어 더이상 에러가 발생하지 않았다  
