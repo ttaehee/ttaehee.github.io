@@ -65,8 +65,14 @@ Java logging framework에서 제공하는 기술인 MDC도 ThreadLocal을 이용
   - 참고) threadContextInheritable : RequestContextHolder 를 자식 thread에 상속되게 할지 여부를 결정하는 값 (기본값 false)
     - FrameworkServlet.java : HttpServletRequest을 처리
        
-      <img width="795" alt="스크린샷 2024-06-16 오후 8 48 10" src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/a490a081-9c40-47ae-94de-3832ca1abd90">   <br/>
-      <img width="711" alt="스크린샷 2024-06-16 오후 8 46 33" src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/b6c1ac47-3eef-4f18-a2b4-3dec116a2bb0">    <br/>
+      <img width="795" alt="스크린샷 2024-06-16 오후 8 48 10" src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/a490a081-9c40-47ae-94de-3832ca1abd90">
+      
+      <br/>
+      
+      <img width="711" alt="스크린샷 2024-06-16 오후 8 46 33" src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/b6c1ac47-3eef-4f18-a2b4-3dec116a2bb0">
+      
+      <br/>
+      
       <img width="548" alt="스크린샷 2024-06-16 오후 8 44 14" src="https://github.com/ttaehee/ttaehee.github.io/assets/103614357/9210d073-45e0-4496-9d66-97caa5837492">    
   - 2의 문제점 : 해당 코드의 영향도가 spring 전반적으로 미치게된다 일이 너무 커져        
     
