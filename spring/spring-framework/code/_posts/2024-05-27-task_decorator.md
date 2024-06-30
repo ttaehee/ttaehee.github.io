@@ -80,7 +80,7 @@ Java logging framework에서 제공하는 기술인 MDC도 ThreadLocal을 이용
 
 ### TaskDecorator 비동기 작업 데코레이터   
 
-- TaskDecorator : Spring의 TaskExecutor 에 대한 decorator interface
+- TaskDecorator : Spring의 TaskExecutor 에 대한 decorator interface        
 
 <br/>
 
@@ -90,7 +90,8 @@ Java logging framework에서 제공하는 기술인 MDC도 ThreadLocal을 이용
 
 <br/>
 
-- TaskDecorator를 이용해서 만든 Custom TaskDecorator    
+- TaskDecorator를 이용해서 만든 Custom TaskDecorator
+  - TaskDecorator를 상속받아 커스텀한 decorator를 만든 뒤, 위 코드처럼 생성시 context를 모두 복제해준다   
 
 ```java
 public class TaeheeTaskDecorator implements TaskDecorator {
@@ -112,6 +113,13 @@ public class TaeheeTaskDecorator implements TaskDecorator {
     }
 }
 ```
+
+<br/>
+
+기존 thread의 context를 복제해서 넣기때문에 기존 thread와 분리되어      
+값만 동일할뿐 서로 연결되지 않아 (새로 생겨난 async thread가 기존 thread의 context 를 바꾸는 등의) side effect 발생도 없을것으로 파악했다  
+
+<br/>
 
 - Custom TaskDecorator를 TaskExecutor
   
