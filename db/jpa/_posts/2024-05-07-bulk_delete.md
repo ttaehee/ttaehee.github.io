@@ -3,6 +3,7 @@ title: DB) JPA의 deleteAll로 인한 N+1 해결하기
 excerpt: bulk delete 구현하기
 ---
 
+테스트
 
 - 예전에 [bulk insert, bulk delete 관련해서 정리](https://ttaehee.github.io/spring/spring-framework/spring-boot/batch/)한적이 한번 있었는데     
   이번에 회사코드에 적용하려다가 bulk delete 방법들이 그 때와 조금 다르게 와닿아서 다시 정리해보려한다     
