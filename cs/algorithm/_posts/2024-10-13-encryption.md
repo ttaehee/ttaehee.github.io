@@ -1,5 +1,5 @@
 ---
-title: CS) 암호화를 통한 API 통신 및 데이터베이스 저장 과정의 보안 강화
+title: 암호화를 통한 API 통신 및 데이터베이스 저장 과정의 보안 강화
 excerpt: encryption algorithm (RSA4096, AES256)
 ---
 
