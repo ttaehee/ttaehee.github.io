@@ -6,7 +6,7 @@ excerpt: 리팩토링 pr 머지
 <br/>
 
 - 저번에 [resilience4j 오픈소스 기여 시도 실패 과정](https://ttaehee.github.io/etc/open_source/)을 적었는데 이번에는 pr merge 까지 성공하였다
-- 에러 해결은 아니고 (시작은 분명 버그해결이었으나,,) 리팩토링 pr 이긴 하지만, 첫 기여이니까 그리고 에러 해결을 위해 테스트 했던 과정도 있어서 같이 적어두려고 한다
+- 에러 해결은 아니고 (시작은 분명 버그해결이었으나,,) 리팩토링 pr 인데, 첫 기여 기념 + 에러 해결을 위해 테스트 했던 과정도 있어서 같이 적어두려고 한다
 
 <br/>
 
@@ -30,6 +30,36 @@ excerpt: 리팩토링 pr 머지
 
 ## 이슈  파악    
 
+- Retry.kt
+
+```java
+suspend fun <T> Retry.executeSuspendFunction(block: suspend () -> T): T {
+    val retryContext = asyncContext<T>()
+    while (true) {
+        try {
+            val result = block()
+            val delayMs = retryContext.onResult(result)
+            if (delayMs >= 0) {
+                delay(delayMs)
+                continue
+            }
+            retryContext.onComplete()
+            return result
+        } catch (e: Exception) {
+            val delayMs = retryContext.onError(e)
+
+            if (delayMs >= 0) {
+                delay(delayMs)
+                continue
+            }
+            throw e
+        }
+    }
+}
+```
+
+<br/>
+
 - CoroutineRetryTest.kt
 
 ```java
@@ -41,7 +71,6 @@ fun `should execute function with retry of result`() {
         val retry = Retry.of("testName") {
             RetryConfig {
                 waitDuration(Duration.ofMillis(10))
-                maxAttempts(6)  // 이번에 추가해서 테스트 확인한 부분
                 retryOnResult { helloWorldService.invocationCounter < 2 }
             }
         }
@@ -77,7 +106,7 @@ fun `should execute function with retry of result`() {
 
 ## 테스트 
 
-- 관련 테스트코드 :: CoroutineRetryTest.kt
+- 관련 테스트코드 :: CoroutineRetryTest.kt 에 maxAttempts 조건 추가해서 테스트해보기
 
 ```java
 //80번째줄
@@ -109,14 +138,55 @@ fun `should execute function with retry of result`() {
 }
 ```
 
+```java
+class CoroutineHelloWorldService {
+    var invocationCounter = 0
+        private set
+
+    private val sync = Channel<Unit>(Channel.UNLIMITED)
+
+    suspend fun returnHelloWorld(): String {
+        delay(0) // so tests are fast, but compiler agrees suspend modifier is required
+        invocationCounter++
+        return "Hello world"
+    }
+
+    suspend fun throwException() {
+        delay(0) // so tests are fast, but compiler agrees suspend modifier is required
+        invocationCounter++
+        error("test exception")
+    }
+
+    suspend fun cancel() {
+        invocationCounter++
+        coroutineContext.cancel(CancellationException("test cancel"))
+        yield() //so CancellationException is thrown
+    }
+
+    /**
+     * Suspend until a matching [proceed] call.
+     */
+    suspend fun wait() {
+        invocationCounter++
+        sync.receive()
+    }
+
+    /**
+     * Allow a call into [wait] to proceed.
+     */
+    fun proceed() = sync.trySend(Unit)
+
+}
+```
+
 기존 테스트 코드에는 maxAttempts 조건이 없어서 이번이슈 테스트를 위해 추가하여 테스트하였다   
 위의 이슈가 제기한바대로라면 테스트가 실패하고 `Assertions.assertThat(helloWorldService.invocationCounter).isEqualTo(6)` 의 테스트가 성공해야한다   
 
 <br/>
 
-그러나 테스트 진행 시, maxAttempts 6까지 시도하지 않고 helloWorldService.invocationCounter가 2가 될때까지만 시도하였다       
+그러나 테스트 진행 시, maxAttempts 6까지 시도하지 않고 helloWorldService.invocationCounter가 2보다 작을 때까지만 시도하였다       
 즉, 정상 동작으로 파악하였다     
-디버깅을 해보아도 원하는 코드 흐름으로 따라가졌고 혼란스러웠다   
+디버깅을 해보아도 문제가 없어보였고 당황스러웠다   
 
 <br/>
 
@@ -152,7 +222,7 @@ if (delayMs < 1) {
 ```
 
 동일하게 retryContext.onResult(result) 를 사용하는데 Retry는 `delayMs < 1` 로, FlowRetry은 `delayMs >= 0` 로 비교하고있다   
-`retryContext.onResult(result)` 에서 문제가 있을 시, 무조건 -1을 반환하고 있어서 동작에는 상관이 없지만 코드 통일성 및 추후 retryContext.onResult(result) 의 코드 변경을 대비하여 리팩토링하였다   
+`retryContext.onResult(result)` 에서 문제가 있을 시, 무조건 -1을 반환하고 있어서 현재는 동작에 상관이 없지만 코드 통일성 및 추후 retryContext.onResult(result) 의 코드 변경을 대비하여 리팩토링하였다   
 
 <br/><br/>
 
@@ -210,7 +280,9 @@ try {
 
 <br/>
 
-결과는 1주일도 안되어서 merge 되었다 신기하군    
+### PR merge
+
+결과는 1주일도 안되어서 merge 되었다 신기해    
 
 - [merge pr](https://github.com/resilience4j/resilience4j/pull/2245)
   
@@ -221,9 +293,10 @@ try {
 
 ## 느낀점
 
-오픈소스도 사람이 만드는거다      
-오픈소스에도 사내에서 코드 및 성능 개선하듯이 얼마든지 할 수 있다   
-예전에는 오픈소스에서 제공하는 기능만을 사용하고 믿는 입장이었지만, 기여를 통해 프로젝트가 발전할 수 있다는 가능성에 대한 시각을 가지게 되었다   
+- 오픈소스도 사람이 만드는거다      
+- 오픈소스 기여는 버그 해결뿐 아니라 사내에서 코드 및 성능 개선하듯이 얼마든지 할 수 있다
+  
+예전에는 오픈소스에서 제공하는 기능만을 사용하고 믿는 입장이었지만, 나의 기여를 통해 프로젝트가 발전할 수 있다는 가능성을 자각하게되었다     
 
 <br/>
 
@@ -240,9 +313,9 @@ try {
 내가 이번에 기여한 부분처럼 말이다   
 
 <br/>
- 
-이번에 새롭게 무한재귀 관련 이슈 파악을 시작했는데 얘는 정말 디버깅조차 쉽지않다     
-쉽지않은만큼 요 문제를 해결하는 과정에서 더 큰 성취감을 느낄거같다        
-다음엔 요 해결 과정으로 기록할 수 있길 바라며 마무리!            
+  
+이번에 새롭게 무한재귀 관련 이슈 파악을 시작했는데 얘는 정말 디버깅조차 쉽지않다       
+쉽지않은만큼 요 문제를 해결하는 과정에서 여러가지 배우고 겪을것 같다           
+다음엔 요 해결 과정으로 기록할 수 있길 바람 ㅎ.ㅎ             
 
 <br/>
