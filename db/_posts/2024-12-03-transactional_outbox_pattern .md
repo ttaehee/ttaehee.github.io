@@ -1,5 +1,5 @@
 ---
-title: 분산 시스템에서 이벤트 유실을 방지하는 방법은? Transactional Outbox Pattern 활용하기
+title: Transactional Outbox Pattern과 비동기 처리로 API 성능 개선하기
 excerpt: "Transactional Messaging :: Transaction 내 이벤트 처리와 Outbox table을 활용한 안정적인 비동기 이벤트 처리"
 ---
 
