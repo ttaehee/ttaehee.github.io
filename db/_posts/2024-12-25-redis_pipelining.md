@@ -1,6 +1,6 @@
 ---
-title: 왜 내 Redis는 느릴까? 성능 병목의 원인과 해결법
-excerpt: "Pipelining을 활용한 Redis 호출 개선 :: 네트워크 비용 줄이고 응답 속도 높이기"
+title: 왜 내 Redis는 느릴까? 성능 병목의 원인과 해결법  
+excerpt: "Pipelining을 활용한 Redis 호출 개선 :: 네트워크 비용 줄이고 응답 속도 높이기"  
 ---
 
 <br/>
