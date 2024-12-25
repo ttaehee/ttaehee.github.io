@@ -455,7 +455,17 @@ defaults:
     values:
       sidebar:
         - nav: CS
-        
+  
+  # Operations Engineering
+  - scope:
+      path: "cs/operations-engineering"
+      type: posts
+    values:
+      header:
+        actions:
+          - label: <i class='fas fa-fw fa-link'></i> about cs
+            url: /cs/
+            
   # Algorithm
   - scope:
       path: "cs/algorithm"
