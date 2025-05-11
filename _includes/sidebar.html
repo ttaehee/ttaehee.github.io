@@ -16,13 +16,32 @@
     {% endif %}
   {% endif %}
     <!-- hits : counte view -->
-    <a href="https://myhits.vercel.app">
-      <img 
-        src="https://myhits.vercel.app/api/hit/https%3A%2F%2Fttaehee.github.io%2F?color=darkgray&label=hits&size=small" 
-        alt="hits" 
-        style="max-width: 100px; max-height: 10px;" 
-      />
+    <a href="https://myhits.vercel.app" target="_blank" style="text-decoration: none;">
+      <div style="
+        display: inline-flex;
+        align-items: center;
+        background-color: #222;
+        color: #fff;
+        border-radius: 12px;
+        font-size: 11px;
+        font-family: 'Segoe UI', sans-serif;
+        padding: 2px 6px;
+        line-height: 1;
+      ">
+        <!-- 발자국 아이콘 -->
+        <span style="font-size: 14px; margin-right: 4px;">👣</span>
+        hits  
+        <span id="hit-count" style="margin-left: 4px;">...</span>
+      </div>
     </a>
     {% if page.search_bar %}{% include search_bar.html %}{% endif %}
   </div>
 {% endif %}
+
+<script>
+  fetch('https://myhits.vercel.app/api/hit/https%3A%2F%2Fttaehee.github.io%2F')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('hit-count').innerText = data?.count ?? '0';
+    });
+</script>
