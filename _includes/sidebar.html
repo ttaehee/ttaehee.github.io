@@ -42,6 +42,6 @@
   fetch('https://myhits.vercel.app/api/hit/https%3A%2F%2Fttaehee.github.io%2F')
     .then(res => res.json())
     .then(data => {
-      document.getElementById('hit-count').innerText = data?.count ?? '0';
-    });
+    document.getElementById('hit-count').innerText = data.count || '0';
+  });
 </script>
