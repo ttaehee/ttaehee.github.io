@@ -1,16 +1,18 @@
 ---
 title: Kubernetes는 무엇을 어떻게 자동으로 해주는지
-excerpt: 상태(State) 기반 시스템으로서의 Kubernetes와 EKS
+excerpt: 상태(State) 기반 시스템으로서의 Kubernetes, EKS
 ---
 
 <br/>
 
-- EKS 전환과정에서 서비스 연동을 위해 이 기회에 kubernetes 큰 동작흐름이나 개념을 파악해봄      
+- EKS 전환과정에서 서비스 연동을 위해 이 기회에 kubernetes 큰 동작흐름이나 개념을 파악해봄    
+  그리고 로그나 모니터링 어찌해야하는지 파악할겸           
   올만에 TIL   
 
 <br/>
 
 ## Kubernetes   
+가장 널리 사용되고 있는 오픈소스 컨테이너 오케스트레이션 도구       
 컨테이너를 **자동으로 정상 상태로 운영**되게 만드는 시스템 (운영 자동화 엔진)    
 단순히 컨테이너를 실행하는 도구가 아님     
 
@@ -26,7 +28,13 @@ Desired State ≠ Current State
 
 <br/>
 
-### 핵심 역할
+### Kubernetes를 왜 쓰는지 (운영의 시스템화)   
+Kubernetes 도입의 핵심은 **운영 주체의 전환(Human → System)**    
+운영을 '사람이 직접 수행하는 일'에서 '시스템이 스스로 유지하는 상태'로 전환하기 위함            
+
+<br/>
+
+**핵심 역할** (시스템이 대신 하는 일)        
 - **컨테이너 배포 (Deploy)** : 배포 중 다운타임 발생 => 무중단 배포 
 - **확장 (Scale)** : 적정 컨테이너 개수 판단 필요 => 트래픽에 따라 자동 스케일링 
 - **복구 (Self-healing)** : 서버 장애 시 서비스 중단 => 죽은 컨테이너 자동 재기동
@@ -34,9 +42,11 @@ Desired State ≠ Current State
 
 <br/>
 
-=> **운영 책임** 분리 = 운영 판단을 시스템에 위임        
-사람은 원하는 상태(몇 개, 어떻게 연결, 어떤 설정 등)만 말함 
-
+=> **운영 책임** 분리       
+Kubernetes는 사람이 운영을 직접 수행하지 않고, 운영을 정책으로 선언하게 만들기 위해 쓰는 시스템     
+전통적인 운영이 관리자의 경험과 판단에 의존했다면, Kubernetes는 운영을 **규칙과 자동화로 고정**함     
+사람은 원하는 상태(몇 개, 어떻게 연결, 어떤 설정 등)만 말함  
+  
 <br/>
 
 = 선언적 시스템      
@@ -49,7 +59,15 @@ Desired State ≠ Current State
     
     => Kubernetes의 역할 : 결과적으로 항상 Pod 2개 유지  
 
-<br/>
+<br/><br/>
+               
+=> 도입 가치      
+- Human Error 방지 (사람의 개입을 최소화하여 사람의 실수와 반복 작업을 감소)
+- 안정성 확보 (장애·스케일·복구를 항상 동일한 규칙으로 처리)
+- 개발 생산성 향상 (인프라 운영 부담 감소)
+- 비용 및 리소스 최적화 (서버 자원을 최대한 효율적으로 나누어 사용하여 인프라 비용 절감)
+
+<br/><br/>
 
 ### Kubernetes 구조
 
@@ -78,7 +96,7 @@ Cluster                         : k8s 가 동작하는 전체 논리적 공간 (
    └ Service                    : 고정 네트워크 접점, 트래픽 분산, 서비스 디스커버리 담당 -> 무중단 배포 가능   
 ```
 
-<br/>
+<br/><br/>
 
 **HPA (Horizontal Pod Autoscaler)**    
 Deployment의 replicas를 자동 조정하기 위해 추가로 정의하는 운영 정책 리소스
@@ -87,15 +105,45 @@ Deployment의 replicas를 자동 조정하기 위해 추가로 정의하는 운�
 
 ```
 HPA 리소스 (정책)
-→ HPA Controller가 읽음
-→ replicas 값 변경
-→ Deployment의 replicas 값 변경 → ReplicaSet이 Pod 생성/삭제
+→ HPA Controller가 메트릭 기준으로 판단
+→ Deployment.spec.replicas 값 변경
+→ Deployment / ReplicaSet이 Pod 생성·삭제
 ```
 
 - HPA 역할 : replicas 숫자 변경 (컨테이너 재시작 x)
 - HPA가 보는 기준 : CPU 사용률 (가장 기본) / Memory 사용률 / Custom Metric (QPS, 요청 수 등)
 
+<br/><br/>
+
+### ConfigMap / Secret (설정과 민감정보 관리)
+그러면 이제 실행될 때 어떤 설정으로 실행될지는 어디에서 관리하느냐   
+Pod는 코드와 이미지로만 실행되지 않고, 실행 시점에 외부 설정을 함께 주입받음   
+- ConfigMap / Secret : 실행에 필요한 설정과 민감 정보를 관리하기 위한 리소스
+  - Kubernetes에서는 애플리케이션 설정을 코드·이미지에 포함하지 않음 설정은 리소스로 분리해 관리함
+  - **ConfigMap** : 일반 설정값 (환경변수, 설정 파일 등)
+    - ex) feature flag, endpoint, timeout
+  - **Secret** : 민감 정보
+    - ex) DB 비밀번호, API Key, 토큰
+
 <br/>
+
+**Pod에서 사용하는 방식**    
+Pod는 ConfigMap/Secret을 
+- 환경변수(env)로 사용하거나
+- 파일(volume)로 마운트해서 사용함
+
+<br/>
+
+**설정 변경 시 특징**   
+- Pod 재시작 필요
+- 이미지 재빌드 불필요
+- 설정만 교체 가능 
+
+<br/>
+
+=> 코드와 설정을 분리해 동일한 이미지로 환경별(dev/qa/prod) 운영이 가능해짐    
+
+<br/><br/>
 
 ### Kubernetes 동작 flow   
 
@@ -119,11 +167,11 @@ HPA 리소스 (정책)
 
 사람이 원하는 상태 선언    
 -> 이 상태 유지하는데 뭐필요한지 kubernetes 가 판단 (Control Plane : 판단·지시)     
--> (kubelet : 지시 수신) 판단한대로 실행 (container runtime : 실제 컨테이너 실행)    
+-> 판단한대로 실행 (kubelet : 지시 수신 -> container runtime : 실제 컨테이너 실행)    
 -> 실행된 결과를 서비스로 묶음    
 -> 계속 현재상태와 원하는 상태 비교 & 자동 보정      
 
-<br/>
+<br/><br/>
 
 ### 장애 유형별 Kubernetes 복구 동작
 
@@ -148,9 +196,8 @@ Pod Crash
 
 <br/>
 
-컨테이너가 죽으면 kubelet이 먼저 재시작을 시도   
--> 계속 실패하면 Control Plane이 Pod 종료를 인지해    
--> ReplicaSet이 새 Pod를 생성하도록 자동 보정      
+컨테이너가 죽으면 재시작     
+-> 계속 실패하면 새 Pod 생성해서 자동 보정       
 
 <br/>
 
@@ -213,7 +260,7 @@ CI 는 둘 다 동일하게 실행가능한 산출물 만드는거
    
 => Kubernetes에서 CD는 상태 동기화를 지속적으로 안전하게 수행해야 하므로, 보안·운영 안정성(외부로 클러스터 권한을 노출할 필요 없음) 측면에서 Pull 방식 CD가 가장 적합해 주로 사용
 
-<br/>
+<br/><br/>
 
 **Pull 방식 CD (ArgoCD / Flux)**        
 
@@ -237,6 +284,80 @@ Kubernetes : Git에 정의된 Desired State로 수렴
 => Git이 곧 현재 운영 상태임    
 
 = 변경 이력 추적, 롤백 단순화, 보안 강화, 운영 안정성 제공   
+
+<br/><br/>
+
+## 왜 Kubernetes에서는 로그 중앙화가 필수인지
+
+분산 시스템 환경에서 로그는 단순한 텍스트 출력이 아니라, 시스템과 application이 남기는 사건의 기록(event record)        
+MSA라서 로그중앙화가 필요하지만 Kubernetes 환경에서는 필수   
+
+<br/>
+
+Kubernetes는 자동 복구(Self-healing)는 해주지만, 왜 그런 일이 발생했는지는 알려주지 않음 원인분석은 기존처럼 로그 기반으로 파악해야 함     
+kubectl logs는 특정 Pod 단위의 부분 확인용임   
+
+<br/>
+
+근데 Pod는 휘발성이라 Pod 사라지면 해당 Pod의 로컬 로그 파일도 같이 소멸됨    
++) 장애 원인은 특정 Pod 하나가 아니라 여러 Pod, 여러 Node, 여러 서비스에 걸쳐서 발생함   
+
+=> 원인 분석하려면 Pod 단위 로그를 Cluster 단위로 검색 가능하게 만들어야함       
+   서버 들어가서 볼 수 없음 중앙에 모아두지 않으면 장애 분석 자체가 불가능      
+
+= 로그 중앙화가 선택이 아니라 필수    
+   
+<br/> 
+
+### Kubernetes 로그 수집
+
+```
+application log는 stdout/stderr 로만 출력    
+-> Kubernetes가 노드의 로그 파일로 자동 기록    
+-> 수집기는 노드의 /var/log/containers(컨테이너 로그 파일)를 읽어서 중앙화
+```
+
+= application은 출력만 하고, 수집·보관·검색은 플랫폼(Kubernetes + 로그 시스템) 이 담당
+
+<br/> 
+
+장애 추적을 위한 필수 로그 필드는 기존 MSA와 동일하지만, Kubernetes 에서는 원인뿐 아니라 어디에 몰리는지(범위/분포) 도 봐야함    
+- ex) 접근방식
+  - 특정 Pod/노드에만 몰림 → 배포/노드/리소스 문제 의심
+  - 전체 Pod에 고르게 발생 → 코드/DB/외부의존성 문제 의심
+
+<br/> 
+
+**참고) 로그 중앙화(Centralized Logging)**      
+여러 곳에서 발생하는 로그를 한 곳에 모아 저장·검색·분석하는 운영 방식
+
+- 대상 : server / Pod / container / application log 전부
+=> 각 서버/Pod에 들어가서 로그 보는 방식은 운영 불가
+
+<br/> 
+
+### EFK     
+Kubernetes에서 자주 쓰이는 로그 중앙화를 구현하는 대표적인 구현체   
+
+- E (Elasticsearch) : 저장 + 검색
+- F (Fluentd / Fluent Bit) : 수집 + 전송
+- K (Kibana) : 조회 + 시각화
+
+<br/> 
+
+EFK 는 특정 기술들의 조합(Stack)일 뿐, 중요한 것은 수집 - 저장 - 시각화 라는 로그 중앙화의 3단계 구조(Architecture)      
+실무에서는 상황에 따라 각 단계를 Datadog, OpenSearch 등 다른 도구로 대체해 사용     
+
+<br/> 
+
+```
+App / Pod : 로그 생성 (stdout/stderr)
+→ Fluent Bit : 로그 수집 - Datadog Agent 로 대체하여 사용
+→ Elasticsearch : 로그 저장, 검색 - OpenSearch 로 대체 (Datadog logs 안씀)
+→ Kibana : 로그 대시보드, 조회, 분석, 알림 - Datadog UI 로 대체
+```
+
+- 참고) 수집기인 Datadog Agent는 로그(stdout)뿐만 아니라 시스템의 수치 데이터인 메트릭(CPU, Memory 등)도 함께 수집함
 
 <br/> <br/> 
 
@@ -280,4 +401,4 @@ EKS에서 AWS 권한은 **Pod의 ServiceAccount 신원을 기준**으로 IRSA를
 이 과정에서 STS(AWS Security Token Service)가 발급해준 임시 자격증명(AccessKey / SecretKey / SessionToken)으로 AWS 리소스 접근   
 = 키 관리 없이 **IAM Role 기반**(누구인지 증명하면 그 role 에 붙은 권한으로 행동하게 하는 방식)으로 동작    
 
-<br/> <br/> 
+<br/><br/> 
