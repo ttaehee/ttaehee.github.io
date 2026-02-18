@@ -1,5 +1,5 @@
 ---
-title: Spring) 분산환경에서 경쟁상태 해소하기
+title: 분산환경에서 경쟁상태 해소하기
 excerpt: 동시성 이슈 해결을 위한 Redis 분산락 AOP 적용
 ---
 
@@ -34,14 +34,15 @@ excerpt: 동시성 이슈 해결을 위한 Redis 분산락 AOP 적용
 ### Java에서?
 Java에서 해결하는 경우는 application 운영 입장에서 큰 문제가 있다      
 여러 instance와 하나의 database server로 구성되어 있는 경우, 서로 다른 Instance server에서 실행되다보니 코드 내에선 문제가 없더라도 database의 입장에선 동시성 문제 발생이 가능하다     
-같은 JVM 내라면 코드 내에서 synchronized keyword 등을 통해 제어할 수 있겠지만, 우리는 현재 분산환경이고 실제로도 신청서 취소와 견적서 제출 요청은 같은 시각에 각각 다른 서버를 통해 들어왔었다     
+같은 JVM 내라면 코드 내에서 synchronized keyword 등을 통해 제어할 수 있겠지만, 분산환경에서는 JVM 마다 lock이 공유되지 않아 동시성 문제를 막을 수 없다     
+우리는 현재 분산환경이고 실제로도 신청서 취소와 견적서 제출 요청은 같은 시각에 각각 다른 서버를 통해 들어왔었다     
 
 <br/>
 
 ### Database에서?
 Database 단에서의 처리도 문제가 있다    
-요청서는 우리 서비스의 핵심 개념 중 하나로, 조회와 수정이 빈번하게 이루어진다   
-그렇기 때문에 성능상의 이유로 데이터베이스 잠금(DB lock) 또한 선택지에서 제외하였다    
+요청서는 우리 서비스의 핵심 개념 중 하나로, 조회와 수정이 빈번하게 이루어진다       
+그렇기 때문에 성능상의 이유로 데이터베이스 잠금(DB lock - MySQL Named Lock이나 SELECT ... FOR UPDATE) 또한 선택지에서 제외하였다    
 
 <br/>
 
@@ -72,7 +73,9 @@ MySQL의 Named Lock의 경우에는 lock으로 인한 connection 대기를 피�
 
  <br/>
  
-개발의 편리함, 부하 감소를 위해 Redisson으로 선택했고, 덕분에 분산락을 구현하는 로직 자체는 간단했다       
+개발의 편리함, 부하 감소를 위해 Redisson으로 선택했고, 덕분에 분산락을 구현하는 로직 자체는 간단했다      
+Redisson 내부적으로는 spin lock, pub/sub, watchdog 등을 사용하여 lock 안정성을 확보한다     
+특히 leaseTime 종료 전 서버가 죽더라도 Watchdog가 lock을 자동 해제하여 다른 클라이언트가 사용 가능하게 한다         
 Redis,, Pub/Sub messaging도 지원된다니 아주 쓸모가 많구만       
 
 <br/>
@@ -89,7 +92,10 @@ boolean tryLock(long waitTime, long leaseTime, TimeUnit timeUnit) throws Interru
 - leaseTime: lock을 임대하는 시간
 - timeUnit: 시간 단위
   
-=> lock 획득 요청 시, lock을 획득할 수 없다면 waitTime 만큼 기다리고 / lock을 획득했다면 최대 leaseTime만큼 lock을 점유 가능    
+=> lock 획득 요청 시, lock을 획득할 수 없다면 waitTime 만큼 기다리고 / lock을 획득했다면 최대 leaseTime만큼 lock을 점유 가능     
+tryLock의 waitTime과 leaseTime 단위도 명확히 구분해야 한다     
+waitTime 동안 lock 획득에 실패하면 false를 반환하며, leaseTime 동안 lock 점유 후 자동 해제된다      
+Key 생성 시에는 중복 key 방지와 TTL 설정을 고려해야 안전하다       
 
 <br/>
 
@@ -158,6 +164,8 @@ public class CustomSpringELParser {
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DistributedLock {
 
+    String key();
+
     TimeUnit timeUnit() default TimeUnit.SECONDS;
 
     long waitTime() default 10L;
@@ -213,6 +221,7 @@ thread 생성을 직접 제어하지 않고 thread pool을 관리해주는 Execu
 **CountDownLatch 적용**    
 CountDownLatch를 사용하여 여러 thread가 특정 시점까지 기다리도록 조정했다     
 각 thread가 countDown()을 호출하면서 설정된 count가 0이 되면, await()이 해제되었다     
+여러 스레드가 동시에 시작되도록 하더라도 각 스레드의 시작 시점과 latch.await() 시점이 정확해야 동시 실행이 제대로 보장된다    
 
 <br/>   
 
