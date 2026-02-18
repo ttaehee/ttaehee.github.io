@@ -252,8 +252,16 @@ defaults:
       show_date: true
       header:
         overlay_color: "#333"
-  
 
+  
+  # Engineering
+  - scope:
+      path: "engineering"
+    values:
+      sidebar:
+        - nav: Engineering
+
+  
   # Java
   - scope:
       path: "java"
