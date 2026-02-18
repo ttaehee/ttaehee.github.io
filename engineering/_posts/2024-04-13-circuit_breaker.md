@@ -1,11 +1,11 @@
 ---
-title: Spring) Cricuit Breaker 적용하여 장애에 강한 서비스 구현하기   
+title: Circuit Breaker 적용하여 장애에 강한 서비스 구현하기   
 excerpt: Resilience4j 라이브러리 사용
 ---
 
 <br/>
 
-## Cricuit Breaker 도입기
+## Circuit Breaker 도입기
 
 ### 상황    
 결제 모듈 분리 (완벽한 MSA는 아니지만 유사하게 일단 모듈과 서버만 분리) -> 빈번하게 결제 서비스 API 호출 필요
@@ -78,8 +78,8 @@ excerpt: Resilience4j 라이브러리 사용
 |   |Closed|Open|Half Open|
 |------|---|---|---|
 |상황|모든 것이 정상|외부(Callee)에 장애가 발생한 상황|Open 상태가 되고 일정 시간이 지난 상황|
-|요청|Open 상태가 되고 일정시간이 지난 상황|외부(Callee)로의 요청을 차단하고 바로 에러를 받음|외부(Callee)로의 요청을 차단하고 바로 에러를 받음|
-|상태 전이|외부(Callee)로의 요청을 차단하고 바로 에러를 받음|특정 시간이 지나면 Half Open 상태가 됨|일부 허용된 요청들이 성공한 경우 Closed 상태로, 실패인 경우 Open 상태로 변경|    
+|요청|외부(Callee)로 요청이 정상적으로 전달됨|외부(Callee)로의 요청을 차단하고 바로 에러를 받음|외부(Callee)로의 요청을 차단하고 바로 에러를 받음|
+|상태 전이|실패/지연 요청이 임계치를 넘으면 Open 상태로 전환|특정 시간이 지나면 Half Open 상태가 됨|일부 허용된 요청들이 성공한 경우 Closed 상태로, 실패인 경우 Open 상태로 변경|    
 
 <br/>
 
