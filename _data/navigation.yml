@@ -1,5 +1,7 @@
 # main links
 main:
+  - title: Engineering
+    url: /engineering/
   - title: Java
     url: /java/
   - title: Spring
@@ -20,6 +22,8 @@ main:
     url: https://github.com/ttaehee
     
 sidebar:
+  - title: Engineering
+    url: /engineering/
   - title: Java
     url: /java/
   - title: Spring
