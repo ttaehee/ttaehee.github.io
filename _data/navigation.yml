@@ -2,18 +2,6 @@
 main:
   - title: Engineering
     url: /engineering/
-  - title: Java
-    url: /java/
-  - title: Spring
-    url: /spring/
-  - title: DB
-    url: /db/
-  - title: AWS
-    url: /aws/
-  - title: OS
-    url: /os/
-  - title: CS
-    url: /cs/
   - title: DevCourse
     url: /dev-course/
   - title: etc
