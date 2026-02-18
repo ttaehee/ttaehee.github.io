@@ -145,6 +145,40 @@ Pod는 ConfigMap/Secret을
 
 <br/><br/>
 
+### Istio / Envoy (서비스 메시)
+
+MSA에서 서비스가 많아지면 **서비스 간 통신에서 공통으로 필요한 것들**이 생김
+  - ex) 트래픽 제어 (어디로 얼마나 보낼지) / 재시도, 타임아웃 / 인증,암호화 (mTLS) / 모니터링, 트레이싱 등
+     
+이걸 각 서비스 코드에 직접 구현하면 **중복**이 너무 많아짐     
+=> **서비스 메시** : 각 Pod에 Envoy 사이드카를 붙여서 **코드 변경 없이 인프라 레벨에서 처리**     
+
+<br/><br/>
+
+```
+서비스 A Pod                    서비스 B Pod
+[앱 컨테이너 | Envoy 사이드카 ] →→→→→ [Envoy 사이드카 | 앱 컨테이너]
+                  ↑ 트래픽 제어, 모니터링, 암호화 등 여기서 처리
+
+A의 Envoy가 요청을 보내고, B의 Envoy가 받는 식으로 통신이 중계됨
+```
+
+- **Istio** : Envoy 자동 배포 + 트래픽 정책 관리하는 컨트롤러
+- **Envoy** : 각 Pod에 사이드카로 붙어 서비스 요청/응답 중계 + 트래픽 제어하는 프록시
+
+<br/><br/>
+
+= 코드 변경 없이 인프라 레벨에서 처리한다는 것은 사이드카만 교체하면 되므로 메인 서비스 재배포 없이 트래픽 정책·보안·모니터링 업데이트가 가능하다는 의미     
+
+- ex) 코드 변경 없이 사이드카만 업데이트할 때
+
+```
+Istio가 새 Envoy 이미지로 기존 Pod를 사이드카만 교체 재배포
+→ 메인 서비스 코드/이미지 변경 없이 사이드카만 업데이트 완료
+```
+
+<br/><br/>
+
 ### Kubernetes 동작 flow   
 
 ```
@@ -227,6 +261,40 @@ Node Down
 
 Node가 죽으면 해당 Node의 Pod은 모두 소멸로 판단    
 -> ReplicaSet이 다른 Node에 Pod를 재생성해 원하는 개수를 다시 맞춤    
+
+<br/><br/>
+
+### Pod 종료 흐름 (Graceful Shutdown 설정 조율)
+Kubernetes는 자동 복구뿐 아니라 정상 종료 시에도 순서를 보장함    
+설정값 간 순서가 어긋나면 진행 중인 요청이 강제로 끊겨 502/503 에러 발생 가능     
+
+<br/>
+
+- EKS에서 Pod의 **terminationGracePeriodSeconds 기본값은 30초**       
+  -> Spring/Tomcat 같은 웹서버 shutdown 설정(keep-alive-timeout, timeout-per-shutdown-phase)과 조율 필요    
+
+- +) 실무에서는 로드밸런서가 Pod를 endpoint에서 제거하는 타이밍과 SIGTERM 전송 타이밍이 어긋나 요청이 유실될 수 있음    
+   -> preStop hook에 sleep을 넣어 SIGTERM 전에 잠깐 대기하는 패턴으로 방지
+
+<br/>
+
+따라서 아래 순서가 지켜져야 요청 유실 없이 무중단으로 안전하게 종료됨      
+**preStop 시간 + keep-alive-timeout < timeout-per-shutdown-phase < terminationGracePeriodSeconds**    
+
+- preStop hook : SIGTERM 전에 실행되는 훅
+  - 로드밸런서가 해당 Pod를 endpoint에서 제거할 시간을 확보하기 위해 sleep을 넣는 패턴으로 사용     
+- keep-alive-timeout : 서버가 HTTP keep-alive 연결을 유지하는 최대 시간
+- timeout-per-shutdown-phase : Spring graceful shutdown 시 각 단계(웹서버 종료 → 요청 처리 완료 → Bean 종료)별 최대 대기 시간
+- terminationGracePeriodSeconds : K8s가 Pod 종료 시 컨테이너 종료까지 기다리는 최대 시간
+  
+```
+Control Plane이 Pod 종료 결정
+→ preStop hook 실행 (sleep 5~10s)
+→ kubelet 는 프로세스 컨테이너에 SIGTERM 전송 → Pod 가 종료 신호 (SIGTERM) 수신
+→ 애플리케이션이 새 커넥션 수락 중단 (keep-alive-timeout)
+→ 진행 중인 요청 처리 완료 대기 (timeout-per-shutdown-phase)
+→ terminationGracePeriodSeconds 내에 모두 완료되어야 함 → 초과 시 kubelet 이 SIGKILL로 강제 종료
+```
 
 <br/><br/>
 
